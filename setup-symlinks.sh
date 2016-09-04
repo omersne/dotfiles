@@ -37,7 +37,7 @@ for symlink in $(find $DOTFILES_DIR -maxdepth 1 -type f -name ".*"); do
         echo_info "A file named $filename already exists in $HOME."
         echo_info "It will be renamed to $filename.old_$the_date"
 
-        if mv $HOME/$filename $filename.old_$the_date; then
+        if mv $HOME/$filename $HOME/$filename.old_$the_date; then
             ln -s $symlink $HOME/$filename
         else
             echo_error "Failed to rename $filename"
