@@ -11,7 +11,7 @@ setopt noautomenu
 setopt nomenucomplete
 
 
-for file in ~/.{zshrc.local,functions,exports,aliases,zsh_prompt}; do
+for file in ~/.{zshrc.local,functions,colors,exports,aliases,zsh_prompt}; do
     [ -r $file ] && . $file
 done
 unset file
