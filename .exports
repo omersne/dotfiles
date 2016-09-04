@@ -1,0 +1,34 @@
+#!/bin/bash
+
+export DOTFILES_DIR
+
+umask 077
+export EDITOR="vi"
+
+export LS_COLORS=$LS_COLORS:'di=94:ex=32:ln=91'
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+DOWN=$HOME/Downloads/
+DESK=$HOME/Desktop/
+DOCS=$HOME/Documents/
+
+if ___is_osx; then
+
+    # For fixing the problem with the password prompt in GPG in OSX
+    if [ -z "$GPG_TTY" ]; then
+        export GPG_TTY=$(tty)
+    fi
+    
+    # From https://blog.chendry.org/2015/03/13/starting-gpg-agent-in-osx.html
+    [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
+    
+    if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
+        export GPG_AGENT_INFO
+    else
+        eval $(gpg-agent --daemon --write-env-file ~/.gpg-agent-info)
+    fi
+
+fi
+

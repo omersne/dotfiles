@@ -1,0 +1,48 @@
+#!/bin/zsh
+
+
+precmd()
+{
+    _rc=$?
+    _git_branch="$(git branch 2>/dev/null | grep "\*")"
+
+    if [ -n "$_git_branch" ]; then
+        _pwd_color="%F{33}"
+        _git_branch=" %F{226}$_git_branch"
+
+        _pwd="${PWD/$GIT_DIR\/}"
+
+        _bracket_color="%F{9}"
+
+        # Disabled due to speed issues on one of the computers that uses this prompt.
+        #if [ -z "$(git status --porcelain 2>/dev/null)" ]; then
+            #_bracket_color="%F{33}"
+        #else
+            #_bracket_color="%F{9}"
+        #fi
+    else
+        _pwd_color="%F{2}"
+        _bracket_color="%F{2}"
+        _pwd="%~"
+    fi
+
+    if [ $_rc -eq 0 ]; then
+        _rc_color="%F{2}"
+    else
+        _rc_color="%F{9}"
+    fi
+
+    RPROMPT=$'${_bracket_color}[${_pwd_color}${_pwd}${_git_branch}${_bracket_color}] ${_rc_color}[${_rc}]'
+}
+
+if [ "$(id -u)" = 0 ]; then
+    _user_color="%F{9}"
+else
+    _user_color="%F{6}"
+fi
+
+PROMPT=$'%B${_user_color}%n%F{208}@%m->%f%b '
+
+#RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]%b'
+
+

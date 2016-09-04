@@ -1,0 +1,222 @@
+#!/bin/bash
+
+
+if [ -n "$OMERS_STUFF" ]; then
+    [ -r $OMERS_STUFF/ssh_aliases.sh ] && . $OMERS_STUFF/ssh_aliases.sh
+    [ -r $OMERS_STUFF/extra_aliases.sh ] && . $OMERS_STUFF/extra_aliases.sh
+fi
+
+##### Other stuff
+
+alias c="clear"
+
+alias lns="wc -l"
+
+alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
+
+# the '-A' flag prevents the encoded output from being split into multiple lines
+alias b64="openssl enc -base64 -A"
+alias b64d="base64 --decode"
+
+alias gpg-e="gpg --cipher-algo AES256 --symmetric | openssl enc -base64 -A" # encrypt
+alias gpg-d="base64 --decode | gpg" # decrypt
+
+alias py="python"
+
+alias tm="tmux"
+# The 'a' needs to be escaped because of the 'a' alias.
+alias ta="tmux \a -t"
+alias tls="tmux ls"
+
+alias l="less"
+
+alias mkx="chmod +x"
+
+alias v="vi"
+
+##### grep, awk, sed ,tr
+
+alias g="grep"
+alias a="awk"
+alias s="sed"
+
+
+alias l2s="tr '\n' ' '" # convert newlines to spaces
+alias s2l="tr ' ' '\n'" # convert spaces to newlines
+
+alias rmnl="tr -d '\n'"
+alias nlatend='sed "s/$/\\\n/"'
+
+alias toupper="tr '[:lower:]' '[:upper:]'"
+alias tolower="tr '[:upper:]' '[:lower:]'"
+
+alias h="ssh"
+alias hv="ssh -v"
+alias hi="ssh -i"
+alias sshnokey="ssh -o PubkeyAuthentication=no"
+alias sshr="ssh -l root"
+
+##### Changing directories
+
+alias cdc="clear; cd"
+
+alias ..="cd ../"
+alias ...="cd ../../"
+alias ....="cd ../../../"
+alias .....="cd ../../../../"
+alias ......="cd ../../../../../"
+alias .......="cd ../../../../../../"
+
+alias -- -="cd -"
+
+alias desk="cd ~/Desktop/"
+alias deskc="clear; cd ~/Desktop/"
+
+alias down="cd ~/Downloads/"
+alias downc="clear; cd ~/Downloads/"
+
+alias docs="cd ~/Documents/"
+alias docsc="clear; cd ~/Documents/"
+
+alias drop="cd ~/Dropbox/"
+alias dropc="clear; cd ~/Dropbox/"
+
+alias cds="cd ~/.ssh/"
+alias cdsc="clear; cd ~/.ssh/"
+
+if [ -n "$OMERS_STUFF" ]; then
+    alias os='cd $OMERS_STUFF/'
+    alias osc='clear; cd $OMERS_STUFF/'
+fi
+
+if [ -n "$DOTFILES_DIR" ]; then
+    alias dfd="cd $DOTFILES_DIR"
+    alias dfdc="clear; cd $DOTFILES_DIR"
+fi
+
+if [ -n "$GIT_DIR" ]; then
+    alias cdg="cd $GIT_DIR"
+    alias cdgc="clear; cd $GIT_DIR"
+fi
+
+alias md="mkdir"
+alias mk="mkdir"
+
+alias mkcd="mkdir_cd"
+
+##### ls
+
+alias ld="___ls_date_modified"
+alias cld="clear; ___ls_date_modified"
+
+alias 1a="ls -1a"
+alias c1a="clear; 1a"
+
+alias la="ls -la"
+alias cla="clear; la"
+
+
+##### Git
+
+alias gsa="___git_status_all"
+alias cgsa="clear; gsa"
+
+alias gs="git status"
+alias cgs="clear; git status"
+alias tgs="time git status"
+
+alias gc="git commit -m"
+alias gp="git pull"
+alias gh="git push"
+alias ga="git add"
+alias gb="git branch"
+alias gch="git checkout"
+alias gd="git diff"
+
+alias git-clear-cred-cache="git credential-cache exit"
+alias git-cred-cache-timeout-0="git config credential.helper 'cache --timeout=0'"
+
+
+if ___is_osx; then
+
+    # Additional aliases that are only sourced if running on OSX
+
+    if [ -n "$DOTFILES_DIR" ]; then
+        ### Volume control. Uses volume_control_osx.sh
+        OSX_VOLUME_CONTROL_SCRIPT=$DOTFILES_DIR/osx/volume_control_osx.sh
+        
+        if [ -x $OSX_VOLUME_CONTROL_SCRIPT ]; then
+            alias vol="$OSX_VOLUME_CONTROL_SCRIPT --set"
+            #alias v="$OSX_VOLUME_CONTROL_SCRIPT --set"
+            
+            alias vu="$OSX_VOLUME_CONTROL_SCRIPT --increase-by"
+            alias vd="$OSX_VOLUME_CONTROL_SCRIPT --decrease-by"
+            
+            alias mute="$OSX_VOLUME_CONTROL_SCRIPT --toggle"
+            
+            # short aliases for changing the volume to a specific 
+            # percentage (v1 = 1%, v2 = 2%, v3 = 3%...)
+            for percent in {1..100}; do
+                alias "v$i=$OSX_VOLUME_CONTROL_SCRIPT --set $i"
+                alias "vu$i=$OSX_VOLUME_CONTROL_SCRIPT --increase-by $i"
+                alias "vd$i=$OSX_VOLUME_CONTROL_SCRIPT --decrease-by $i"
+            done
+            unset percent
+        fi
+
+        [ -x $DOTFILES_DIR/osx/toggle_scroll_direction.scpt ] && \
+                alias scroll="$DOTFILES_DIR/osx/toggle_scroll_direction.scpt"
+
+    fi
+    
+    # requires GNU sed [brew install gnu-sed]
+    alias sed='gsed'
+    
+    # requires GNU coreutils on OSX [brew install coreutils]
+    alias ls='gls -h --color=auto --time-style="+%Y-%m-%d %H:%M"'
+    
+    # for OSX versions before El Capitan
+    alias _flush-dns-cache='sudo discoveryutil mdnsflushcache; \
+            sudo discoveryutil udnsflushcaches'
+    
+    alias flush-dns-cache-el-capitan='sudo dscacheutil -flushcache; \
+            sudo killall -HUP mDNSResponder'
+    
+    alias pb="pbcopy"
+
+elif ___is_linux; then
+
+    # Additional aliases that are only sourced if running on Linux.
+    
+    alias restart-nscd='sudo /etc/init.d/nscd restart'
+    
+    alias ls='ls -h --color=auto --time-style="+%Y-%m-%d %H:%M"'
+    
+    if [ -n "$DOTFILES_DIR" ]; then
+        ### Volume control. Uses volume_control_linux.sh
+    
+        LINUX_VOLUME_CONTROL_SCRIPT=${LINUX_VOLUME_CONTROL_SCRIPT:-$DOTFILES_DIR/linux/volume_control_linux.sh}
+        
+        if [ -x $LINUX_VOLUME_CONTROL_SCRIPT ]; then
+            alias vol="$LINUX_VOLUME_CONTROL_SCRIPT --set"
+            #alias v="$LINUX_VOLUME_CONTROL_SCRIPT --set"
+            
+            alias vu="$LINUX_VOLUME_CONTROL_SCRIPT --increase-by"
+            alias vd="$LINUX_VOLUME_CONTROL_SCRIPT --decrease-by"
+            
+            alias mute="$LINUX_VOLUME_CONTROL_SCRIPT --toggle"
+            
+            # short aliases for changing the volume to a specific 
+            # percentage (v1 = 1%, v2 = 2%, v3 = 3%...)
+            for percent in {1..100}; do
+                alias "v$i=$LINUX_VOLUME_CONTROL_SCRIPT --set $i"
+                alias "vu$i=$LINUX_VOLUME_CONTROL_SCRIPT --increase-by $i"
+                alias "vd$i=$LINUX_VOLUME_CONTROL_SCRIPT --decrease-by $i"
+            done
+            unset percent
+        fi
+    fi
+
+fi
+
+

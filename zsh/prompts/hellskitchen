@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+precmd() {:;}
+
+PROMPT=$'%B%F{6}%{$([ $EUID = 0 ] && echo "%F{9}")%}%n%F{9}@%m->%f%b '
+
+RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]%b'
+

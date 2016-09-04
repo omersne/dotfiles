@@ -1,0 +1,275 @@
+#!/bin/bash
+
+##### shell/OS detection
+
+___is_osx()
+{
+    [ "$(uname)" = "Darwin" ] && return 0
+    return 1
+}
+
+___is_linux()
+{
+    [ "$(uname)" = "Linux" ] && return 0
+    return 1
+}
+
+___is_zsh()
+{
+    [ "$ZSH_NAME" = "zsh" ] && return 0
+    return 1
+}
+
+___is_bash()
+{
+    [ "$BASH" = "$(which bash)" ] && return 0
+    retun 1
+}
+
+___is_ssh_session()
+{
+    if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+        return 0
+    fi
+    return 1
+}
+
+___is_screen_session()
+{
+    if [ -n "$STY" ] || [ "$TERM" = "screen" ] || strstr "$TERMCAP" "screen"; then
+        return 0
+    fi
+    return 1
+}
+
+___is_tmux_session()
+{
+    [ -n "$TMUX" ] && return 0
+    return 1
+}
+
+
+##### Other stuff
+
+___ls_date_modified()
+{
+    ls -la --time-style=+"%Y-%m-%d %H:%M:%S" | awk -F " " '{print $6 " " $7 " | " $8}'
+}
+
+___git_status_all()
+{
+    local dir
+    for dir in $(ls $GIT_DIR); do
+
+        [ ! -d $GIT_DIR/$dir ] && continue
+
+        # For not including specific repos in git_status_all
+        if [ -r $GIT_DIR/.gsaignore ]; then
+            #local dir_to_ignore
+            for dir_to_ignore in $(cat $GIT_DIR/.gsaignore); do
+                if [ "$dir_to_ignore" = "$dir" ]; then
+                    continue 2
+                fi
+            done
+        fi
+
+        echo_yellow "${underline}*** $dir ***${nounderline}"
+
+        local current_branch="$(cd $GIT_DIR/$dir && git branch | \
+                grep "^ *\*" | \
+                awk '{print $NF}')"
+
+        #local branch
+        for branch in $(cd $GIT_DIR/$dir && git branch | awk '{print $NF}'); do
+
+            echo_blue "\t*** $branch ***"
+
+            # run in a subshell, so the user's directory won't be changed
+            (
+            cd $GIT_DIR/$dir
+            git checkout $branch >/dev/null 2>&1
+            git status
+            )
+        done
+
+        # change back to the original branch
+        (
+        cd $GIT_DIR/$dir && git checkout $current_branch >/dev/null 2>&1
+        )
+        
+        echo ""
+    done
+    unset dir_to_ignore
+}
+
+run_quiet()
+{
+    "$@" >/dev/null 2>&1
+}
+
+toupper()
+{
+    tr '[:lower:]' '[:upper:]'
+}
+
+tolower()
+{
+    tr '[:upper:]' '[:lower:]'
+}
+
+isupper()
+{
+    # returns true if all of the letters in the string are upper case.
+    # non-letter characters are ignored
+    [ "${1//[a-z]}" = "$1" ] && return 0
+    return 1
+}
+
+is_only_upper()
+{
+    [ "${1//[^A-Z]}" = "$1" ] && return 0
+    return 1
+}
+
+islower()
+{
+    # returns true if all of the letters in the string are lower case.
+    # non-letter characters are ignored
+    [ "${1//[A-Z]}" = "$1" ] && return 0
+    return 1
+}
+
+is_only_lower()
+{
+    # returns true if all of the characters are lower case letters
+    [ "${1//[^a-z]}" = "$1" ] && return 0
+    return 1
+}
+
+isdigit()
+{
+    [ -z "${1//[0-9]}" ] && return 0
+    return 1
+}
+
+is_not_digit()
+{
+    # returns false if the string contains any digits
+    [ "${1//[0-9]}" = "$1" ] && return 0
+    return 1
+}
+
+startswith()
+{
+    [ "${1#$2*}" = "$1" ] && return 1
+    return 0
+}
+
+endswith()
+{
+    [ "${1%*$2}" = "$1" ] && return 1
+    return 0
+}
+
+strstr()
+{
+    [ "${1#*$2*}" = "$1" ] && return 1
+    return 0
+}
+
+is_int()
+{
+    if [ $1 -eq $1 ] 2>/dev/null; then
+        return 0
+    fi
+    return 1
+}
+
+func_exists()
+{
+    local _function="$1"
+
+    if run_quiet type $_function; then
+        return 0
+    fi
+    return 1
+}
+
+user_exists()
+{
+    local user="$1"
+
+    if run_quiet id $user; then
+        return 0
+    fi
+    return 1
+}
+
+is_root()
+{
+    if [ "$EUID" = 0 ]; then
+        return 0
+    fi
+    return 1
+}
+
+mkdir_cd()
+{
+    local dir="$1"
+
+    mkdir -p $dir && cd $dir
+}
+
+
+if ___is_osx; then
+
+    # Additional functions that are only sourced if running on Mac OS X.
+    
+    secure_rm()
+    {
+        srm --zero "$@"
+    }
+
+elif ___is_linux; then
+
+    # Additional functions that are only sourced if running on Linux.
+    
+    secure_rm()
+    {
+        if run_quiet which shred; then
+            shred --zero --remove "$@"
+        else
+            echo_error "Error! Shred is not installed on $(hostname)."
+            echo_error "${FUNCNAME[0]} requires shred in order to work."
+            echo_error "No files were deleted."
+            return 1
+        fi
+    }
+    
+    random_string()
+    {
+        local allowed_chars='A-Za-z0-9_=()*&^%\$#@\!/\\-'
+    
+        local arg
+        for arg in "$@"; do
+            case $arg in 
+                --alphanumeric|-a)
+                    allowed_chars="A-Za-z0-9"
+                    ;;
+    
+                --numeric|-n)
+                    allowed_chars="0-9"
+                    ;;
+            esac
+        done
+    
+        local length
+        for length in 08 10 15 16 20 24 25 30 32 35 40 45 48 50 55 60 64; do
+    
+            echo -n "$length: "
+            cat /dev/urandom | tr -dc "$allowed_chars" | fold -w $length | head -1
+        done
+    }
+    
+fi
+

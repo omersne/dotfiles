@@ -1,0 +1,71 @@
+
+
+[System Preferences]
+	Desktop & Screensaver -> Desktop:
+		Set the wallpaper to $CONFIG_FILES_DIR/lib/wallpapers/Bliss2.png.
+
+	Desktop & Screensaver -> Screensaver:
+		Set the screensaver to fireplace_1.mp4.
+		Hot Corners:
+			Set the upper right corner to "Start Screen Saver"
+
+	Mission Control:
+		Uncheck the "Automatically rearrange Spaces based on most recent use" option.
+
+	Displays:
+		When an external monitor is connected, check the "Mirror displays" option.
+
+	Energy Saver:
+		Set the "Turn display off after" option to "Never".
+		Check the "Prevent computer from sleeping automatically when the display is off" option.
+		Uncheck the "Put hard disks to sleep when possible" option.
+
+	Keyboard -> Keyboard:
+		Set "Key Repeat" to the fastest option.
+		Set "Delay Until Repeat" to the shortest option.
+
+	Sharing:
+		Check the "Remote Login" option, but make sure to change the SSH settings first.
+
+	Users & Groups:
+		Enable the root user:
+			--- From https://support.apple.com/en-us/HT204012 ---
+			OS X Lion (10.7) and later
+			1. From the Apple menu choose System Preferences.
+			2. From the View menu choose Users & Groups.
+			3. Click the lock and authenticate as an administrator account.
+			4. Click Login Options.
+			4. Click the "Edit" or "Join" button at the bottom right.
+			6. Click the "Open Directory Utility" button.
+			7. Click the lock in the Directory Utility window.
+			8. Enter an administrator account name and password, then click OK.
+			9. Choose Enable Root User from the Edit menu.
+			10. Enter the root password you wish to use in both the Password and Verify fields, then click OK.
+			
+			Mac OS X Snow Leopard (10.6.x)
+			1. From the Apple menu choose System Preferences.
+			2. From the View menu choose Accounts.
+			3. Click on the lock and authenticate with an administrator account.
+			4. Click Login Options.
+			5. Click the "Edit" or "Join" button at the bottom right.
+			6. Click the "Open Directory Utility" button.
+			7. Click the lock in the Directory Utility window.
+			8. Enter an administrator account name and password, then click OK.
+			9. Choose Enable Root User from the Edit menu.
+			10. Enter the root password you wish to use in both the Password and Verify fields, then click OK.
+
+
+
+
+
+[SSH]
+	/etc/ssh/sshd_config:
+		Disable password authentication [PasswordAuthentication no].
+		Disable ChallengeResponseAuthentication [ChallengeResponseAuthentication no]
+
+
+
+
+
+
+

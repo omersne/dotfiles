@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+# Based on Dror Levin's zsh prompt (https://github.com/spatz/config-files/blob/master/zsh/prompt_spatz_setup)
+
+precmd() {:;}
+
+if ___is_ssh_session; then
+    _ssh_prompt="%F{38} [SSH]"
+fi
+
+PROMPT=$'%(?.%F{2}✔.%F{9}✘) %B%F{6}%{$([ $EUID = 0 ] && echo "%F{9}")%}❯❯❯%{\033[0m%} '
+
+RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]${_ssh_prompt}%{$(tput sgr0)%}'
+
