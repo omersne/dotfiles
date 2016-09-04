@@ -37,12 +37,5 @@ precmd()
     RPROMPT=$'${_bracket_color}[${_pwd_color}${_pwd}${_git_branch}${_bracket_color}] ${_rc_color}[${_rc}]${_ssh_prompt}'
 }
 
-if [ "$(id -u)" = 0 ]; then
-    _user_color="%F{9}"
-else
-    _user_color="%F{6}"
-fi
-
-PROMPT="%B${_user_color}%n%F{63}@%m%b%F{226}->%f "
-
+PROMPT="%B%(!.%F{9}.%F{6})%n%F{63}@%m%b%F{226}->%f "
 

@@ -35,14 +35,7 @@ precmd()
     RPROMPT=$'${_bracket_color}[${_pwd_color}${_pwd}${_git_branch}${_bracket_color}] ${_rc_color}[${_rc}]'
 }
 
-if [ "$(id -u)" = 0 ]; then
-    _user_color="%F{9}"
-else
-    _user_color="%F{6}"
-fi
-
-PROMPT=$'%B${_user_color}%n%F{208}@%m->%f%b '
+PROMPT=$'%B%(!.%F{9}.%F{6})%n%F{208}@%m->%f%b '
 
 #RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]%b'
-
 

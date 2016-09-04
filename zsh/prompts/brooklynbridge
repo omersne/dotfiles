@@ -2,7 +2,7 @@
 
 precmd() {:;}
 
-PROMPT="%{$([ "$EUID" = 0 ] && echo "%F{9}" || echo "%F{6}")%}%n%F{6}@%F{208}%m->%{$(tput sgr0)%} "
+PROMPT="%(!.%F{9}.%F{6})%n%F{6}@%F{208}%m->%f "
 
-RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]%{$(tput sgr0)%}'
+RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]%f'
 

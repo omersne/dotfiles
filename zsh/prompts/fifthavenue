@@ -8,7 +8,7 @@ if ___is_ssh_session; then
     _ssh_prompt="%F{38} [SSH]"
 fi
 
-PROMPT=$'%(?.%F{2}✔.%F{9}✘) %B%F{6}%{$([ $EUID = 0 ] && echo "%F{9}")%}❯❯❯%{\033[0m%} '
+PROMPT=$'%(?.%F{2}✔.%F{9}✘) %B%(!.%F{9}.%F{6})❯❯❯%b%f '
 
-RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]${_ssh_prompt}%{$(tput sgr0)%}'
+RPROMPT=$'%F{2}[%~] %(?.%F{2}.%F{9})[%?]${_ssh_prompt}%f'
 
