@@ -35,66 +35,66 @@ fi
 
 echo_red()
 {
-    echo -e "${color_red}$@${normal}"
+    echo -e "${color_red}$@${color_none}"
 }
 
 echo_green()
 {
-    echo -e "${color_green}$@${normal}"
+    echo -e "${color_green}$@${color_none}"
 }
 
 echo_yellow()
 {
-    echo -e "${color_yellow}$@${normal}"
+    echo -e "${color_yellow}$@${color_none}"
 }
 
 echo_cyan()
 {
-    echo -e "${color_cyan}$@${normal}"
+    echo -e "${color_cyan}$@${color_none}"
 }
 
 echo_orange()
 {
-    echo -e "${color_orange}$@${normal}"
+    echo -e "${color_orange}$@${color_none}"
 }
 
 echo_purple()
 {
-    echo -e "${color_purple}$@${normal}"
+    echo -e "${color_purple}$@${color_none}"
 }
 
 echo_lavender()
 {
-    echo -e "${color_lavender}$@${normal}"
+    echo -e "${color_lavender}$@${color_none}"
 }
 
 echo_pink()
 {
-    echo -e "${color_pink}$@${normal}"
+    echo -e "${color_pink}$@${color_none}"
 }
 
 echo_blue()
 {
-    echo -e "${color_blue}$@${normal}"
+    echo -e "${color_blue}$@${color_none}"
 }
 
 echo_painful_error()
 {
-    echo -e "${color_painful_error}$@${normal}"
+    echo -e "${color_painful_error}$@${color_none}"
 }
 
 echo_ok()
 {
-    echo -e "${color_ok}$@${normal}"
+    echo -e "${color_ok}$@${color_none}"
 }
 
 echo_error()
 {
-    echo -e "${color_error}$@${normal}" >&2
+    echo -e "${color_error}$@${color_none}" >&2
 }
 
 echo_info()
 {
-    echo -e "${color_info}$@${normal}"
+    echo -e "${color_info}$@${color_none}"
 }
 
