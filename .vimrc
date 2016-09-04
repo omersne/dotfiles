@@ -76,6 +76,6 @@ endfunction
 
 autocmd FileType c call CStuff()
 
-autocmd FileType python,bash,sh call ShellStuff()
+autocmd FileType python,bash,sh,zsh call ShellStuff()
 
 
