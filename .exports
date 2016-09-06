@@ -17,9 +17,9 @@ DOCS=$HOME/Documents/
 if ___is_osx; then
 
     # For fixing the problem with the password prompt in GPG in OSX
-    if [ -z "$GPG_TTY" ]; then
+    #if [ -z "$GPG_TTY" ]; then
         export GPG_TTY=$(tty)
-    fi
+    #fi
     
     # From https://blog.chendry.org/2015/03/13/starting-gpg-agent-in-osx.html
     [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
