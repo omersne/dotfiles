@@ -7,6 +7,7 @@
 	c = commit -m
 	ch = checkout
 	chb = checkout -b
+	cht = checkout --track
 	clear-cred-cache = credential-cache exit
 	co = config
 	df = diff --color --color-words --abbrev
