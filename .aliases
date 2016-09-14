@@ -21,6 +21,8 @@ alias b64d="base64 --decode"
 alias gpg-e="gpg --cipher-algo AES256 --symmetric | openssl enc -base64 -A" # encrypt
 alias gpg-d="base64 --decode | gpg" # decrypt
 
+alias gpg-list-recipients="gpg --no-default-keyring --secret-keyring /dev/null -a --list-only"
+
 alias py="python"
 
 alias tm="tmux"
