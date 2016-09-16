@@ -1,5 +1,9 @@
 #!/bin/zsh
 
+if [ -e ~/.no_load_zshrc ]; then
+    return 1
+fi
+
 [ -r $HOME/.dotfiles_dir_path ] && DOTFILES_DIR="$(cat $HOME/.dotfiles_dir_path)"
 
 [ -r $HOME/.git_dir_path ] && GIT_DIR="$(cat $HOME/.git_dir_path)"
