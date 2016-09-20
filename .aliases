@@ -11,6 +11,7 @@ fi
 alias c="clear"
 
 alias lns="wc -l"
+alias wl="wc -l"
 
 alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 
@@ -22,6 +23,16 @@ alias gpg-e="gpg --cipher-algo AES256 --symmetric | openssl enc -base64 -A" # en
 alias gpg-d="base64 --decode | gpg" # decrypt
 
 alias gpg-list-recipients="gpg --no-default-keyring --secret-keyring /dev/null -a --list-only"
+
+# Convert the slash between the size of the key and the key ID to a space so 
+# the key ID can be selected with a double click.
+alias gk="gpg -k | sed '/^[sp]ub / {s|/| |1;}'"
+alias gsk="gpg -K | sed '/^[a-z]\{3\}#* / {s|/| |1;}'"
+
+alias gkl="gpg -k --keyid-format long | sed '/^[sp]ub / {s|/| |1;}'"
+alias gskl="gpg -K --keyid-format long | sed '/^[a-z]\{3\}#* / {s|/| |1;}'"
+
+alias ge="gpg --encrypt --armor --recipient"
 
 alias py="python"
 
@@ -89,8 +100,8 @@ alias cds="cd ~/.ssh/"
 alias cdsc="clear; cd ~/.ssh/"
 
 if [ -n "$OMERS_STUFF" ]; then
-    alias os='cd $OMERS_STUFF/'
-    alias osc='clear; cd $OMERS_STUFF/'
+    alias os="cd $OMERS_STUFF/"
+    alias osc="clear; cd $OMERS_STUFF/"
 fi
 
 if [ -n "$DOTFILES_DIR" ]; then
