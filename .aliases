@@ -32,7 +32,7 @@ alias gsk="gpg -K | sed '/^[a-z]\{3\}#* / {s|/| |1;}'"
 alias gkl="gpg -k --keyid-format long | sed '/^[sp]ub / {s|/| |1;}'"
 alias gskl="gpg -K --keyid-format long | sed '/^[a-z]\{3\}#* / {s|/| |1;}'"
 
-alias ge="gpg --encrypt --armor --recipient"
+alias ge="gpg -eavr"
 
 alias py="python"
 
