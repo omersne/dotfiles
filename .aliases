@@ -186,6 +186,9 @@ if ___is_osx; then
 
     fi
     
+    # Requires gnu coreutils [brew install coreutils]
+    alias tr='gtr'
+
     # requires GNU sed [brew install gnu-sed]
     alias sed='gsed'
     
