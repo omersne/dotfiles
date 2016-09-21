@@ -174,9 +174,9 @@ if ___is_osx; then
             # short aliases for changing the volume to a specific 
             # percentage (v1 = 1%, v2 = 2%, v3 = 3%...)
             for percent in {1..100}; do
-                alias "v$i=$OSX_VOLUME_CONTROL_SCRIPT --set $i"
-                alias "vu$i=$OSX_VOLUME_CONTROL_SCRIPT --increase-by $i"
-                alias "vd$i=$OSX_VOLUME_CONTROL_SCRIPT --decrease-by $i"
+                alias "v$percent=$OSX_VOLUME_CONTROL_SCRIPT --set $percent"
+                alias "vu$percent=$OSX_VOLUME_CONTROL_SCRIPT --increase-by $percent"
+                alias "vd$percent=$OSX_VOLUME_CONTROL_SCRIPT --decrease-by $percent"
             done
             unset percent
         fi
