@@ -30,7 +30,8 @@ vnoremap ; :
 " Highlight any text that is beyond the 81st column
 function! ColorLongLines()
 	if (!exists("s:LongLinesColored")) || (s:LongLinesColored == 0)
-		highlight OverLength ctermbg=1 ctermfg=226
+		"highlight OverLength ctermbg=1 ctermfg=226
+		highlight OverLength ctermbg=242
 		match OverLength /\%81v.\+/
 		let s:LongLinesColored = 1
 	elseif s:LongLinesColored == 1
