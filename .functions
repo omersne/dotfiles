@@ -220,6 +220,35 @@ mkdir_cd()
     mkdir -p $dir && cd $dir
 }
 
+random_string()
+{
+    local allowed_chars='A-Za-z0-9_=()*&^%\$#@\!/\\-'
+
+    local arg
+    for arg in "$@"; do
+
+        case $arg in 
+
+            --alphanumeric|-a)
+                allowed_chars="A-Za-z0-9";;
+
+            --alpha|-l)
+                allowed_chars="A-Za-z";;
+
+            --numeric|-n)
+                allowed_chars="0-9";;
+
+        esac
+    done
+
+    local length
+    for length in 08 10 15 16 20 24 25 30 32 35 40 45 48 50 55 60 64; do
+
+        echo -n "$length: "
+        cat /dev/urandom | tr -dc "$allowed_chars" | fold -w $length | head -1
+    done
+}
+    
 
 if ___is_osx; then
 
@@ -244,31 +273,6 @@ elif ___is_linux; then
             echo_error "No files were deleted."
             return 1
         fi
-    }
-    
-    random_string()
-    {
-        local allowed_chars='A-Za-z0-9_=()*&^%\$#@\!/\\-'
-    
-        local arg
-        for arg in "$@"; do
-            case $arg in 
-                --alphanumeric|-a)
-                    allowed_chars="A-Za-z0-9"
-                    ;;
-    
-                --numeric|-n)
-                    allowed_chars="0-9"
-                    ;;
-            esac
-        done
-    
-        local length
-        for length in 08 10 15 16 20 24 25 30 32 35 40 45 48 50 55 60 64; do
-    
-            echo -n "$length: "
-            cat /dev/urandom | tr -dc "$allowed_chars" | fold -w $length | head -1
-        done
     }
     
 fi
