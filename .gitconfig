@@ -28,7 +28,7 @@
 	skey = config user.signingkey
 
 [branch]
-	autosetuprebase = always
+	#autosetuprebase = always
 
 [core]
 	excludesfile = ~/.gitignore
