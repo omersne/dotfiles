@@ -5,8 +5,8 @@ colorscheme timessquare
 
 set number
 
-inoremap jj <Esc>
-inoremap jk <Esc>
+"inoremap jj <Esc>
+"inoremap jk <Esc>
 inoremap kj <Esc>
 
 :command TAB set expandtab!
