@@ -35,6 +35,8 @@ alias gKl="gpg -K --keyid-format long | sed '/^[a-z]\{3\}#* / {s|/| |1;}'"
 alias ge="gpg -eavr"
 
 alias py="python"
+alias p="python"
+alias pc="python -c"
 
 alias tm="tmux"
 # The 'a' needs to be escaped because of the 'a' alias.
@@ -130,6 +132,7 @@ alias c1a="clear; 1a"
 alias la="ls -la"
 alias cla="clear; la"
 alias l="ls -la"
+alias cl="clear; la"
 alias L="clear; la"
 
 
