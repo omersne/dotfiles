@@ -5,6 +5,7 @@
 	b = branch
 	br = branch
 	c = commit -m
+	sc = commit -S -m
 	ch = checkout
 	chb = checkout -b
 	cht = checkout --track
