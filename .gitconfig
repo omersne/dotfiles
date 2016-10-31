@@ -26,6 +26,7 @@
 	sb = status -sb
 	signingkey = config user.signingkey
 	skey = config user.signingkey
+	w = show
 
 [branch]
 	#autosetuprebase = always
