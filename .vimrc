@@ -75,6 +75,8 @@ function! ShellStuff()
 	call ColorLongLines()
 endfunction
 
+au BufRead,BufNewFile *.h set filetype=c
+
 autocmd FileType c call CStuff()
 
 autocmd FileType python,bash,sh,zsh call ShellStuff()
