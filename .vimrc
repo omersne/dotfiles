@@ -1,4 +1,7 @@
 
+set modeline
+set modelines=5
+
 syntax on
 
 colorscheme timessquare
