@@ -277,3 +277,14 @@ elif ___is_linux; then
     
 fi
 
+get_image_size()
+{
+    local image
+
+    for image in "$@"; do
+
+        sips -g pixelHeight -g pixelWidth "$image" | sed "s/^ *//"
+
+    done
+}
+
