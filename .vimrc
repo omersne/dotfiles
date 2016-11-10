@@ -23,6 +23,8 @@ nnoremap e $
 :command NU set number!
 :command NN set number!
 
+:command FS set tabstop=4 shiftwidth=4 expandtab smarttab
+
 :command RL source ~/.vimrc
 
 " Map ; to :
@@ -66,6 +68,8 @@ function! CStuff()
 	call ColorLongLines()
 endfunction
 
+:command CS call CStuff()
+
 function! ShellStuff()
 	set tabstop=4
 	set softtabstop=0
@@ -77,6 +81,8 @@ function! ShellStuff()
 
 	call ColorLongLines()
 endfunction
+
+:command SS call ShellStuff()
 
 au BufRead,BufNewFile *.h set filetype=c
 
