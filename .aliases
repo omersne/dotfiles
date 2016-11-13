@@ -220,6 +220,8 @@ elif ___is_linux; then
     alias restart-nscd='sudo /etc/init.d/nscd restart'
     
     alias ls='ls -h --color=auto --time-style="+%Y-%m-%d %H:%M"'
+
+    alias remap-ctrl="$DOTFILES_DIR/linux/remap_ctrl.sh"
     
     if [ -n "$DOTFILES_DIR" ]; then
         ### Volume control. Uses volume_control_linux.sh
