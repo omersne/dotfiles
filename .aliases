@@ -223,6 +223,8 @@ elif ___is_linux; then
 
     alias remap-ctrl="$DOTFILES_DIR/linux/remap_ctrl.sh"
     
+    alias x="xclip -selection clipboard"
+
     if [ -n "$DOTFILES_DIR" ]; then
         ### Volume control. Uses volume_control_linux.sh
     
