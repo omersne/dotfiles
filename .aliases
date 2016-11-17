@@ -217,7 +217,8 @@ elif ___is_linux; then
 
     # Additional aliases that are only sourced if running on Linux.
     
-    alias restart-nscd='sudo /etc/init.d/nscd restart'
+    #alias restart-nscd='sudo /etc/init.d/nscd restart'
+    alias nscd-restart="sudo /usr/sbin/service nscd restart"
     
     alias ls='ls -h --color=auto --time-style="+%Y-%m-%d %H:%M"'
 
