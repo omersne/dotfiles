@@ -24,6 +24,10 @@ nnoremap e $
 :command NN set number!
 
 :command FS set tabstop=4 shiftwidth=4 expandtab smarttab
+:command SPACES set tabstop=4 shiftwidth=4 expandtab smarttab
+
+:command ET set tabstop=8 shiftwidth=8 noexpandtab nosmarttab
+:command TABS set tabstop=8 shiftwidth=8 noexpandtab nosmarttab
 
 :command RL source ~/.vimrc
 
