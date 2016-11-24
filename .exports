@@ -14,7 +14,7 @@ DOWN=$HOME/Downloads/
 DESK=$HOME/Desktop/
 DOCS=$HOME/Documents/
 
-if ___is_osx || ___is_linux; then
+if ___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ]); then
 
     # For fixing the problem with the password prompt in GPG in OSX
     #if [ -z "$GPG_TTY" ]; then
