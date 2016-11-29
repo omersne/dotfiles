@@ -248,7 +248,6 @@ random_string()
         cat /dev/urandom | tr -dc "$allowed_chars" | fold -w $length | head -1
     done
 }
-    
 
 if ___is_osx; then
 
@@ -257,6 +256,17 @@ if ___is_osx; then
     secure_rm()
     {
         srm --zero "$@"
+    }
+
+    get_image_size()
+    {
+        local image
+
+        for image in "$@"; do
+
+            sips -g pixelHeight -g pixelWidth "$image" | sed "s/^ *//"
+
+        done
     }
 
 elif ___is_linux; then
@@ -276,15 +286,4 @@ elif ___is_linux; then
     }
     
 fi
-
-get_image_size()
-{
-    local image
-
-    for image in "$@"; do
-
-        sips -g pixelHeight -g pixelWidth "$image" | sed "s/^ *//"
-
-    done
-}
 
