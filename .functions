@@ -249,6 +249,56 @@ random_string()
     done
 }
 
+openssl_rsa_encrypt()
+{
+    local pub_key="$1"
+
+    if ! grep -q -- "-----BEGIN PUBLIC KEY-----" $pub_key; then
+        echo "Warning: $pub_key is not in PEM format. A copy in PEM format will be created in /tmp/."
+        ssh-keygen -f $pub_key -e -m PKCS8 > /tmp/$pub_key.pem
+        pub_key="/tmp/$pub_key.pem"
+    fi
+
+    #local pass="$(openssl rand 64)"
+    local pass="hello is it me uy"
+
+    local encrypted_pass="$(openssl rsautl -encrypt -pubin -inkey $pub_key \
+            -ssl <<< "$pass" | base64 -w 0)"
+
+    if [ -n "$2" ]; then
+        local filename="$2"
+
+        #openssl rsautl -encrypt -pubin -inkey $pub_key -ssl -in $filename \
+        #        -out $filename.enc | base64 -w 0
+
+        local enc_output="$(openssl enc -aes-256-cbc -salt -a -A -k "$pass" \
+                -in $filename -out $filename.enc)"
+        echo "Decryption command:"
+        echo "openssl enc -d -aes-256-cbc -salt -a -A -k \"\$(echo "\"$encrypted_pass\"" | base64 --decode | openssl rsautl -decrypt -inkey <Private key>)\" -in $filename.enc -out $filename.dec"
+
+    else
+        local enc_output="$(openssl enc -aes-256-cbc -salt -a -A -k "$pass")"
+        echo "Decryption command:"
+        echo "echo \"$enc_output\" | openssl enc -d -aes-256-cbc -salt -a -A -k \"\$(echo "\"$encrypted_pass\"" | base64 --decode | openssl rsautl -decrypt -inkey \"<Private key>\")\""
+    fi
+
+}
+
+# TODO
+#openssl_rsa_decrypt()
+#{
+#    local pub_key="$1"
+#
+#    if [ -n "$2" ]; then
+#        local filename="$2"
+#
+#        openssl rsautl -encrypt -pubin -inkey $pub_key -ssl -in $filename \
+#                -out $filename.enc | base64 -w 0
+#    fi
+#
+#    openssl rsautl -encrypt -pubin -inkey id_rsa.pub.pem -ssl | base64 -w 0
+#}
+
 if ___is_osx; then
 
     # Additional functions that are only sourced if running on Mac OS X.
