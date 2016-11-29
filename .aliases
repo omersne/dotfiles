@@ -75,6 +75,8 @@ alias hi="ssh -i"
 alias sshnokey="ssh -o PubkeyAuthentication=no"
 alias sshr="ssh -l root"
 
+alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
+
 ##### Changing directories
 
 alias cdc="clear; cd"
