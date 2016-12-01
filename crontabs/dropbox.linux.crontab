@@ -1,1 +1,1 @@
-*/10 * * * * $(cat ~/.dotfiles_dir_path)/scripts/dropbox_scheduler.sh
+*/10 * * * * $(cat ~/.dotfiles_dir_path)/linux/dropbox_scheduler.sh
