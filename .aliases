@@ -46,7 +46,7 @@ alias tm="tmux"
 alias ta="tmux \a -t"
 alias tls="tmux ls"
 
-alias le="less"
+alias l="less"
 
 alias mkx="chmod +x"
 
@@ -60,7 +60,7 @@ alias g="grep"
 alias gi="grep -i"
 alias gv="grep -v"
 
-alias a="awk"
+alias k="awk"
 alias s="sed"
 
 
@@ -139,9 +139,9 @@ alias c1a="clear; 1a"
 
 alias la="ls -la"
 alias cla="clear; la"
-alias l="ls -la"
-alias cl="clear; la"
-alias L="clear; la"
+alias a="ls -la"
+alias ca="clear; la"
+alias A="clear; la"
 
 
 ##### Git
