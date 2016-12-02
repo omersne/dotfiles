@@ -35,6 +35,7 @@ alias gkl="gpg -k --keyid-format long | sed '/^[sp]ub / {s|/| |1;}'"
 alias gKl="gpg -K --keyid-format long | sed '/^[a-z]\{3\}#* / {s|/| |1;}'"
 
 alias ge="gpg -eavr"
+alias geh="gpg -eavR"
 
 alias py="python"
 alias p="python"
@@ -56,6 +57,9 @@ alias ma="make"
 ##### grep, awk, sed ,tr
 
 alias g="grep"
+alias gi="grep -i"
+alias gv="grep -v"
+
 alias a="awk"
 alias s="sed"
 
