@@ -76,8 +76,9 @@ alias tolower="tr '[:upper:]' '[:lower:]'"
 alias h="ssh"
 alias hv="ssh -v"
 alias hi="ssh -i"
-alias sshnokey="ssh -o PubkeyAuthentication=no"
 alias sshr="ssh -l root"
+alias sshnokey="ssh -o PubkeyAuthentication=no"
+alias scpnokey="scp -o PubkeyAuthentication=no"
 
 alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
 
