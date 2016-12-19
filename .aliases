@@ -15,6 +15,9 @@ alias wl="wc -l"
 
 alias nocolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 
+# Removes 'clear screen' escape codes from output.
+alias noclear="sed 's/\x1B\[[HJ]//g'"
+
 # the '-A' flag prevents the encoded output from being split into multiple lines
 alias b64="openssl enc -base64 -A"
 alias b64d="base64 --decode"
@@ -46,6 +49,7 @@ alias tm="tmux"
 alias ta="tmux \a -t"
 alias tls="tmux ls"
 
+alias less="less -r"
 alias l="less"
 
 alias mkx="chmod +x"
