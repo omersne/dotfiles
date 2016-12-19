@@ -51,6 +51,7 @@ alias tls="tmux ls"
 
 alias less="less -r"
 alias l="less"
+alias lc="noclear | less"
 
 alias mkx="chmod +x"
 
