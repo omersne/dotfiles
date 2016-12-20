@@ -334,6 +334,14 @@ elif ___is_linux; then
             return 1
         fi
     }
-    
+
+    create_shadow_digest()
+    {
+        local pass="$1"
+        local salt="$2"
+
+        python -c "import crypt; print crypt.crypt('$pass', '$salt')"
+    }
+
 fi
 
