@@ -259,8 +259,7 @@ openssl_rsa_encrypt()
         pub_key="/tmp/$pub_key.pem"
     fi
 
-    #local pass="$(openssl rand 64)"
-    local pass="hello is it me uy"
+    local pass="$(openssl rand 64)"
 
     local encrypted_pass="$(openssl rsautl -encrypt -pubin -inkey $pub_key \
             -ssl <<< "$pass" | base64 -w 0)"
@@ -298,6 +297,11 @@ openssl_rsa_encrypt()
 #
 #    openssl rsautl -encrypt -pubin -inkey id_rsa.pub.pem -ssl | base64 -w 0
 #}
+
+date_for_filename()
+{
+    date +"%Y-%m-%d_%H-%M-%S"
+}
 
 if ___is_osx; then
 
