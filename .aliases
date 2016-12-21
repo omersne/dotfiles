@@ -170,6 +170,7 @@ alias gch="git checkout"
 alias gcht="git checkout --track"
 alias gd="git diff"
 alias gw="git show"
+alias gl="git log --show-signature"
 
 alias git-clear-cred-cache="git credential-cache exit"
 alias git-cred-cache-timeout-0="git config credential.helper 'cache --timeout=0'"
