@@ -94,4 +94,9 @@ autocmd FileType c call CStuff()
 
 autocmd FileType python,bash,sh,zsh call ShellStuff()
 
+" When editing a file, always jump to the last cursor position
+autocmd BufReadPost *
+	\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+		\ exe "normal! g'\"" |
+	\ endif
 
