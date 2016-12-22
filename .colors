@@ -1,6 +1,6 @@
 # Colors borrowed from https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 
-if [ -t 1 ] || [ "$FORCE_COLORS" == 1 ]; then
+if [ -t 1 ] || [ "$FORCE_COLORS" = 1 ]; then
     color_none="\033[00m"
     color_red="\033[38;5;9m"
     color_green="\033[38;5;10m"
