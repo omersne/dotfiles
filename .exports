@@ -14,11 +14,15 @@ DOWN=$HOME/Downloads/
 DESK=$HOME/Desktop/
 DOCS=$HOME/Documents/
 
-if ___is_osx && [ -d $DOTFILES_DIR/osx/bin ]; then
-    export PATH="$PATH:$DOTFILES_DIR/osx/bin"
+#if ___is_osx && [ -d $DOTFILES_DIR/osx/bin ]; then
+#    export PATH="$PATH:$DOTFILES_DIR/osx/bin"
+#
+#elif ___is_linux && [ -d $DOTFILES_DIR/linux/bin ]; then
+#    export PATH="$PATH:$DOTFILES_DIR/linux/bin"
+#fi
 
-elif ___is_linux && [ -d $DOTFILES_DIR/linux/bin ]; then
-    export PATH="$PATH:$DOTFILES_DIR/linux/bin"
+if [ -d $DOTFILES_DIR/bin ]; then
+    export PATH="$PATH:$DOTFILES_DIR/bin"
 fi
 
 if ___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ]); then
