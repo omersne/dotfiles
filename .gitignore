@@ -7,4 +7,4 @@ Thumbs.db
 a.out
 *.swp
 __ignore__*
-*/bin/*
+bin/*

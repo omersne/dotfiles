@@ -12,17 +12,19 @@ echo_and_run_cmd()
     echo
 }
 
-if ___is_osx; then
-    DEST_DIR=$SCRIPT_DIR/../osx/bin
+#if ___is_osx; then
+#    DEST_DIR=$SCRIPT_DIR/../osx/bin
+#
+#elif ___is_linux; then
+#    DEST_DIR=$SCRIPT_DIR/../linux/bin
+#
+#else
+#    echo_error "Unsupported platform."
+#    echo_error "Exiting"
+#    exit 1
+#fi
 
-elif ___is_linux; then
-    DEST_DIR=$SCRIPT_DIR/../linux/bin
-
-else
-    echo_error "Unsupported platform."
-    echo_error "Exiting"
-    exit 1
-fi
+DEST_DIR=$SCRIPT_DIR/../bin
 
 if [ ! -d $DEST_DIR ]; then
     mkdir -p $DEST_DIR
