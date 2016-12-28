@@ -15,8 +15,12 @@ setopt noautomenu
 setopt nomenucomplete
 
 
-for file in ~/.{zshrc.local,functions,colors,exports,aliases,zsh_prompt}; do
-    [ -r $file ] && . $file
+for file in .{zshrc.local,functions,colors,exports,aliases,zsh_prompt}; do
+    if [ -n "$DOTFILES_DIR" ] && [ -r $DOTFILES_DIR/$file ]; then
+        . $DOTFILES_DIR/$file
+    else
+        [ -r ~/$file ] && . ~/$file
+    fi
 done
 unset file
 
