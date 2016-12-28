@@ -21,7 +21,7 @@ DOCS=$HOME/Documents/
 #    export PATH="$PATH:$DOTFILES_DIR/linux/bin"
 #fi
 
-if [ -d $DOTFILES_DIR/bin ]; then
+if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     export PATH="$PATH:$DOTFILES_DIR/bin"
 fi
 
