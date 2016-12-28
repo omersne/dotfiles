@@ -109,8 +109,10 @@ alias downc="clear; cd ~/Downloads/"
 alias docs="cd ~/Documents/"
 alias docsc="clear; cd ~/Documents/"
 
-alias drop="cd ~/Dropbox/"
-alias dropc="clear; cd ~/Dropbox/"
+if [ -d ~/Dropbox ]; then
+    alias drop="cd ~/Dropbox/"
+    alias dropc="clear; cd ~/Dropbox/"
+fi
 
 alias cds="cd ~/.ssh/"
 alias cdsc="clear; cd ~/.ssh/"
