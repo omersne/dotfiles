@@ -59,6 +59,8 @@ alias v="vi"
 
 alias ma="make"
 
+alias uu="sort -u"
+
 ##### grep, awk, sed ,tr
 
 alias g="grep"
