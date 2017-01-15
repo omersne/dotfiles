@@ -165,6 +165,7 @@ alias tgs="time git status"
 
 alias gc="git commit -m"
 alias gsc="git commit -S -m"
+alias gnsc="git commit --no-gpg-sign -m"
 alias gp="git pull"
 alias gh="git push"
 alias ga="git add"
