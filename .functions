@@ -303,6 +303,13 @@ date_for_filename()
     date +"%Y-%m-%d_%H-%M-%S"
 }
 
+___ssh_remove_known_hosts_line()
+{
+    local line_num="$1"
+
+    sed -i "${line_num}d" ~/.ssh/known_hosts
+}
+
 if ___is_osx; then
 
     # Additional functions that are only sourced if running on Mac OS X.

@@ -89,6 +89,8 @@ alias scpnokey="scp -o PubkeyAuthentication=no"
 
 alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
 
+alias ssh-remove-known-hosts-line="___ssh_remove_known_hosts_line"
+
 ##### Changing directories
 
 alias cdc="clear; cd"
