@@ -330,6 +330,25 @@ if ___is_osx; then
         done
     }
 
+    set_wifi_state()
+    {
+        local state="$1"
+        local current_device=$(networksetup -listallhardwareports | \
+                sed -ne '/Wi-Fi/ {n; s/.* //p}')
+
+        case "$state" in
+
+            enable)
+                local cmd="on";;
+
+            disable)
+                local cmd="off";;
+
+        esac
+
+        networksetup -setairportpower $current_device $cmd
+    }
+
 elif ___is_linux; then
 
     # Additional functions that are only sourced if running on Linux.
