@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export DOTFILES_DIR
+DFD="$DOTFILES_DIR"
 
 umask 077
 export EDITOR="vi"
