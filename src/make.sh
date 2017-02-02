@@ -40,13 +40,23 @@ for i in "$@"; do
             ;;
 
         rstrip-newline)
-            echo "[rstrip-newline]"
+            echo "[$i]"
 	        echo_and_run_cmd gcc -Wall $SCRIPT_DIR/rstrip-newline.c -o $DEST_DIR/rstrip-newline
             ;;
 
         newline-to-backslash-n)
-            echo "[newline-to-backslash-n]"
+            echo "[$i]"
 	        echo_and_run_cmd gcc -Wall $SCRIPT_DIR/newline-to-backslash-n.c -o $DEST_DIR/newline-to-backslash-n
+            ;;
+
+        text2ascii)
+            echo "[$i]"
+            echo_and_run_cmd gcc -Wall $SCRIPT_DIR/text2ascii.c -o $DEST_DIR/text2ascii
+            ;;
+
+        ascii2text)
+            echo "[$i]"
+            echo_and_run_cmd gcc -DASCII_2_TEXT -Wall $SCRIPT_DIR/text2ascii.c -o $DEST_DIR/ascii2text
             ;;
 
         *)
