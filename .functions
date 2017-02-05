@@ -310,6 +310,16 @@ ___ssh_remove_known_hosts_line()
     sed -i "${line_num}d" ~/.ssh/known_hosts
 }
 
+___find_files_exec_cmd()
+{
+    find . -type f -exec $@ {} \;
+}
+
+___find_files_exec_cmd_no_hidden()
+{
+    find [^.]* -type f -exec $@ {} \;
+}
+
 if ___is_osx; then
 
     # Additional functions that are only sourced if running on Mac OS X.

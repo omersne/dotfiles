@@ -61,6 +61,12 @@ alias ma="make"
 
 alias uu="sort -u"
 
+alias find-files-exec-cmd="___find_files_exec_cmd"
+alias ff="find-files-exec-cmd"
+
+alias find-files-exec-cmd-no-hidden="___find_files_exec_cmd_no_hidden"
+alias ffnh="find-files-exec-cmd-no-hidden"
+
 ##### grep, awk, sed ,tr
 
 alias g="grep"
