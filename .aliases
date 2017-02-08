@@ -67,6 +67,9 @@ alias ff="find-files-exec-cmd"
 alias find-files-exec-cmd-no-hidden="___find_files_exec_cmd_no_hidden"
 alias ffnh="find-files-exec-cmd-no-hidden"
 
+alias hex2dec="printf '%d'"
+alias dec2hex="printf '%x'"
+
 ##### grep, awk, sed ,tr
 
 alias g="grep"
