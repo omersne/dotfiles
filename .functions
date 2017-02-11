@@ -320,6 +320,16 @@ ___find_files_exec_cmd_no_hidden()
     find [^.]* -type f -exec $@ {} \;
 }
 
+___filenames_spaces_to_underscores()
+{
+    local i
+    for i in "$@"; do
+
+        mv -- "$i" "${i// /_}"
+
+    done
+}
+
 if ___is_osx; then
 
     # Additional functions that are only sourced if running on Mac OS X.

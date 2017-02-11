@@ -70,6 +70,8 @@ alias ffnh="find-files-exec-cmd-no-hidden"
 alias hex2dec="printf '%d'"
 alias dec2hex="printf '%x'"
 
+alias spaces-to-underscores="___filenames_spaces_to_underscores"
+
 ##### grep, awk, sed ,tr
 
 alias g="grep"
