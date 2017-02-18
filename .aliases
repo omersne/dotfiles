@@ -61,6 +61,7 @@ alias ma="make"
 
 alias uu="sort -u"
 
+alias f="find"
 alias find-files-exec-cmd="___find_files_exec_cmd"
 alias ff="find-files-exec-cmd"
 alias f.="find ."
