@@ -8,7 +8,9 @@ fi
 
 ##### Other stuff
 
-alias c="clear"
+# Print 200 new lines before clearing the screen, for dealing with the problem
+# when changing screen resolutions.
+alias c="printf '\n%.0s' {1..200}; clear"
 
 alias lns="wc -l"
 alias wl="wc -l"
