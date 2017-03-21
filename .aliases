@@ -50,6 +50,8 @@ alias tm="tmux"
 # The 'a' needs to be escaped because of the 'a' alias.
 alias ta="tmux \a -t"
 alias tls="tmux ls"
+alias tmux-all-panes="___tmux_send_to_all_panes"
+alias tap="___tmux_send_to_all_panes"
 
 alias less="less -r"
 alias l="less"
