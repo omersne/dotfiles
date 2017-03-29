@@ -210,16 +210,16 @@ if ___is_osx; then
     if [ -n "$DOTFILES_DIR" ]; then
         ### Volume control. Uses volume_control_osx.sh
         OSX_VOLUME_CONTROL_SCRIPT=$DOTFILES_DIR/osx/volume_control_osx.sh
-        
+
         if [ -x $OSX_VOLUME_CONTROL_SCRIPT ]; then
             alias vol="$OSX_VOLUME_CONTROL_SCRIPT --set"
             #alias v="$OSX_VOLUME_CONTROL_SCRIPT --set"
-            
+
             alias vu="$OSX_VOLUME_CONTROL_SCRIPT --increase-by"
             alias vd="$OSX_VOLUME_CONTROL_SCRIPT --decrease-by"
-            
+
             alias mute="$OSX_VOLUME_CONTROL_SCRIPT --toggle"
-            
+
             # short aliases for changing the volume to a specific 
             # percentage (v1 = 1%, v2 = 2%, v3 = 3%...)
             for percent in {1..100}; do
@@ -247,10 +247,13 @@ if ___is_osx; then
     # for OSX versions before El Capitan
     alias _flush-dns-cache='sudo discoveryutil mdnsflushcache; \
             sudo discoveryutil udnsflushcaches'
-    
+
     alias flush-dns-cache-el-capitan='sudo dscacheutil -flushcache; \
             sudo killall -HUP mDNSResponder'
-    
+
+    if which rstrip-newline > /dev/null 2>&1; then
+        alias pbcopy="rstrip-newline | pbcopy"
+    fi
     alias pb="pbcopy"
 
     alias wifi-off="set_wifi_state disable"
@@ -261,30 +264,30 @@ if ___is_osx; then
 elif ___is_linux; then
 
     # Additional aliases that are only sourced if running on Linux.
-    
+
     #alias restart-nscd='sudo /etc/init.d/nscd restart'
     alias nscd-restart="sudo /usr/sbin/service nscd restart"
-    
+
     alias ls='ls -h --color=auto --time-style="+%Y-%m-%d %H:%M"'
 
     alias remap-ctrl="$DOTFILES_DIR/linux/remap_ctrl.sh"
-    
+
     alias x="xclip -selection clipboard"
 
     if [ -n "$DOTFILES_DIR" ]; then
         ### Volume control. Uses volume_control_linux.sh
-    
+
         LINUX_VOLUME_CONTROL_SCRIPT=${LINUX_VOLUME_CONTROL_SCRIPT:-$DOTFILES_DIR/linux/volume_control_linux.sh}
-        
+
         if [ -x $LINUX_VOLUME_CONTROL_SCRIPT ]; then
             alias vol="$LINUX_VOLUME_CONTROL_SCRIPT --set"
             #alias v="$LINUX_VOLUME_CONTROL_SCRIPT --set"
-            
+
             alias vu="$LINUX_VOLUME_CONTROL_SCRIPT --increase-by"
             alias vd="$LINUX_VOLUME_CONTROL_SCRIPT --decrease-by"
-            
+
             alias mute="$LINUX_VOLUME_CONTROL_SCRIPT --toggle"
-            
+
             # short aliases for changing the volume to a specific 
             # percentage (v1 = 1%, v2 = 2%, v3 = 3%...)
             for percent in {1..100}; do
@@ -297,5 +300,4 @@ elif ___is_linux; then
     fi
 
 fi
-
 
