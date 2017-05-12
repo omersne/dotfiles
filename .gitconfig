@@ -15,7 +15,12 @@
 	d = diff
 	email = config user.email
 	h = push
-	lg = log --color --graph --pretty=format:'%C(63)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset - %C(208)%an <%ae>%Creset' --abbrev-commit --
+
+	lg = log --color --abbrev-commit \
+		--pretty=format:'%C(63)%h%Creset - %Cgreen%ci%Creset - %C(208)%an <%ae>%Creset\n%C(226)[%G?] %C(45)%GS %GK%Creset\n%B' --
+
+	lg2 = log --color --graph --pretty=format:'%C(63)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset - %C(208)%an <%ae>%Creset' --abbrev-commit --
+
 	list-remote-branches = ls-remote-origin
 	logsig = log --show-signature
 	lrb = ls-remote origin

@@ -196,7 +196,7 @@ alias gch="git checkout"
 alias gcht="git checkout --track"
 alias gd="git diff"
 alias gw="git show"
-alias gl="git log --show-signature"
+alias gl="git lg"
 alias gg="git grep"
 
 alias git-clear-cred-cache="git credential-cache exit"
