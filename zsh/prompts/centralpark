@@ -1,41 +1,20 @@
 #!/bin/zsh
 
-
-# check if this is an SSH session
-if ___is_ssh_session; then
-    _ssh_prompt="%F{226} [SSH]"
-fi
+__git_prompt_color()
+{
+    if git status --porcelain 2>/dev/null | grep -q .; then
+        echo "%F{9}"
+    else
+        # If `git status --porcelain' returned 0
+        if [ "${pipestatus%% *}" = "0" ]; then
+            echo "%F{226}"
+        fi
+    fi
+}
 
 precmd()
 {
-    _rc=$?
-    _git_branch="$(git branch 2>/dev/null | grep "\*")"
-
-    if [ -n "$_git_branch" ]; then
-        _pwd_color="%F{33}"
-        _git_branch=" %F{226}$_git_branch"
-
-        _pwd="${PWD/$GIT_DIR\/}"
-
-        if [ -z "$(git status --porcelain 2>/dev/null)" ]; then
-            _bracket_color="%F{33}"
-        else
-            _bracket_color="%F{9}"
-        fi
-    else
-        _pwd_color="%F{2}"
-        _bracket_color="%F{2}"
-        _pwd="%~"
-    fi
-
-    if [ $_rc -eq 0 ]; then
-        _rc_color="%F{2}"
-    else
-        _rc_color="%F{9}"
-    fi
-
-    RPROMPT=$'${_bracket_color}[${_pwd_color}${_pwd}${_git_branch}${_bracket_color}] ${_rc_color}[${_rc}]${_ssh_prompt}'
+    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m$(__git_prompt_color)->%f "
+    RPROMPT=$'%F{2}[%~]%f %(?.%F{2}.%F{9})[%?]'
 }
-
-PROMPT="%B%(!.%F{9}.%F{6})%n%F{63}@%m%b%F{226}->%f "
 
