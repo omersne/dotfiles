@@ -1,29 +1,24 @@
 #!/bin/zsh
 
-__prompt_git_color()
-{
-    if git status --porcelain 2>/dev/null | grep -q .; then
-        echo "%F{9}"
-    else
-        # If `git status --porcelain' returned 0
-        if [ "${pipestatus%% *}" = "0" ]; then
-            echo "%F{226}"
-        fi
-    fi
-}
-
-__prompt_pwd_color()
-{
-    if [ -n "${SSH_CONNECTION}" ]; then
-        echo "%F{45}"
-    else
-        echo "%F{2}"
-    fi
-}
-
 precmd()
 {
-    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m$(__prompt_git_color)->%f "
-    RPROMPT="$(__prompt_pwd_color)[%~]%f %(?.%F{2}.%F{9})[%?]"
+    local git_branch="$(git branch 2>/dev/null | sed -ne '/^\*/ {s/\* *//p}')"
+
+    if [ -n "$git_branch" ]; then
+        git_branch=" %F{226}$git_branch"
+        local pwd_color="%F{33}"
+
+        if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+            local bracket_color="%F{9}"
+        else
+            local bracket_color="%F{33}"
+        fi
+    else
+        local pwd_color="%F{2}"
+        local bracket_color="%F{2}"
+    fi
+
+    RPROMPT="${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}]"
+    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m%(?.%F{2}.%F{9})->%f "
 }
 
