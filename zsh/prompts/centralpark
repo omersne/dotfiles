@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-__git_prompt_color()
+__prompt_git_color()
 {
     if git status --porcelain 2>/dev/null | grep -q .; then
         echo "%F{9}"
@@ -12,9 +12,18 @@ __git_prompt_color()
     fi
 }
 
+__prompt_pwd_color()
+{
+    if [ -n "${SSH_CONNECTION}" ]; then
+        echo "%F{45}"
+    else
+        echo "%F{2}"
+    fi
+}
+
 precmd()
 {
-    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m$(__git_prompt_color)->%f "
-    RPROMPT=$'%F{2}[%~]%f %(?.%F{2}.%F{9})[%?]'
+    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m$(__prompt_git_color)->%f "
+    RPROMPT="$(__prompt_pwd_color)[%~]%f %(?.%F{2}.%F{9})[%?]"
 }
 
