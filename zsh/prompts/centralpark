@@ -10,6 +10,8 @@ precmd()
 
         if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
             local bracket_color="%F{9}"
+        elif ! git status | grep -q "Your branch is up-to-date with "; then
+            local bracket_color="%F{226}"
         else
             local bracket_color="%F{33}"
         fi
