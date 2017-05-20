@@ -2,7 +2,7 @@
 
 precmd()
 {
-    local git_branch="$(git branch 2>/dev/null | sed -ne '/^\*/ {s/\* *//p}')"
+    local git_branch="$(git branch 2>/dev/null | sed -ne '/^\*/ {s/^\* *//p}')"
 
     if [ -n "$git_branch" ]; then
         git_branch=" %F{226}$git_branch"
@@ -22,7 +22,7 @@ precmd()
         local bracket_color="%F{2}"
     fi
 
-    RPROMPT="${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}]"
-    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m%(?.%F{2}.%F{9})->%f "
+    RPROMPT="${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}] %(?.%F{2}.%F{9})[%?]%f"
+    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m%F{226}->%f "
 }
 
