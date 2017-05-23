@@ -23,6 +23,6 @@ precmd()
     fi
 
     RPROMPT="${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}] %(?.%F{2}.%F{9})[%?]%f"
-    PROMPT="%(!.%F{11}.%F{14})%n%F{63}@%m%F{226}->%f "
+    PROMPT="%(!.%F{9}.%F{14})%n%F{63}@%m%F{226}->%f "
 }
 
