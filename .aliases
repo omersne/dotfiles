@@ -205,7 +205,7 @@ alias gB="git branch"
 alias gch="git checkout"
 alias gcht="git checkout --track"
 alias gd="git diff"
-alias gw="git show"
+alias gw="$DOTFILES_DIR/utils/git-show.sh"
 alias gl="git lg"
 alias gg="git grep"
 
