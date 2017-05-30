@@ -32,15 +32,20 @@ if ___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ]); then
     #if [ -z "$GPG_TTY" ]; then
         export GPG_TTY=$(tty)
     #fi
-    
-    # From https://blog.chendry.org/2015/03/13/starting-gpg-agent-in-osx.html
-    [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
-    
-    if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
-        export GPG_AGENT_INFO
-    else
-        eval $(gpg-agent --daemon --write-env-file ~/.gpg-agent-info)
-    fi
 
+    if [ -e ~/.gpg-agent-2.dfcfg ]; then
+        if ! pgrep -q gpg-agent; then
+            gpg-agent --daemon
+        fi
+    else
+        # From https://blog.chendry.org/2015/03/13/starting-gpg-agent-in-osx.html
+        [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
+
+        if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
+            export GPG_AGENT_INFO
+        else
+            eval $(gpg-agent --daemon --write-env-file ~/.gpg-agent-info)
+        fi
+    fi
 fi
 
