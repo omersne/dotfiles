@@ -23,8 +23,8 @@ nnoremap e $
 :command NU set number!
 :command NN set number!
 
-:command FS set tabstop=4 shiftwidth=4 expandtab smarttab
-:command SPACES set tabstop=4 shiftwidth=4 expandtab smarttab
+:command FS set tabstop=8 shiftwidth=4 expandtab smarttab
+:command SPACES set tabstop=8 shiftwidth=4 expandtab smarttab
 
 :command ET set tabstop=8 shiftwidth=8 noexpandtab nosmarttab
 :command TABS set tabstop=8 shiftwidth=8 noexpandtab nosmarttab
@@ -75,7 +75,7 @@ endfunction
 :command CS call CStuff()
 
 function! ShellStuff()
-	set tabstop=4
+	set tabstop=8
 	set softtabstop=0
 	set expandtab
 	set shiftwidth=4
