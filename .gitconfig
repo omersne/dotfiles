@@ -16,8 +16,7 @@
 	email = config user.email
 	h = push
 
-	lg = log --color --abbrev-commit \
-		--pretty=format:'%C(63)%h%Creset - %Cgreen%ci%Creset - %C(208)%an <%ae>%Creset\n%C(226)[%G?] %C(45)%GS %GK%Creset\n%B' --
+	lg = log --color --pretty=format:'%C(63)%h%Creset - %Cgreen%ci%Creset - %C(208)%an <%ae>%Creset\n%C(226)[%G?] %C(45)%GS %GK%Creset\n%B' --
 
 	lg2 = log --color --graph --pretty=format:'%C(63)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset - %C(208)%an <%ae>%Creset' --abbrev-commit --
 
@@ -42,6 +41,8 @@
 
 	# http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/
 	trustctime = false
+
+	editor = vim
 
 [color]
 	ui = auto
@@ -74,4 +75,12 @@
 [user]
 	# Require setting user.name and user.email explicitly for each repo:
 	#useconfigonly = true
+	name = Omer Sne
+	email = omer@omersne.com
+	signingkey = 0x7C03F88D18AA418A
 
+[commit]
+	gpgsign = true
+
+[gpg]
+	program = gpg2
