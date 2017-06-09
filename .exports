@@ -33,7 +33,7 @@ if ___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ]); then
         export GPG_TTY=$(tty)
     #fi
 
-    if [ -e ~/.gpg-agent-2.dfcfg ]; then
+    if [ -e ~/.use-gpg-agent-2.dfcfg ]; then
         if ! pgrep -q gpg-agent; then
             gpg-agent --daemon
         fi
