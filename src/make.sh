@@ -24,7 +24,7 @@ echo_and_run_cmd()
 #    exit 1
 #fi
 
-DEST_DIR=$SCRIPT_DIR/../bin
+DEST_DIR=$SCRIPT_DIR/../bin/local
 
 if [ ! -d $DEST_DIR ]; then
     mkdir -p $DEST_DIR
