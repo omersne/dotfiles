@@ -23,7 +23,7 @@ DOCS=$HOME/Documents/
 #fi
 
 if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
-    export PATH="$PATH:$DOTFILES_DIR/bin"
+    export PATH="$PATH:$DOTFILES_DIR/bin/local"
 fi
 
 if ___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ]); then
