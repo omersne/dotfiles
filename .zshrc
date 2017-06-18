@@ -15,7 +15,7 @@ setopt noautomenu
 setopt nomenucomplete
 
 
-for file in .{zshrc.local,functions,colors,exports,aliases,zsh_prompt}; do
+for file in .{zshrc.local,functions,colors,exports,aliases,zsh_prompt,dotfiles_overriders}; do
     if [ -n "$DOTFILES_DIR" ] && [ -r $DOTFILES_DIR/$file ]; then
         . $DOTFILES_DIR/$file
     else
