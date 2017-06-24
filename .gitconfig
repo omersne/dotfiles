@@ -1,6 +1,7 @@
 [alias]
 	a = add
 	aa = add --all
+	add-remote = remote add origin
 	amend = commit --amend
 	b = branch
 	br = branch
