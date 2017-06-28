@@ -1,13 +1,5 @@
 #!/bin/bash
 
-
-if [ -n "$OMERS_STUFF" ]; then
-    [ -r $OMERS_STUFF/ssh_aliases.sh ] && . $OMERS_STUFF/ssh_aliases.sh
-    [ -r $OMERS_STUFF/extra_aliases.sh ] && . $OMERS_STUFF/extra_aliases.sh
-fi
-
-##### Other stuff
-
 alias rc="echo \$?"
 
 if ___is_zsh; then
@@ -86,6 +78,8 @@ alias hex2dec="printf '%d'"
 alias dec2hex="printf '%x'"
 
 alias spaces-to-underscores="___filenames_spaces_to_underscores"
+
+alias y="youtube-dl.sh"
 
 ##### grep, awk, sed ,tr
 
