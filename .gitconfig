@@ -15,6 +15,7 @@
 	df = diff --color --color-words --abbrev
 	d = diff
 	email = config user.email
+	fp = format-patch --stdout
 	h = push
 
 	lg = log --color --pretty=format:'%C(63)%h%Creset - %Cgreen%ci%Creset - %C(208)%an <%ae>%Creset\n%C(226)[%G?] %C(45)%GS %GK%Creset\n%B' --
