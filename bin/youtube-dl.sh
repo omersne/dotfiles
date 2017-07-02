@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Requires `ffmpeg' for downloading 1080p YouTube videos.
+
+ARCHIVE_FILE=".youtube-dl_archive"
+
 help_info()
 {
     echo "Usage: $0 <URL/video ID>"
@@ -23,11 +27,60 @@ valid_video_file_regex()
     echo "_${video_id}_U20[0-2][0-9][01][0-9][0-3][0-9]\."
 }
 
+valid_video_id_regex()
+{
+    echo "^[a-zA-Z0-9_-]\{11\}$"
+}
+
+ls_video_id()
+{
+    local video_id="$1"
+
+    ls -a *"_${video_id}_U"*
+}
+
 ls_video_file()
 {
     local video_id="$1"
 
-    ls -lah *$(valid_video_file_regex "$video_id")*
+    ls_video_id "$video_id" | ignore_non_video_files
+}
+
+ignore_partial_videos()
+{
+    grep -v "\.part$"
+}
+
+ignore_non_video_files()
+{
+    ignore_partial_videos | grep "\.\(webm\|mp4\)$"
+}
+
+ls_video_json()
+{
+    local video_id="$1"
+
+    ls_video_id "$video_id" | grep "\.json$"
+}
+
+ls_original_video_json()
+{
+    local video_id="$1"
+
+    ls_video_json "$video_id" | grep "\.info.json$"
+}
+
+video_json_exists()
+{
+    local video_id="$1"
+
+    ls_video_json "$video_id" 2>/dev/null | grep -q "\.info\.json$" && \
+            ls_video_json "$video_id" 2>/dev/null | grep -q "\.info\.min\.json$"
+}
+
+is_video_id()
+{
+    grep -q "$(valid_video_id_regex)" <<< "$1"
 }
 
 is_single_video()
@@ -36,7 +89,8 @@ is_single_video()
 
     if (strstr "$url" "v=" && ! strstr "$url" "list=") || \
             strstr "$video" "youtu.be/" || strstr "$video" "/watch/" || \
-            strstr "$video" "/embed/"; then
+            strstr "$video" "/embed/" || \
+            is_video_id "$url"; then
         return 0
     fi
 
@@ -47,7 +101,9 @@ get_video_id()
 {
     local video="$1"
 
-    if strstr "$video" "v="; then
+    if is_video_id "$video"; then
+        :
+    elif strstr "$video" "v="; then
         video="$(awk -F '=' '{print $NF}' <<< "$video")"
     elif strstr "$video" "youtu.be/" || strstr "$video" "/watch/" || \
             strstr "$video" "/embed/"; then
@@ -61,14 +117,15 @@ ygrep()
 {
     local video_id="$1"
 
-    ls | grep -q "$(valid_video_file_regex "$video_id")" | grep -v "\.part$"
+    ls_video_file "$video_id" > /dev/null 2>&1 && video_json_exists "$video_id"
 }
 
 check_UNA()
 {
     local video_id="$1"
 
-    ls *$(valid_video_file_regex "$video_id")* 2>/dev/null | \
+    ls_video_file "$video_id" 2>/dev/null | \
+            ignore_non_video_files | \
             grep -q "$(valid_video_file_regex "$video_id")"
 }
 
@@ -97,8 +154,42 @@ youtube_dl()
 {
     local url="$1"
 
+    if [ -f "$ARCHIVE_FILE" ]; then
+        local archive_arg="--download-archive $ARCHIVE_FILE"
+    else
+        local archive_arg=""
+    fi
+
     "$YOUTUBE_DL" --restrict-filename \
-            -o '%(title)s_%(id)s_U%(upload_date)s.%(ext)s' "$url"
+            -o '%(title)s_%(id)s_U%(upload_date)s.%(ext)s' \
+            --format "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" \
+            --write-info-json \
+            $archive_arg \
+            "$url"
+}
+
+improve_video_json()
+{
+    # The default JSON file created by youtube-dl is compressed into one line.
+    # For easier readability, I prefer to have it split into multiple lines with
+    # indentation.
+    local video_id="$1"
+
+    local video_file="$(ls_original_video_json "$video_id")"
+    local old_video_file="${video_file%.json}.min.json"
+    mv "$video_file" "$old_video_file" || return 1
+
+    #python -c "import json; f = open('$old_video_file', 'r'); j = json.load(f); f.close(); \
+    #           f2 = open('$video_file', 'w'); json.dump(j, f2, indent=4, sort_keys=True); f2.close()"
+    /usr/bin/env python <<EOF
+import json
+with open('$old_video_file', 'r') as f:
+    j = json.load(f)
+j["download_date"] = "$(date +"%Y-%m-%d %H-%M-%S")"
+f2 = open('$video_file', 'w')
+with open('$video_file', 'w') as f:
+    json.dump(j, f, indent=4, sort_keys=True)
+EOF
 }
 
 main()
@@ -135,14 +226,13 @@ main()
 
         if ygrep "$video_id"; then
             echo "The video already exists: "
-            ls -lah *_${video_id}_U2*
+            ls_video_id "$video_id"
             echo "Skipping the download."
             return 0
         fi
     fi
 
     youtube_dl "$URL"
-
     if [ $? -ne 0 ]; then
         echo "An error was encountered, exiting." >&2
         return 1
@@ -150,16 +240,17 @@ main()
 
     if is_single_video "$URL"; then
         if ! check_UNA "$video_id"; then
+            # XXX: The 'UNA' problem can't be fixed by the script anymore, since
+            # the script can only fix the filename and not the JSON file.
             echo "Failed to get the video's upload date (AKA, the UNA problem)." >&2
-            fix_UNA "$video_id"
-            local rc=$?
-            if [ $rc -eq 0 ]; then
-                echo "The upload date in the filename was fixed."
-            else
-                echo "Failed to fix the upload date in the filename." >&2
-            fi
-            ls -lah *_${video_id}_U*
-            return $rc
+            ls_video_file "$video_id"
+            return 1
+        fi
+        echo "Creating an improved JSON file"
+        improve_video_json "$video_id"
+        if [ $? -ne 0 ]; then
+            echo "Failed to create an improved JSON file." >&2
+            return 1
         fi
     fi
 
