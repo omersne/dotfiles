@@ -79,9 +79,3 @@ for symlink in $(find $DOTFILES_DIR/vim/color_schemes/ -maxdepth 1 -type f); do
 
 done
 
-# If a prompt file already exists, assume that it's a custom prompt that was 
-# chosen from $DOTFILES_DIR/<shell>/prompts and don't overwrite it.
-[ ! -e $HOME/.bash_prompt ] && ln -s $DOTFILES_DIR/bash/prompts/statueofliberty $HOME/.bash_prompt
-[ ! -e $HOME/.zsh_prompt ] && ln -s $DOTFILES_DIR/zsh/prompts/centralpark $HOME/.zsh_prompt
-
-
