@@ -1,6 +1,10 @@
 [user]
 	name = Art Vandelay
 	email = art@vandelayindustries.com
-[credential]
-	helper = osxkeychain
-
+	#signingkey = 0xDEADBEEF
+#[credential]
+#	helper = osxkeychain
+#[commit]
+#	gpgsign = true
+#[gpg]
+#        program = gpg2
