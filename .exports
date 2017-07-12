@@ -27,7 +27,8 @@ if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     export PYTHONPATH="$PYTHONPATH:$DOTFILES_DIR/bin/python/lib:$DOTFILES_DIR/bin/local/python/lib"
 fi
 
-if ___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ]); then
+if which gpg >/dev/null 2>&1 && \
+        (___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ])); then
 
     # For fixing the problem with the password prompt in GPG in OSX
     #if [ -z "$GPG_TTY" ]; then
