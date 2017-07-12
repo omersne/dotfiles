@@ -81,7 +81,11 @@ alias spaces-to-underscores="___filenames_spaces_to_underscores"
 
 #alias y="youtube-dl.sh"
 # This is one long line so it will be displayed as one line when I run `which y'.
-alias y="${YOUTUBE_DL:-~/git/youtube-dl/youtube_dl/__main__.py} --restrict-filename -o '%(title)s_%(id)s_U%(upload_date)s.%(ext)s' --format 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' --write-info-json --write-all-thumbnails"
+alias youtube-dl="${YOUTUBE_DL:-~/git/youtube-dl/youtube_dl/__main__.py} --restrict-filename -o '%(title)s_%(id)s_U%(upload_date)s.%(ext)s' --format 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/mp4' --write-info-json --write-all-thumbnails"
+# Use the output of `alias_value', so the value will be the contents of the
+# 'youtube-dl' alias, not the name of the alias.
+alias y="$(alias_value youtube-dl)"
+alias youtube-dl-max-res="$(alias_value youtube-dl | sed "s/\[height<\?=[0-9]\+\]//")"
 
 ##### grep, awk, sed ,tr
 

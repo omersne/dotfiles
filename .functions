@@ -340,6 +340,23 @@ ___tmux_send_to_all_panes()
     done
 }
 
+check_pipestatus_error()
+{
+    if grep -q "[^0 ]" <<< "$pipestatus${PIPESTATUS[@]}"; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+alias_value()
+{
+    local alias_name="$1"
+
+    which "$alias_name" | sed "s/$alias_name: aliased to //"
+    check_pipestatus_error
+}
+
 if ___is_osx; then
 
     # Additional functions that are only sourced if running on Mac OS X.
