@@ -77,12 +77,3 @@
 [user]
 	# Require setting user.name and user.email explicitly for each repo:
 	#useconfigonly = true
-	name = Omer Sne
-	email = omer@omersne.com
-	signingkey = 0x7C03F88D18AA418A
-
-[commit]
-	gpgsign = true
-
-[gpg]
-	program = gpg2
