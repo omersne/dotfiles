@@ -36,7 +36,7 @@ if which gpg >/dev/null 2>&1 && \
     #fi
 
     if [ -e ~/.use-gpg-agent-2.dfcfg ]; then
-        if ! pgrep -q gpg-agent; then
+        if ! pgrep gpg-agent > /dev/null; then
             gpg-agent --daemon
         fi
     else
@@ -48,6 +48,10 @@ if which gpg >/dev/null 2>&1 && \
         else
             eval $(gpg-agent --daemon --write-env-file ~/.gpg-agent-info)
         fi
+    fi
+
+    if [ -S "${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent.ssh" ]; then
+        GPG_SSH_AUTH_SOCK="${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent.ssh"
     fi
 fi
 

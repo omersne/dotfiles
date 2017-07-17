@@ -112,6 +112,11 @@ alias hi="ssh -i"
 alias sshr="ssh -l root"
 alias sshnokey="ssh -o PubkeyAuthentication=no"
 alias scpnokey="scp -o PubkeyAuthentication=no"
+if [ -n "$GPG_SSH_AUTH_SOCK" ]; then
+    alias ssh-yubikey="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK ssh"
+    alias sshy="$(alias_value "ssh-yubikey")"
+    alias hy="$(alias_value "ssh-yubikey")"
+fi
 
 alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
 
