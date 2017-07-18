@@ -116,6 +116,7 @@ if [ -n "$GPG_SSH_AUTH_SOCK" ]; then
     alias ssh-yubikey="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK ssh"
     alias sshy="$(alias_value "ssh-yubikey")"
     alias hy="$(alias_value "ssh-yubikey")"
+    alias ssh-add-yubikey="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK ssh-add"
 fi
 
 alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
