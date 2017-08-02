@@ -79,9 +79,6 @@ alias f.g="find . | grep"
 alias find-files-exec-cmd-no-hidden="___find_files_exec_cmd_no_hidden"
 alias ffnh="find-files-exec-cmd-no-hidden"
 
-alias hex2dec="printf '%d'"
-alias dec2hex="printf '%x'"
-
 alias spaces-to-underscores="___filenames_spaces_to_underscores"
 
 if [ -x "$YOUTUBE_DL" ]; then
