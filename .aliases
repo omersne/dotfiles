@@ -61,6 +61,7 @@ alias tap="___tmux_send_to_all_panes"
 alias less="less -r"
 alias l="less"
 alias lc="noclear | less"
+alias lrs="less -RS"
 
 alias mkx="chmod +x"
 
