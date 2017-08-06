@@ -89,6 +89,9 @@ if [ -x "$YOUTUBE_DL" ]; then
     # 'youtube-dl' alias, not the name of the alias.
     alias y="$(alias_value youtube-dl)"
     alias youtube-dl-max-res="$(alias_value youtube-dl | sed "s/\[height<\?=[0-9]\+\]//")"
+
+    alias youtube-dl-mp3="$YOUTUBE_DL ${YOUTUBE_DL_MP3_OPTIONS[*]}"
+    alias y3="$(alias_value youtube-dl-mp3)"
 fi
 
 ##### grep, awk, sed ,tr

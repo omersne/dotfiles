@@ -37,6 +37,13 @@ if [ -x ~/git/youtube-dl/youtube_dl/__main__.py ]; then
         --write-all-thumbnails
         --no-mtime
     )
+    YOUTUBE_DL_MP3_OPTIONS=(
+        --restrict-filename
+        --output="'%(title)s_%(id)s_U%(upload_date)s.%(ext)s'"
+        --extract-audio
+        --audio-format=mp3
+        --no-mtime
+    )
 fi
 
 ___load_gpg_agent()
