@@ -38,9 +38,9 @@ main()
     fi
 
     if bool "$no_hidden_recipient"; then
-        args+="r $ENCRYPTION_KEY"
+        args+="r $ENCRYPTION_KEY!"
     else
-        args+="R $ENCRYPTION_KEY"
+        args+="R $ENCRYPTION_KEY!"
     fi
 
     if [ -n "$filename" ]; then
