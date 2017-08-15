@@ -195,6 +195,7 @@ alias cla="clear; la"
 alias a="ls -la"
 alias ca="clear; la"
 alias A="clear; la"
+alias ltr="ls -latr"
 
 
 ##### Git
