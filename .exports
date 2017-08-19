@@ -27,22 +27,31 @@ if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     export PYTHONPATH="$PYTHONPATH:$DOTFILES_DIR/bin/python/lib:$DOTFILES_DIR/bin/local/python/lib"
 fi
 
-if [ -x ~/git/youtube-dl/youtube_dl/__main__.py ]; then
+if [ -z "$YOUTUBE_DL" ] && [ -x ~/git/youtube-dl/youtube_dl/__main__.py ]; then
     YOUTUBE_DL=~/git/youtube-dl/youtube_dl/__main__.py
-    YOUTUBE_DL_OPTIONS=(
+fi
+if [ -x "$YOUTUBE_DL" ]; then
+    ___YOUTUBE_DL_COMMON_OPTIONS=(
         --restrict-filename
-        --output="'%(title)s_%(id)s_U%(upload_date)s.%(ext)s'"
+        --output="'%(title)s_%(id)s_D%(epoch)s.%(ext)s'"
+        --no-mtime
+    )
+    YOUTUBE_DL_OPTIONS=(
+        "${___YOUTUBE_DL_COMMON_OPTIONS[@]}"
         --format="'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/mp4'"
         --write-info-json
         --write-all-thumbnails
-        --no-mtime
+    )
+    YOUTUBE_DL_MAX_RES_OPTIONS=(
+        "${___YOUTUBE_DL_COMMON_OPTIONS[@]}"
+        --format="'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
+        --write-info-json
+        --write-all-thumbnails
     )
     YOUTUBE_DL_MP3_OPTIONS=(
-        --restrict-filename
-        --output="'%(title)s_%(id)s_U%(upload_date)s.%(ext)s'"
+        "${___YOUTUBE_DL_COMMON_OPTIONS[@]}"
         --extract-audio
         --audio-format=mp3
-        --no-mtime
     )
 fi
 
