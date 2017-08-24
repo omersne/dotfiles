@@ -52,23 +52,11 @@ endfunction
 :command LL call ColorLongLines()
 
 function! CStuff()
-	" For changing the colors of function names and braces/parenthases in C
-	" TODO: Fix these
-	"syn match FuncBraces "^[{}]$"
-	"syn match FuncName " \w\+("
-	"syn match FuncName ")$"
-	"syn match CalledFunc "\t\w*("
-	"syn match CalledFunc ");"
-
-	syn match Not "![A-Za-z0-9_.]\+"
-
-	" For the '->' operator
-	syn match Not "![A-Za-z0-9_]\+->[A-Za-z0-9_]\+"
-
+	"syn match Not "!\(\(\w\|::\)\+<.*>([^)]\+)\|\(\w\|::\)\+\(([^)]*)\)\?\)\(\(->\|\.\)\(\(\w\|::\)\+<.*>([^)]*)\|\(\w\|::\)\+\(([^)]*)\)\?\)\)*"
+	"syn match Not "!\(\w\|::\)\+\(<.*>\)\?\(([^)]*)\)\?\(\(->\|\.\)\(\w\|::\)\+\(<.*>\)\?\(([^)]*)\)\?\)*"
+	syn match Not "\((\s*\)\@<=!"
 	set noexpandtab
-
 	colorscheme rockefellercenter
-
 	call ColorLongLines()
 endfunction
 

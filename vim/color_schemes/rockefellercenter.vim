@@ -31,7 +31,7 @@ hi LineNr	term=bold			ctermfg=75		guifg=#5fafff
 "hi FuncBraces	term=bold			ctermfg=184		guifg=#5fafff
 "hi CalledFunc	term=bold			ctermfg=75		guifg=green
 hi PreProc	term=bold			ctermfg=184		guifg=yellow
-hi Not		term=bold			ctermfg=201
+hi Not		term=bold			ctermfg=9
 
 
 " Common groups that link to default highlighting.
