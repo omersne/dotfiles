@@ -84,12 +84,12 @@ if [ -x "$YOUTUBE_DL" ]; then
     alias youtube-dl="$YOUTUBE_DL ${YOUTUBE_DL_OPTIONS[*]}"
     # Use the output of `alias_value', so the value will be the contents of the
     # 'youtube-dl' alias, not the name of the alias.
-    alias y="$(alias_value youtube-dl)"
+    alias y="$(___zsh_noglob) $(alias_value youtube-dl)"
 
     alias youtube-dl-max-res="$YOUTUBE_DL ${YOUTUBE_DL_MAX_RES_OPTIONS[*]}"
 
     alias youtube-dl-mp3="$YOUTUBE_DL ${YOUTUBE_DL_MP3_OPTIONS[*]}"
-    alias y3="$(alias_value youtube-dl-mp3)"
+    alias y3="$(___zsh_noglob) $(alias_value youtube-dl-mp3)"
 fi
 
 ##### grep, awk, sed ,tr
