@@ -33,8 +33,8 @@ alias gpg-list-recipients="gpg --no-default-keyring --secret-keyring /dev/null -
 
 # Convert the slash between the size of the key and the key ID to a space so 
 # the key ID can be selected with a double click.
-alias gk="gpg -k | sed '/^[sp]ub / {s|/| |1;}'"
-alias gK="gpg -K | sed '/^[a-z]\{3\}[#>]\{0,1\} / {s|/| |1;}'"
+alias gk="gpg -k --keyid-format 0xlong | sed '/^[sp]ub\s/ {s|/| |1;}'"
+alias gK="gpg -K --keyid-format 0xlong | sed '/^\(ssb\|sec\)[#>]\?\s/ {s|/| |1;}'"
 
 alias ge="gpg -eavr"
 alias geh="gpg -eavR"
