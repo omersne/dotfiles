@@ -2,7 +2,10 @@
 
 precmd()
 {
-    local git_branch="$(git branch 2>/dev/null | sed -ne '/^\*/ {s/^\* *//p;}')"
+    local git_branch=
+    if [ ! -e ./.no_git_prompt.dfcfg ]; then
+        git_branch="$(git branch 2>/dev/null | sed -ne '/^\*/ {s/^\* *//p;}')"
+    fi
 
     if [ -n "$git_branch" ]; then
         git_branch=" %F{226}$git_branch"

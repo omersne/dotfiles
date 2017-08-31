@@ -8,3 +8,4 @@ a.out
 *.swp
 __ignore__*
 bin/local/*
+.no_git_prompt.dfcfg
