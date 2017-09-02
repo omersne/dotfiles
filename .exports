@@ -27,10 +27,7 @@ if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     export PYTHONPATH="$PYTHONPATH:$DOTFILES_DIR/bin/python/lib:$DOTFILES_DIR/bin/local/python/lib"
 fi
 
-if [ -z "$YOUTUBE_DL" ] && [ -x ~/git/youtube-dl/youtube_dl/__main__.py ]; then
-    YOUTUBE_DL=~/git/youtube-dl/youtube_dl/__main__.py
-fi
-if [ -x "$YOUTUBE_DL" ]; then
+if exists_in_path youtube-dl; then
     ___YOUTUBE_DL_COMMON_OPTIONS=(
         --restrict-filename
         --output="'%(title)s_%(id)s_D%(epoch)s.%(ext)s'"

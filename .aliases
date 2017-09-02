@@ -79,17 +79,11 @@ alias ffnh="find-files-exec-cmd-no-hidden"
 
 alias spaces-to-underscores="___filenames_spaces_to_underscores"
 
-if [ -x "$YOUTUBE_DL" ]; then
+if exists_in_path youtube-dl; then
     # XXX: Using '[*]' works in bash and zsh, while '[@]' only works in bash.
-    alias youtube-dl="$YOUTUBE_DL ${YOUTUBE_DL_OPTIONS[*]}"
-    # Use the output of `alias_value', so the value will be the contents of the
-    # 'youtube-dl' alias, not the name of the alias.
-    alias y="$(___zsh_noglob) $(alias_value youtube-dl)"
-
-    alias youtube-dl-max-res="$YOUTUBE_DL ${YOUTUBE_DL_MAX_RES_OPTIONS[*]}"
-
-    alias youtube-dl-mp3="$YOUTUBE_DL ${YOUTUBE_DL_MP3_OPTIONS[*]}"
-    alias y3="$(___zsh_noglob) $(alias_value youtube-dl-mp3)"
+    alias y="$(___zsh_noglob) youtube-dl ${YOUTUBE_DL_OPTIONS[*]}"
+    alias ymax="$(___zsh_noglob) youtube-dl ${YOUTUBE_DL_MAX_RES_OPTIONS[*]}"
+    alias y3="$(___zsh_noglob) youtube-dl ${YOUTUBE_DL_MP3_OPTIONS[*]}"
 fi
 
 ##### grep, awk, sed ,tr
