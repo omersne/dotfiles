@@ -115,8 +115,8 @@ main()
     echo "$DOTFILES_DIR" > $HOME/.dotfiles_dir_path
     [ -n "$GIT_DIR" ] && echo "$GIT_DIR" > ~/.git_dir_path
 
-    #run_func symlink_general_dotfiles || rc=1
-    #run_func symlink_vim_files || rc=1
+    run_func symlink_general_dotfiles || rc=1
+    run_func symlink_vim_files || rc=1
     run_func symlink_gpg_files || rc=1
 
     exit $rc
