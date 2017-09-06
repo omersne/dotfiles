@@ -43,13 +43,16 @@ get_date_from_filename()
 {
     local filename="$1"
 
-    local date_re="\(Jan\(uary\)\?\|Feb\(ruary\)\?\|Mar\(ch\)\?\|Apr\(il\)\?\|May\|Jun\(e\)\?\|Jul\(y\)\?\|Aug\(ust\)\?\|Sep\(tember\)\?\|Oct\(ober\)\?\|Nov\(ember\)\?\|Dec\(ember\)\?\)_[0-9][0-9]_[0-9]\{4\}"
+    local date_re="\(Jan\(uary\)\?\|Feb\(ruary\)\?\|Mar\(ch\)\?\|Apr\(il\)\?\|May\|Jun\(e\)\?\|Jul\(y\)\?\|Aug\(ust\)\?\|Sep\(tember\)\?\|Oct\(ober\)\?\|Nov\(ember\)\?\|Dec\(ember\)\?\)_[0-9]\{1,2\}_[0-9]\{4\}"
     # Some filenames contain the date more than once.
     local match="$(grep -o "$date_re" <<< "$filename" | head -1)"
 
     if [ -n "$match" ]; then
         local month="$(month_name_to_num "${match%%_*}")"
-        local day="$(grep -o "_[0-9][0-9]_" <<< "$match" | tr -d '_')"
+        local day="$(grep -o "_[0-9]\{1,2\}_" <<< "$match" | tr -d '_')"
+        if [ "${#day}" -eq 1 ]; then
+            day="0$day"
+        fi
         local year="${match##*_}"
     fi
 
