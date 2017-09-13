@@ -50,6 +50,11 @@ if exists_in_path youtube-dl; then
         --extract-audio
         --audio-format=mp3
     )
+    if [ -n "$___YOUTUBE_DL_SOCKS_PROXY" ]; then
+        YOUTUBE_DL_PROXY_OPTIONS=(
+            "--proxy='$___YOUTUBE_DL_SOCKS_PROXY'"
+        )
+    fi
 fi
 
 ___load_gpg_agent()

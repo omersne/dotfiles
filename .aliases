@@ -84,6 +84,14 @@ if exists_in_path youtube-dl; then
     alias y="$(___zsh_noglob) youtube-dl ${YOUTUBE_DL_OPTIONS[*]}"
     alias ymax="$(___zsh_noglob) youtube-dl ${YOUTUBE_DL_MAX_RES_OPTIONS[*]}"
     alias y3="$(___zsh_noglob) youtube-dl ${YOUTUBE_DL_MP3_OPTIONS[*]}"
+
+    if [ -n "${YOUTUBE_DL_PROXY_OPTIONS[*]}" ]; then
+        # Use the output of `alias_value', so the value will be the contents of
+        # the alias, not the name of the alias.
+        alias yp="$(alias_value y) ${YOUTUBE_DL_PROXY_OPTIONS[*]}"
+        alias ymaxp="$(alias_value ymax) ${YOUTUBE_DL_PROXY_OPTIONS[*]}"
+        alias y3p="$(alias_value y3) ${YOUTUBE_DL_PROXY_OPTIONS[*]}"
+    fi
 fi
 
 ##### grep, awk, sed ,tr
