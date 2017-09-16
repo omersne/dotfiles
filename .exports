@@ -25,6 +25,9 @@ DOCS=$HOME/Documents/
 if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     export PATH="$PATH:$DOTFILES_DIR/bin:$DOTFILES_DIR/bin/local:$DOTFILES_DIR/bin/local/python"
     export PYTHONPATH="$PYTHONPATH:$DOTFILES_DIR/bin/python/lib:$DOTFILES_DIR/bin/local/python/lib"
+    if ___is_linux && [ -d $DOTFILES_DIR/bin/linux ]; then
+        export PATH="$PATH:$DOTFILES_DIR/bin/linux"
+    fi
 fi
 
 if exists_in_path youtube-dl; then
