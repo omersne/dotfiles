@@ -28,35 +28,8 @@ if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     if ___is_linux && [ -d $DOTFILES_DIR/bin/linux ]; then
         export PATH="$PATH:$DOTFILES_DIR/bin/linux"
     fi
-fi
-
-if exists_in_path youtube-dl; then
-    ___YOUTUBE_DL_COMMON_OPTIONS=(
-        --restrict-filename
-        --output="'%(title)s_%(id)s_D%(epoch)s.%(ext)s'"
-        --no-mtime
-    )
-    YOUTUBE_DL_OPTIONS=(
-        "${___YOUTUBE_DL_COMMON_OPTIONS[@]}"
-        --format="'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/mp4'"
-        --write-info-json
-        --write-all-thumbnails
-    )
-    YOUTUBE_DL_MAX_RES_OPTIONS=(
-        "${___YOUTUBE_DL_COMMON_OPTIONS[@]}"
-        --format="'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
-        --write-info-json
-        --write-all-thumbnails
-    )
-    YOUTUBE_DL_MP3_OPTIONS=(
-        "${___YOUTUBE_DL_COMMON_OPTIONS[@]}"
-        --extract-audio
-        --audio-format=mp3
-    )
-    if [ -n "$___YOUTUBE_DL_SOCKS_PROXY" ]; then
-        YOUTUBE_DL_PROXY_OPTIONS=(
-            "--proxy='$___YOUTUBE_DL_SOCKS_PROXY'"
-        )
+    if exists_in_path youtube-dl; then
+        export PATH="$PATH:$DOTFILES_DIR/bin/youtube-dl"
     fi
 fi
 
