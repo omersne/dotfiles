@@ -77,6 +77,7 @@ endfunction
 :command SS call ShellStuff()
 
 au BufRead,BufNewFile *.h set filetype=c
+au BufRead,BufNewFile *.go set filetype=go
 
 autocmd FileType c,cpp call CStuff()
 
