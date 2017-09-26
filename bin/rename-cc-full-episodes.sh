@@ -97,7 +97,7 @@ main()
         MV="echo [dry run] $MV"
     fi
 
-    local act suffix date
+    local act suffix date new_filename
     for file in "${FILES[@]}"; do
         cd $(dirname "$file") || abort "\`cd' failed."
         file="$(basename "$file")"
@@ -124,7 +124,7 @@ main()
             abort "'$new_filename' Already exists."
         fi
 
-        $MV "$file" "${show}_${date}_act_${act}_${suffix}" || abort "\`mv' failed."
+        $MV "$file" "$new_filename" || abort "\`mv' failed."
     done
 
     exit 0
