@@ -4,7 +4,6 @@ YOUTUBE_DL="${YOUTUBE_DL:-youtube-dl}"
 
 YOUTUBE_DL_COMMON_OPTIONS=(
     --restrict-filename
-    --output="%(title)s_%(id)s_D%(epoch)s.%(ext)s"
     --no-mtime
 )
 YOUTUBE_DL_OPTIONS=(
@@ -24,6 +23,12 @@ YOUTUBE_DL_MP3_OPTIONS=(
     --extract-audio
     --audio-format=mp3
 )
+YOUTUBE_DL_FILENAME_OPTIONS=(
+    --output="%(title)s_%(id)s_D%(epoch)s.%(ext)s"
+)
+YOUTUBE_DL_SHORT_FILENAME_OPTIONS=(
+    --output="%(title).50s_%(id)s_D%(epoch)s.%(ext)s"
+)
 YOUTUBE_DL_PROXY_OPTIONS=(
     --proxy="$YOUTUBE_DL_PROXY"
 )
@@ -40,19 +45,26 @@ main()
             exit 1;;
     esac
 
-    local skip_rest=0 use_proxy=0
+    local skip_rest=0 short_filename=0 use_proxy=0
     while [ $# -gt 0 ]; do
         if [ "$skip_rest" == 1 ]; then
             options=("${options[@]}" "$1")
         else
             case "$1" in
                 --) skip_rest=1;;
+                --short-filename|--short) short_filename=1;;
                 --use-proxy) use_proxy=1;;
                 *) options=("${options[@]}" "$1");;
             esac
         fi
         shift
     done
+
+    if [ "$short_filename" == 1 ]; then
+        options=("${options[@]}" "${YOUTUBE_DL_SHORT_FILENAME_OPTIONS[@]}")
+    else
+        options=("${options[@]}" "${YOUTUBE_DL_FILENAME_OPTIONS[@]}")
+    fi
 
     if [ "$use_proxy" == 1 ]; then
         if [ -z "$YOUTUBE_DL_PROXY" ]; then
