@@ -61,9 +61,9 @@ main()
     done
 
     if [ "$short_filename" == 1 ]; then
-        options=("${options[@]}" "${YOUTUBE_DL_SHORT_FILENAME_OPTIONS[@]}")
+        options=("${YOUTUBE_DL_SHORT_FILENAME_OPTIONS[@]}" "${options[@]}")
     else
-        options=("${options[@]}" "${YOUTUBE_DL_FILENAME_OPTIONS[@]}")
+        options=("${YOUTUBE_DL_FILENAME_OPTIONS[@]}" "${options[@]}")
     fi
 
     if [ "$use_proxy" == 1 ]; then
