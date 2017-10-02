@@ -120,6 +120,9 @@ if [ -n "$GPG_SSH_AUTH_SOCK" ]; then
     alias ssh-add-gpg="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK ssh-add"
 fi
 
+alias r="rsync -vva"
+alias rh="$(alias_value r) -e ssh"
+
 alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
 
 alias ssh-remove-known-hosts-line="___ssh_remove_known_hosts_line"
