@@ -122,7 +122,7 @@ if [ -n "$GPG_SSH_AUTH_SOCK" ]; then
     alias ssh-add-gpg="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK ssh-add"
 fi
 
-alias r="rsync -vva"
+alias r="rsync -vva --progress"
 alias rh="$(alias_value r) -e ssh"
 
 alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
