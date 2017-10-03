@@ -81,9 +81,11 @@ alias spaces-to-underscores="___filenames_spaces_to_underscores"
 
 if exists_in_path youtube-dl.sh; then
     alias y="$(___zsh_noglob) youtube-dl.sh"
+    alias ys="$(___zsh_noglob) youtube-dl.sh --short-filename"
     alias ymax="$(___zsh_noglob) youtube-dl-max-res.sh"
     alias y3="$(___zsh_noglob) youtube-dl-mp3.sh"
     alias yp="$(alias_value y) --use-proxy"
+    alias ysp="$(___zsh_noglob) youtube-dl.sh --use-proxy --short-filename"
     alias ymaxp="$(alias_value ymax) --use-proxy"
     alias y3p="$(alias_value y3) --use-proxy"
 fi
