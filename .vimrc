@@ -10,7 +10,21 @@ set number
 
 "inoremap jj <Esc>
 "inoremap jk <Esc>
-inoremap kj <Esc>
+"inoremap kj <Esc>
+
+function! ToggleEscAliases()
+	if (!exists("s:EscAliasesEnabled")) || (s:EscAliasesEnabled == 0)
+		inoremap kj <Esc>
+		let s:EscAliasesEnabled = 1
+	elseif s:EscAliasesEnabled == 1
+		iunmap kj
+		let s:EscAliasesEnabled = 0
+	endif
+endfunction
+:command ESC call ToggleEscAliases()
+:command E call ToggleEscAliases()
+" Enable the <Esc> aliases by default.
+call ToggleEscAliases()
 
 :command TAB set expandtab!
 
