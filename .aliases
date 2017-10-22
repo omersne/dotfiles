@@ -65,6 +65,7 @@ alias mkx="chmod +x"
 alias v="vi"
 
 alias ma="make"
+alias mb="make -B"
 
 alias uu="sort -u"
 
