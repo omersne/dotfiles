@@ -23,13 +23,17 @@ DOCS=$HOME/Documents/
 #fi
 
 if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
-    export PATH="$PATH:$DOTFILES_DIR/bin:$DOTFILES_DIR/bin/local:$DOTFILES_DIR/bin/local/python"
-    export PYTHONPATH="$PYTHONPATH:$DOTFILES_DIR/bin/python/lib:$DOTFILES_DIR/bin/local/python/lib"
+    append_PATH "$DOTFILES_DIR/bin" "$DOTFILES_DIR/bin/local" "$DOTFILES_DIR/bin/local/python"
+    append_PYTHONPATH "$DOTFILES_DIR/bin/python/lib" "$DOTFILES_DIR/bin/local/python/lib"
+
     if ___is_linux && [ -d $DOTFILES_DIR/bin/linux ]; then
-        export PATH="$PATH:$DOTFILES_DIR/bin/linux"
+        append_PATH "$DOTFILES_DIR/bin/linux"
+    elif ___is_osx && [ -d $DOTFILES_DIR/bin/osx ]; then
+        append_PATH "$DOTFILES_DIR/bin/osx"
     fi
+
     if exists_in_path youtube-dl; then
-        export PATH="$PATH:$DOTFILES_DIR/bin/youtube-dl"
+        append_PATH "$DOTFILES_DIR/bin/youtube-dl"
     fi
 fi
 

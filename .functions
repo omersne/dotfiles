@@ -329,6 +329,22 @@ timestamp_to_date()
     python -c "import datetime; print datetime.datetime.fromtimestamp(float('$timestamp')).strftime('%Y-%m-%d %H:%M:%S')"
 }
 
+append_PATH()
+{
+    local dir
+    for dir in "$@"; do
+        export PATH="${PATH%:}:$dir"
+    done
+}
+
+append_PYTHONPATH()
+{
+    local dir
+    for dir in "$@"; do
+        export PYTHONPATH="${PYTHONPATH%:}:$dir"
+    done
+}
+
 if ___is_osx; then
 
     # Additional functions that are only sourced if running on Mac OS X.
