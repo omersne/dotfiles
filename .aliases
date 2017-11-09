@@ -224,6 +224,7 @@ alias gw="$DOTFILES_DIR/utils/git-show.sh"
 alias gl="git lg"
 alias gg="git grep"
 alias gbl="git blame"
+alias gap="git apply"
 
 alias git-clear-cred-cache="git credential-cache exit"
 alias git-cred-cache-timeout-0="git config credential.helper 'cache --timeout=0'"
