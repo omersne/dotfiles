@@ -121,6 +121,7 @@ if [ -n "$GPG_SSH_AUTH_SOCK" ]; then
     alias sshg="$(alias_value "ssh-gpg")"
     alias hg="$(alias_value "ssh-gpg")"
     alias ssh-add-gpg="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK ssh-add"
+    alias scpg="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK scp"
 fi
 
 alias r="rsync -vva --progress"
