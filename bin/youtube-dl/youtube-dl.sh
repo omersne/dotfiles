@@ -8,13 +8,13 @@ YOUTUBE_DL_COMMON_OPTIONS=(
 )
 YOUTUBE_DL_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
-    --format="bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/mp4"
+    --format="bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/mp4"
     --write-info-json
     --write-all-thumbnails
 )
 YOUTUBE_DL_MAX_RES_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
-    --format="bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"
+    --format="bestvideo[ext=mp4]+bestaudio[ext=m4a]"
     --write-info-json
     --write-all-thumbnails
 )
