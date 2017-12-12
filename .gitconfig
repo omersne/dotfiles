@@ -34,6 +34,7 @@
 	signingkey = config user.signingkey
 	skey = config user.signingkey
 	w = show
+	pull-and-verify-sigs = "!f() { last=$(git rev-list HEAD^..); git pull || return 1; for c in $(git rev-list $last..HEAD); do git verify-commit $c > /dev/null 2>&1 || { echo \"\n\n-----\nBAD SIGNATURE IN COMMIT $c\n-----\nTo return to safety, run this: \\`git reset --hard $last'\" >&2; return 99; }; done; }; f"
 
 [branch]
 	#autosetuprebase = always
