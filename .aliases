@@ -88,6 +88,7 @@ if exists_in_path youtube-dl.sh; then
     alias yp="$(alias_value y) --use-proxy"
     alias ysp="$(___zsh_noglob) youtube-dl.sh --use-proxy --short-filename"
     alias ymaxp="$(alias_value ymax) --use-proxy"
+    alias ycc="$(___zsh_noglob) youtube-dl-cc.sh"
     alias y3p="$(alias_value y3) --use-proxy"
 fi
 

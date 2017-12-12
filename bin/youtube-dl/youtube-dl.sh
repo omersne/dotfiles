@@ -6,8 +6,13 @@ YOUTUBE_DL_COMMON_OPTIONS=(
     --restrict-filename
     --no-mtime
 )
+YOUTUBE_DL_EXTRA_VIDEO_OPTIONS=(
+    --write-info-json
+    --write-all-thumbnails
+)
 YOUTUBE_DL_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
+    "${YOUTUBE_DL_EXTRA_VIDEO_OPTIONS[@]}"
     # Preferred formats:
     # 1. 1080p, best video + best audio (only available with separate video and audio).
     # 2. >30fps (any resolution), best video + best audio (only available with separate video and audio).
@@ -15,14 +20,16 @@ YOUTUBE_DL_OPTIONS=(
     # 4. <720p, best video + best audio (480p and some other lower resolutions are only available with separate video and audio).
     # 5. When all else fails, take whatever youtube-dl thinks is the best (mainly for non-YT websites).
     --format="bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[fps>30][ext=mp4]+bestaudio[ext=m4a]/best[height=720][ext=mp4]/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best"
-    --write-info-json
-    --write-all-thumbnails
 )
 YOUTUBE_DL_MAX_RES_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
+    "${YOUTUBE_DL_EXTRA_VIDEO_OPTIONS[@]}"
     --format="bestvideo[ext=mp4]+bestaudio[ext=m4a]"
-    --write-info-json
-    --write-all-thumbnails
+)
+YOUTUBE_DL_CC_OPTIONS=(
+    "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
+    "${YOUTUBE_DL_EXTRA_VIDEO_OPTIONS[@]}"
+    --format="mp4"
 )
 YOUTUBE_DL_MP3_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
@@ -45,6 +52,7 @@ main()
     case "${0##*/}" in
         youtube-dl.sh) options=("${YOUTUBE_DL_OPTIONS[@]}");;
         youtube-dl-max-res.sh) options=("${YOUTUBE_DL_MAX_RES_OPTIONS[@]}");;
+        youtube-dl-cc.sh) options=("${YOUTUBE_DL_CC_OPTIONS[@]}");;
         youtube-dl-mp3.sh) options=("${YOUTUBE_DL_MP3_OPTIONS[@]}");;
         *)
             echo "Unrecognized script name: \`${0##*/}'." >&2
