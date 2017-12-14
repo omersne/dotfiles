@@ -37,6 +37,8 @@ if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     fi
 fi
 
+RSYNC_PARTIAL_DIR="${RSYNC_PARTIAL_DIR:-.___rsync_partial01}"
+
 ___load_gpg_agent()
 {
     if which gpg >/dev/null 2>&1 && \

@@ -125,8 +125,7 @@ if [ -n "$GPG_SSH_AUTH_SOCK" ]; then
     alias scpg="SSH_AUTH_SOCK=$GPG_SSH_AUTH_SOCK scp"
 fi
 
-alias r="rsync -vva --progress --human-readable"
-alias rh="$(alias_value r) -e ssh"
+alias r="rsync -vvae ssh --progress --human-readable --partial-dir='$RSYNC_PARTIAL_DIR'"
 
 alias convert-ssh-key-to-pem="ssh-keygen -e -m PKCS8 -f"
 
