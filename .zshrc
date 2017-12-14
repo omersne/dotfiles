@@ -14,6 +14,12 @@ setopt complete_in_word
 setopt noautomenu
 setopt nomenucomplete
 
+for func in compinit bashcompinit; do
+    if ! type $func > /dev/null 2>&1; then
+        autoload -U +X $func && $func
+    fi
+done
+unset func
 
 for file in .{zshrc.local,functions,colors,exports,aliases,zsh_prompt,dotfiles_overriders}; do
     if [ -n "$DOTFILES_DIR" ] && [ -r $DOTFILES_DIR/$file ]; then
