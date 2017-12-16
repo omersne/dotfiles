@@ -283,10 +283,10 @@ if ___is_osx; then
     fi
     alias pb="pbcopy"
 
-    alias wifi-off="set_wifi_state disable"
-    alias wf="set_wifi_state disable"
-    alias wifi-on="set_wifi_state enable"
-    alias wn="set_wifi_state enable"
+    alias wifi-off="set-wifi-state.sh off"
+    alias wf="$(alias_value wifi-off)"
+    alias wifi-on="set-wifi-state.sh on"
+    alias wn="$(alias_value wifi-on)"
 
 elif ___is_linux; then
 
