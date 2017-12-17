@@ -327,6 +327,11 @@ timestamp_to_date()
     python -c "import datetime; print datetime.datetime.fromtimestamp(float('$timestamp')).strftime('%Y-%m-%d %H:%M:%S')"
 }
 
+url_decode()
+{
+    python -c "import urllib; print urllib.unquote('$1').decode('utf8')"
+}
+
 append_PATH()
 {
     local dir
