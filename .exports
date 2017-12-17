@@ -1,7 +1,11 @@
 #!/bin/bash
 
-export DOTFILES_DIR
-DFD="$DOTFILES_DIR"
+if [ -r $HOME/.dotfiles_dir_path ]; then
+    export DOTFILES_DIR="$(cat $HOME/.dotfiles_dir_path)"
+    DFD="$DOTFILES_DIR"
+fi
+
+[ -r $HOME/.git_dir_path ] && GIT_DIR="$(cat $HOME/.git_dir_path)"
 
 umask 077
 export EDITOR="vi"

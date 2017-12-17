@@ -4,10 +4,6 @@ if [ -e ~/.no_load_zshrc ]; then
     return 1
 fi
 
-[ -r $HOME/.dotfiles_dir_path ] && DOTFILES_DIR="$(cat $HOME/.dotfiles_dir_path)"
-
-[ -r $HOME/.git_dir_path ] && GIT_DIR="$(cat $HOME/.git_dir_path)"
-
 setopt prompt_subst
 setopt no_beep
 setopt complete_in_word
@@ -21,12 +17,8 @@ for func in compinit bashcompinit; do
 done
 unset func
 
-for file in .{zshrc.local,functions,colors,exports,aliases,zsh_prompt,dotfiles_overriders}; do
-    if [ -n "$DOTFILES_DIR" ] && [ -r $DOTFILES_DIR/$file ]; then
-        . $DOTFILES_DIR/$file
-    else
-        [ -r ~/$file ] && . ~/$file
-    fi
+for file in .{functions,colors,exports,aliases,zsh_prompt,zshrc.local}; do
+    [ -r ~/$file ] && . ~/$file
 done
 unset file
 
