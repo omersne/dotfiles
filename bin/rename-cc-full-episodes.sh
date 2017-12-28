@@ -111,7 +111,7 @@ main()
             fi
         fi
 
-        act="$(sed -ne "s/.*_[Aa]ct_\([0-9]\)_.*/\1/p" <<< "$file")"
+        act="$(sed -ne "s/.*_[Aa]ct_\([0-9]\{1,2\}\)_.*/\1/p" <<< "$file")"
         if [ -z "$act" ]; then
             abort "$file: Failed to get the act number from the filename."
         fi
