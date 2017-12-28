@@ -1,17 +1,14 @@
-
-set modeline
-set modelines=5
-
 syntax on
+set nocompatible
+set modelines=5
+set number
+set ignorecase
+set smartcase
 
+" Default colorscheme. Will be overridden for some file types.
 colorscheme timessquare
 
-set number
-
-"inoremap jj <Esc>
-"inoremap jk <Esc>
-"inoremap kj <Esc>
-
+" Sometimes I need the 'kj' mapping to be disabled when I'm pasting text into Vim.
 function! ToggleEscAliases()
 	if (!exists("s:EscAliasesEnabled")) || (s:EscAliasesEnabled == 0)
 		inoremap kj <Esc>
@@ -26,10 +23,10 @@ endfunction
 " Enable the <Esc> aliases by default.
 call ToggleEscAliases()
 
-:command TAB set expandtab!
-
+" For getting to the start of the line more easily.
 nnoremap B ^
 
+" For getting to the end of the line more easily.
 nnoremap E $
 nnoremap e $
 
@@ -37,18 +34,20 @@ nnoremap e $
 :command NU set number!
 :command NN set number!
 
+" Set Vim to use spaces instead of tabs.
 :command FS set tabstop=8 shiftwidth=4 expandtab smarttab
 :command SPACES set tabstop=8 shiftwidth=4 expandtab smarttab
 
+" Set Vim to use tabs instead of spaces.
 :command ET set tabstop=8 shiftwidth=8 noexpandtab nosmarttab
 :command TABS set tabstop=8 shiftwidth=8 noexpandtab nosmarttab
 
+" Reload this file.
 :command RL source ~/.vimrc
 
 " Map ; to :
 nnoremap ; :
 vnoremap ; :
-
 
 " Highlight any text that is beyond the 81st column
 function! ColorLongLines()
@@ -62,40 +61,19 @@ function! ColorLongLines()
 		let s:LongLinesColored = 0
 	endif
 endfunction
-
 :command LL call ColorLongLines()
+" Enable colored long lines by default.
+call ColorLongLines()
 
-function! CStuff()
-	"syn match Not "!\(\(\w\|::\)\+<.*>([^)]\+)\|\(\w\|::\)\+\(([^)]*)\)\?\)\(\(->\|\.\)\(\(\w\|::\)\+<.*>([^)]*)\|\(\w\|::\)\+\(([^)]*)\)\?\)\)*"
-	"syn match Not "!\(\w\|::\)\+\(<.*>\)\?\(([^)]*)\)\?\(\(->\|\.\)\(\w\|::\)\+\(<.*>\)\?\(([^)]*)\)\?\)*"
-	syn match Not "\((\s*\)\@<=!"
-	set noexpandtab
-	colorscheme rockefellercenter
-	call ColorLongLines()
-endfunction
+" Some Mac OS versions don't recognize these file types by default.
+au BufNewFile,BufRead *.c,*.h setlocal filetype=c
+au BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
+au BufNewfile,BufRead *.go setlocal filetype=go
 
-:command CS call CStuff()
+au Filetype c,cpp,go setlocal noexpandtab
+au FileType c,cpp,go colorscheme rockefellercenter
 
-function! ShellStuff()
-	set tabstop=8
-	set softtabstop=0
-	set expandtab
-	set shiftwidth=4
-	set smarttab
-
-	colorscheme timessquare
-
-	call ColorLongLines()
-endfunction
-
-:command SS call ShellStuff()
-
-au BufRead,BufNewFile *.h set filetype=c
-au BufRead,BufNewFile *.go set filetype=go
-
-autocmd FileType c,cpp call CStuff()
-
-autocmd FileType python,bash,sh,zsh call ShellStuff()
+au FileType python,bash,sh,zsh setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
