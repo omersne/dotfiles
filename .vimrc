@@ -4,6 +4,7 @@ set modelines=5
 set number
 set ignorecase
 set smartcase
+set ruler
 
 " Default colorscheme. Will be overridden for some file types.
 colorscheme timessquare
