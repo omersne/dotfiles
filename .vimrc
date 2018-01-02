@@ -71,7 +71,8 @@ au BufNewFile,BufRead *.c,*.h setlocal filetype=c
 au BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
 au BufNewfile,BufRead *.go setlocal filetype=go
 
-au Filetype c,cpp,go setlocal noexpandtab
+au Filetype c,go setlocal noexpandtab
+au FileType cpp setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 au FileType c,cpp,go colorscheme rockefellercenter
 
 au FileType python,bash,sh,zsh setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
