@@ -277,11 +277,9 @@ if ___is_osx; then
     alias ls='gls -h --color=auto --time-style="+%Y-%m-%d %H:%M:%S"'
     
     # for OSX versions before El Capitan
-    alias _flush-dns-cache='sudo discoveryutil mdnsflushcache; \
-            sudo discoveryutil udnsflushcaches'
+    alias _flush-dns-cache="sudo discoveryutil mdnsflushcache; sudo discoveryutil udnsflushcaches"
 
-    alias flush-dns-cache-el-capitan='sudo dscacheutil -flushcache; \
-            sudo killall -HUP mDNSResponder'
+    alias flush-dns-cache-el-capitan="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
     if which rstrip-newline > /dev/null 2>&1; then
         alias pbcopy="rstrip-newline | pbcopy"
