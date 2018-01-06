@@ -14,12 +14,14 @@ YOUTUBE_DL_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
     "${YOUTUBE_DL_EXTRA_VIDEO_OPTIONS[@]}"
     # Preferred formats:
-    # 1. 1080p, best video + best audio (only available with separate video and audio).
-    # 2. >30fps (any resolution), best video + best audio (only available with separate video and audio).
-    # 3. 720p, pre-joined, because it is available.
-    # 4. <720p, best video + best audio (480p and some other lower resolutions are only available with separate video and audio).
-    # 5. When all else fails, take whatever youtube-dl thinks is the best (mainly for non-YT websites).
-    --format="bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[fps>30][ext=mp4]+bestaudio[ext=m4a]/best[height=720][ext=mp4]/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best"
+    # 1. 1080p, combined, mp4 (for some non-youtube sites).
+    # 2. 1080p, combined, any format (in case mp4 is not available).
+    # 3. 1080p, best video + best audio (only available with separate video and audio on youtube).
+    # 4. >30fps (any resolution), best video + best audio (only available with separate video and audio on youtube).
+    # 5. 720p, pre-joined, because it is available on youtube.
+    # 6. <720p, best video + best audio (480p and some other lower resolutions are only available with separate video and audio on youtube).
+    # 7. When all else fails, take whatever youtube-dl thinks is the best (mainly for non-YT websites).
+    --format="best[height=1080][ext=mp4]/best[height=1080]/bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[fps>30][ext=mp4]+bestaudio[ext=m4a]/best[height=720][ext=mp4]/bestvideo[ext=mp4]+bestaudio[ext=m4a]/best"
 )
 YOUTUBE_DL_MAX_RES_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
