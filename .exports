@@ -71,6 +71,9 @@ ___load_gpg_agent()
         if [ -S "${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent.ssh" ]; then
             GPG_SSH_AUTH_SOCK="${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent.ssh"
         fi
+        if [ -S "$GPG_SSH_AUTH_SOCK" ] && [ -e ~/.use_gpg_ssh_auth_sock.dfcfg ]; then
+            export SSH_AUTH_SOCK="$GPG_SSH_AUTH_SOCK"
+        fi
     fi
 }
 ___load_gpg_agent
