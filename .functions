@@ -51,11 +51,6 @@ ___is_tmux_session()
 
 ##### Other stuff
 
-___ls_date_modified()
-{
-    ls -la --time-style=+"%Y-%m-%d %H:%M:%S" | awk -F " " '{print $6 " " $7 " | " $8}'
-}
-
 ___git_status_all()
 {
     local dir

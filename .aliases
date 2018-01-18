@@ -193,19 +193,10 @@ alias mkcd="mkdir_cd"
 
 ##### ls
 
-alias ld="___ls_date_modified"
-alias cld="clear; ___ls_date_modified"
-
-alias 1a="ls -1a"
-alias c1a="clear; 1a"
-
-alias la="ls -la"
-alias cla="clear; la"
-alias a="ls -la"
-alias ca="clear; la"
-alias A="clear; la"
-alias ltr="ls -latr"
-alias lad="ls -lahd */"
+alias la="ls -lah"
+alias cla="clear; $(alias_value la)"
+alias ltr="$(alias_value la) -tr"
+alias lad="$(alias_value la) -d */"
 
 
 ##### Git
@@ -277,7 +268,7 @@ if ___is_osx; then
     alias sed='gsed'
     
     # requires GNU coreutils on OSX [brew install coreutils]
-    alias ls='gls -h --color=auto --time-style="+%Y-%m-%d %H:%M:%S"'
+    alias ls='gls --color=auto --time-style="+%Y-%m-%d %H:%M:%S"'
     
     # for OSX versions before El Capitan
     alias _flush-dns-cache="sudo discoveryutil mdnsflushcache; sudo discoveryutil udnsflushcaches"
@@ -301,7 +292,7 @@ elif ___is_linux; then
     #alias restart-nscd='sudo /etc/init.d/nscd restart'
     alias nscd-restart="sudo /usr/sbin/service nscd restart"
 
-    alias ls='ls -h --color=auto --time-style="+%Y-%m-%d %H:%M:%S"'
+    alias ls='ls --color=auto --time-style="+%Y-%m-%d %H:%M:%S"'
 
     alias remap-ctrl="$DOTFILES_DIR/linux/remap_ctrl.sh"
 
