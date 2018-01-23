@@ -185,6 +185,9 @@ if [ -n "$GIT_DIR" ]; then
     alias cdg="cd $GIT_DIR"
     alias cdgc="clear; cd $GIT_DIR"
 fi
+if [ -n "$GOPATH" ]; then
+    alias cdgo="cd $GOPATH/src/github.com/omersne/"
+fi
 
 alias md="mkdir"
 alias mk="mkdir"
