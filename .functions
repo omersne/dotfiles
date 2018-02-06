@@ -461,3 +461,14 @@ elif ___is_linux; then
 
 fi
 
+if ___is_zsh; then
+    newest_file()
+    {
+        local dir="${1:-}"
+        if [ "${#dir}" -gt 0 ] && ! endswith "$dir" "/"; then
+            dir="$dir/"
+        fi
+
+        \ls -tr -- "$dir"*(-^/) | tail -1
+    }
+fi
