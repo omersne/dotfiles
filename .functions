@@ -327,6 +327,17 @@ url_decode()
     python -c "import urllib; print urllib.unquote('$1').decode('utf8')"
 }
 
+mktempcd()
+{
+    local prefix="${1:-/tmp/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}"
+    local dir="$(mktemp -d "$prefix")"
+    if [ $? -ne 0 ] || [ -z "$dir" ]; then
+        return 1
+    fi
+
+    cd "$dir"
+}
+
 append_PATH()
 {
     local dir
