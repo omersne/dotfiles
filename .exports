@@ -55,7 +55,7 @@ ___load_gpg_agent()
 
         if [ -e ~/.use-gpg-agent-2.dfcfg ]; then
             if ! pgrep gpg-agent > /dev/null; then
-                gpg-agent --daemon 2>>~/.gpg-agent.log
+                gpg-agent --daemon >> ~/.gpg-agent.log 2>&1
             fi
         else
             # From https://blog.chendry.org/2015/03/13/starting-gpg-agent-in-osx.html
