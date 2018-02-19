@@ -70,12 +70,13 @@ call ColorLongLines()
 au BufNewFile,BufRead *.c,*.h setlocal filetype=c
 au BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
 au BufNewfile,BufRead *.go setlocal filetype=go
+au BufNewfile,BufRead *.awk,*.gawk setlocal filetype=awk
 
 au Filetype c,go setlocal noexpandtab
 au FileType cpp setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 au FileType c,cpp,go colorscheme rockefellercenter
 
-au FileType python,bash,sh,zsh setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+au FileType python,bash,sh,zsh,awk setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
