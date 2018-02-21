@@ -41,7 +41,7 @@ alias geh="gpg -eavR"
 
 if ___is_osx; then
     # https://gpgtools.tenderapp.com/discussions/problems/30646-gpg-agent-gets-stuck-when-used-with-smartcards-in-ssh-agent-mode
-    alias restart-gpg-agent="pgrep gpg-agent | xargs -L 1 kill -9 && ___load_gpg_agent && gpg < $DOTFILES_DIR/.gnupg/hello.txt.asc 2>/dev/null"
+    alias restart-gpg-agent="pgrep gpg-agent | xargs -L 1 kill -9 && ___load_gpg_agent && gpg -q < $DOTFILES_DIR/.gnupg/hello.txt.asc"
 fi
 
 alias py="python"
