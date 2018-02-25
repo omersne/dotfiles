@@ -48,6 +48,22 @@ ___is_tmux_session()
     return 1
 }
 
+___is_docker()
+{
+    [ -e /.dockerenv ]
+}
+
+___is_py_virtualenv()
+{
+    [ "$PIPENV_ACTIVE" = 1 ]
+}
+
+___is_virtual_environment()
+{
+    ___is_docker || \
+            ___is_py_virtualenv || \
+            [ -n "$VIRTUAL_ENV" ]
+}
 
 ##### Other stuff
 

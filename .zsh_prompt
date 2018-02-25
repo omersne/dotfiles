@@ -25,7 +25,22 @@ precmd()
         local bracket_color="%F{2}"
     fi
 
-    RPROMPT="${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}] %(?.%F{2}.%F{9})[%?]%f"
+    local env_indicator=
+    if ___is_ssh_session; then
+        env_indicator+="%F{226}S"
+    fi
+    if ___is_docker; then
+        env_indicator+="%F{6}D"
+    fi
+    if ___is_py_virtualenv; then
+        env_indicator+="%F{9}P"
+    fi
+
+    if [ -n "$env_indicator" ]; then
+        env_indicator=" %F{7}{${env_indicator}%F{7}}"
+    fi
+
+    RPROMPT="${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}] %(?.%F{2}.%F{9})[%?]${env_indicator}%f"
     PROMPT="%(!.%F{9}.%F{14})%n%F{63}@%m%F{226}->%f "
 }
 
