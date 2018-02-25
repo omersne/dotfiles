@@ -23,7 +23,7 @@ ___is_zsh()
 ___is_bash()
 {
     [ "$BASH" = "$(which bash)" ] && return 0
-    retun 1
+    return 1
 }
 
 ___is_ssh_session()
