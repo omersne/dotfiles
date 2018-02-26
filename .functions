@@ -236,6 +236,13 @@ date_for_filename()
     date +"%Y-%m-%d_%H-%M-%S"
 }
 
+mod_date_for_filename()
+{
+    local filename="$1"
+
+    python -c "import os, datetime; print(datetime.datetime.fromtimestamp(os.lstat('$filename').st_mtime).strftime('%Y-%m-%d_%H-%M-%S'))"
+}
+
 ___ssh_remove_known_hosts_line()
 {
     local line_num="$1"
