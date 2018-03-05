@@ -69,12 +69,13 @@ call ColorLongLines()
 " Some Mac OS versions don't recognize these file types by default.
 au BufNewFile,BufRead *.c,*.h setlocal filetype=c
 au BufNewFile,BufRead *.cpp,*.hpp setlocal filetype=cpp
+au BufNewFile,BufRead *.ino setlocal filetype=arduino
 au BufNewfile,BufRead *.go setlocal filetype=go
 au BufNewfile,BufRead *.awk,*.gawk setlocal filetype=awk
 
 au Filetype c,go setlocal noexpandtab
-au FileType cpp setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
-au FileType c,cpp,go colorscheme rockefellercenter
+au FileType cpp,arduino setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+au FileType c,cpp,arduino,go colorscheme rockefellercenter
 
 au FileType python,bash,sh,zsh,awk setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
