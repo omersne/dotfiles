@@ -55,10 +55,7 @@ alias tls="tmux ls"
 alias tmux-all-panes="___tmux_send_to_all_panes"
 alias tap="___tmux_send_to_all_panes"
 
-alias less="less -r"
 alias l="less"
-alias lc="noclear | less"
-alias lrs="less -RS"
 
 # Trim the ends of long lines so they won't wrap around. The '$' is escaped so
 # $COLUMNS will be expanded dynamically for compatibility with changing terminal
