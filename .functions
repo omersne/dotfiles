@@ -361,6 +361,17 @@ mktempcd()
     cd "$dir"
 }
 
+create_rsync_script()
+{
+    local script="$DOTFILES_DIR/bin/rsync.sh"
+    {
+    echo '#!/bin/bash'
+    echo
+    echo "$(alias_value r) \"\$@\""
+    } > "$script"
+    chmod +x "$script"
+}
+
 append_PATH()
 {
     local dir
