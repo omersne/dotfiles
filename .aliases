@@ -65,6 +65,8 @@ alias tl="cut -c1-\$COLUMNS"
 alias mkx="chmod +x"
 
 alias v="vi"
+# Open a file in readonly mode, even if a swapfile exists.
+alias vir="vi -M -n"
 
 alias ma="make"
 alias mb="make -B"
