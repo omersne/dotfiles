@@ -15,7 +15,7 @@ precmd()
 
         if grep -q $'\t' <<< "$git_status"; then
             local bracket_color="%F{9}"
-        elif ! grep -q "Your branch is up-to-date with " <<< "$git_status"; then
+        elif ! grep -q "Your branch is up.to.date with " <<< "$git_status"; then
             local bracket_color="%F{226}"
         else
             local bracket_color="%F{33}"
