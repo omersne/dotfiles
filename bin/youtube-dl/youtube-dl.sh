@@ -26,7 +26,7 @@ YOUTUBE_DL_OPTIONS=(
 YOUTUBE_DL_MAX_RES_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
     "${YOUTUBE_DL_EXTRA_VIDEO_OPTIONS[@]}"
-    --format="bestvideo[ext=mp4]+bestaudio[ext=m4a]"
+    --format="bestvideo[height=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio"
 )
 YOUTUBE_DL_CC_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
