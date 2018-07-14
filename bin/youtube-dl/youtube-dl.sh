@@ -1,5 +1,18 @@
 #!/bin/bash
 
+##############################################################################
+# youtube-dl.sh
+# ------------------------------------------
+# Run `youtube-dl' with my custom config.
+#
+# Usage:
+#       youtube-dl.sh <URL>
+#
+# :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
+# :date: 2017-06-28
+# :version: 0.0.11
+##############################################################################
+
 YOUTUBE_DL="${YOUTUBE_DL:-youtube-dl}"
 
 YOUTUBE_DL_COMMON_OPTIONS=(
@@ -9,6 +22,11 @@ YOUTUBE_DL_COMMON_OPTIONS=(
 YOUTUBE_DL_EXTRA_VIDEO_OPTIONS=(
     --write-info-json
     --write-all-thumbnails
+    --write-annotations
+    --write-sub
+    --all-subs
+    --convert-subs=srt
+    --prefer-ffmpeg
 )
 YOUTUBE_DL_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
