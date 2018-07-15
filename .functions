@@ -361,6 +361,27 @@ mktempcd()
     cd "$dir"
 }
 
+is_case_insensitive_filesystem()
+{
+    local name="fortytwo"
+
+    local tmp_dir="$(mktemp -d /tmp/XXXXXXXXXXXXXXXX)"
+    touch "$tmp_dir/$name"
+    touch "$tmp_dir/$(toupper <<< "$name")"
+
+    local file_count="$(ls "$tmp_dir" | wc -l | sed "s/ //g")"
+    rm -r "$tmp_dir"
+
+    case "$file_count" in
+        1) return 0;;
+        2) return 1;;
+        *)
+            echo_error "Invalid file count: $file_count"
+            return 99
+            ;;
+    esac
+}
+
 create_rsync_script()
 {
     local script="$DOTFILES_DIR/bin/rsync.sh"
