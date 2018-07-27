@@ -4,7 +4,7 @@
 # rename-youtube-dl-files.sh
 # ------------------------------------------
 # Renames a media file downloaded with `youtube-dl' and associated files
-# (info JSON, thumbnail image).
+# (info JSON, annotations, thumbnail image, subtitles).
 #
 # Usage:
 #       rename-youtube-dl-files.sh <source filename> <destination filename>
@@ -14,10 +14,10 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-09-08
-# :version: 0.0.1
+# :version: 0.0.2
 ##############################################################################
 
-EXTENSIONS=( info.json jpg mp4 mp3 )
+EXTENSIONS=( info.json annotations.xml jpg mp4 mp3 en.srt )
 MV="mv"
 
 endswith()
