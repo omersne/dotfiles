@@ -393,6 +393,28 @@ create_rsync_script()
     chmod +x "$script"
 }
 
+edit_which()
+{
+    local cmd="$1"
+
+    # XXX: In zsh on Mac OS X you can't get the output of command substitution
+    # and the exit status of the command.
+    #local full_path="$(which "$cmd")"
+    #local rc=$?
+    #if [ $rc -ne 0 ]; then
+    #    return $rc
+    #fi
+    if ! which "$cmd" > /dev/null; then
+        # To make things worse, in zsh on Mac OS X the '* not found' error
+        # message is sent to stdout, not stderr, so I need this separate
+        # message as a backup because I can't count on the one from `which'.
+        echo_error "'$cmd' not found in \$PATH."
+        return 1
+    fi
+
+    "$EDITOR" "$(which "$cmd")"
+}
+
 append_PATH()
 {
     local dir

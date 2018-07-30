@@ -68,6 +68,7 @@ alias mkx="chmod +x"
 alias v="vi"
 # Open a file in readonly mode, even if a swapfile exists.
 alias vir="vi -M -n"
+alias viw="edit_which"
 
 alias ma="make"
 alias mb="make -B"
