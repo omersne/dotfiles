@@ -8,3 +8,4 @@ a.out
 *.swp
 __ignore__*
 .no_git_prompt.dfcfg
+___FILE_INFO_01.json
