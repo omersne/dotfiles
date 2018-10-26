@@ -118,6 +118,16 @@ run_quiet()
     "$@" >/dev/null 2>&1
 }
 
+run_quiet_stdout()
+{
+    "$@" > /dev/null
+}
+
+run_quiet_stderr()
+{
+    "$@" 2>/dev/null
+}
+
 toupper()
 {
     tr '[:lower:]' '[:upper:]'
