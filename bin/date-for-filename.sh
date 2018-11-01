@@ -3,7 +3,7 @@
 ##############################################################################
 # date-for-filename.sh
 # ------------------------------------------
-# Print the current date in an ideal format for filenames: YYYY-MM-DD_hh:mm:ss
+# Print the current date in an ideal format for filenames: YYYY-MM-DD_hh-mm-ss
 #
 # Usage:
 #       date-for-filename.sh
