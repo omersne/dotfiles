@@ -10,7 +10,7 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-06-28
-# :version: 0.0.11
+# :version: 0.0.12
 ##############################################################################
 
 YOUTUBE_DL="${YOUTUBE_DL:-youtube-dl}"
@@ -46,11 +46,6 @@ YOUTUBE_DL_MAX_RES_OPTIONS=(
     "${YOUTUBE_DL_EXTRA_VIDEO_OPTIONS[@]}"
     --format="bestvideo[height=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio"
 )
-YOUTUBE_DL_CC_OPTIONS=(
-    "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
-    "${YOUTUBE_DL_EXTRA_VIDEO_OPTIONS[@]}"
-    --format="mp4"
-)
 YOUTUBE_DL_MP3_OPTIONS=(
     "${YOUTUBE_DL_COMMON_OPTIONS[@]}"
     --extract-audio
@@ -72,7 +67,6 @@ main()
     case "${0##*/}" in
         youtube-dl.sh) options=("${YOUTUBE_DL_OPTIONS[@]}");;
         youtube-dl-max-res.sh) options=("${YOUTUBE_DL_MAX_RES_OPTIONS[@]}");;
-        youtube-dl-cc.sh) options=("${YOUTUBE_DL_CC_OPTIONS[@]}");;
         youtube-dl-mp3.sh) options=("${YOUTUBE_DL_MP3_OPTIONS[@]}");;
         *)
             echo "Unrecognized script name: \`${0##*/}'." >&2
