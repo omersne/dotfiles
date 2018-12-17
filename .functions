@@ -55,6 +55,11 @@ ___is_docker()
 
 ___is_py_virtualenv()
 {
+    [ -n "$VIRTUAL_ENV" ]
+}
+
+___is_pipenv()
+{
     [ "$PIPENV_ACTIVE" = 1 ]
 }
 
@@ -358,6 +363,11 @@ timestamp_to_date()
 url_decode()
 {
     python -c "import urllib; print urllib.unquote('$1').decode('utf8')"
+}
+
+_python_virtualenv_project_name()
+{
+    basename "$VIRTUAL_ENV"
 }
 
 mktempcd()

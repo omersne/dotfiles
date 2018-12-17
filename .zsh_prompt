@@ -32,8 +32,11 @@ precmd()
     if ___is_docker; then
         env_indicator+="%F{6}D"
     fi
-    if ___is_py_virtualenv; then
+    if ___is_pipenv; then
         env_indicator+="%F{9}P"
+    fi
+    if ___is_py_virtualenv; then
+        env_indicator+="%F{9}($(_python_virtualenv_project_name))"
     fi
 
     if [ -n "$env_indicator" ]; then
