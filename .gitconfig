@@ -24,6 +24,8 @@
 	lg2 = log --color --graph --pretty=format:'%C(63)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset - %C(208)%an <%ae>%Creset' --abbrev-commit --
 
 	list-remote-branches = ls-remote-origin
+	loc = "!git grep '^' | wc -l | tr -d ' '"
+	sloc = "!git grep '.' | wc -l | tr -d ' '"
 	logsig = log --show-signature
 	lrb = ls-remote origin
 	name = config user.name
