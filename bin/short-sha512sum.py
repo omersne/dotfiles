@@ -42,10 +42,19 @@ class Encoder(object):
     BASE = len(ALPHABET)
     SIGN_CHARACTER = "$"
 
+    @staticmethod
+    def is_string(x):
+        try:
+            # Python 2.x
+            return isinstance(x, basestring)
+        except NameError:
+            # Python 3.x
+            return isinstance(x, str)
+
     @classmethod
     def encode(cls, n):
         leading_zeroes = 0
-        if isinstance(n, basestring):
+        if cls.is_string(n):
             if n.startswith("0"):
                 leading_zeroes = len(re.search("^(0+)", n).group(1))
             n = int(n, 16)
@@ -86,8 +95,8 @@ def main():
             for block in iter(lambda: fd.read(HASH_BLOCK_SIZE), b""):
                 hasher.update(block)
 
-        print "{}  {}".format(Encoder.encode(hasher.hexdigest()),
-                              "-" if filename == "/dev/stdin" else filename)
+        print("{}  {}".format(Encoder.encode(hasher.hexdigest()),
+                              "-" if filename == "/dev/stdin" else filename))
 
     sys.exit(0)
 
