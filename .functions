@@ -313,6 +313,28 @@ alias_value()
     check_pipestatus_error
 }
 
+___function_name()
+{
+    if ___is_bash; then
+        echo "${FUNCNAME[1]}"
+    elif ___is_zsh; then
+        echo "${funcstack[2]}"
+    else
+        echo_error "___function_name(): Can't determine the name of the calling function."
+        return 1
+    fi
+}
+
+___pretty_function_name()
+{
+    local function_name="$(___function_name)"
+    if [ -z "$function_name" ]; then
+        return 1
+    fi
+
+    echo "$function_name()"
+}
+
 hex2dec()
 {
     local n="$1"
@@ -433,6 +455,47 @@ edit_which()
     fi
 
     "$EDITOR" "$(which "$cmd")"
+}
+
+___gnu_utility_program_name()
+{
+    local program="$1"
+    local gprogram="g$program"
+
+    if exists_in_path "$program"; then
+        echo "$program"
+    elif ___is_osx && exists_in_path "$gprogram"; then
+        echo "$gprogram"
+    else
+        echo_error "$(___pretty_function_name): Unable to find \`$program' or \`$gprogram' in \$PATH"
+        return 1
+    fi
+
+    return 0
+}
+
+___get_digest_without_filename()
+{
+    local program="$1"
+    local file_path="$2"
+
+    program="$(___gnu_utility_program_name "$program")"
+    if [ -z "$program" ]; then
+        return 1
+    fi
+
+    "$program" "$file_path" | awk '{print $1}'
+    check_pipestatus_error
+}
+
+___get_sha256_digest_without_filename()
+{
+    ___get_digest_without_filename "sha256sum" "$1"
+}
+
+___get_sha512_digest_without_filename()
+{
+    ___get_digest_without_filename "sha512sum" "$1"
 }
 
 append_PATH()

@@ -88,6 +88,9 @@ alias ffnh="find-files-exec-cmd-no-hidden"
 
 alias spaces-to-underscores="___filenames_spaces_to_underscores"
 
+alias 256="___get_sha256_digest_without_filename"
+alias 512="___get_sha512_digest_without_filename"
+
 if exists_in_path youtube-dl.sh; then
     alias y="$(___zsh_noglob) youtube-dl.sh"
     alias ys="$(___zsh_noglob) youtube-dl.sh --short-filename"
