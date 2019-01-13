@@ -37,6 +37,7 @@
 	sb = status -sb
 	signingkey = config user.signingkey
 	skey = config user.signingkey
+	squash-latest = "!f() { count=$1; shift; git reset --soft HEAD~$count && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\" \"$@\"; }; f"
 	w = show
 
 [branch]
