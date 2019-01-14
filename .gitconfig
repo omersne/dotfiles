@@ -23,7 +23,7 @@
 
 	lg2 = log --color --graph --pretty=format:'%C(63)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset - %C(208)%an <%ae>%Creset' --abbrev-commit --
 
-	list-remote-branches = ls-remote-origin
+	list-remote-branches = "!git ls-remote | grep 'refs/heads/' | sed 's|.*\trefs/heads/||'"
 	loc = "!git grep '^' | wc -l | tr -d ' '"
 	sloc = "!git grep '.' | wc -l | tr -d ' '"
 	logsig = log --show-signature
