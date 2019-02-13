@@ -4,6 +4,7 @@
 	add-remote = remote add origin
 	amend = commit --amend
 	b = branch
+	backup-branch = "!f() { local name=\"$(git rev-parse --abbrev-ref HEAD)_BACKUP_$(date '+%Y-%m-%d_%H-%M-%S')\"; git branch \"$name\" && echo \"Backed up the current branch to '$name'\"; }; f"
 	br = branch
 	c = commit -m
 	sc = commit -S -m
