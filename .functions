@@ -477,25 +477,25 @@ ___gnu_utility_program_name()
 ___get_digest_without_filename()
 {
     local program="$1"
-    local file_path="$2"
+    shift
 
     program="$(___gnu_utility_program_name "$program")"
     if [ -z "$program" ]; then
         return 1
     fi
 
-    "$program" "$file_path" | awk '{print $1}'
+    "$program" "$@" | awk '{print $1}'
     check_pipestatus_error
 }
 
 ___get_sha256_digest_without_filename()
 {
-    ___get_digest_without_filename "sha256sum" "$1"
+    ___get_digest_without_filename "sha256sum" "$@"
 }
 
 ___get_sha512_digest_without_filename()
 {
-    ___get_digest_without_filename "sha512sum" "$1"
+    ___get_digest_without_filename "sha512sum" "$@"
 }
 
 append_PATH()
