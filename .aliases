@@ -114,6 +114,7 @@ alias s="sed"
 
 alias l2s="tr '\n' ' '" # convert newlines to spaces
 alias s2l="tr ' ' '\n'" # convert spaces to newlines
+alias s2u="tr ' ' '_' " # convert spaces to underscores
 
 alias rmnl="tr -d '\n'"
 alias nlatend='sed "s/$/\\\n/"'
