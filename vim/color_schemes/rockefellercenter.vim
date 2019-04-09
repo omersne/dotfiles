@@ -11,7 +11,7 @@ if exists("syntax_on")
 endif
 
 let g:colors_name = "rockefellercenter"
-hi Normal								guifg=11	guibg=black
+hi Normal								guifg=#ffff00	guibg=black
 hi Comment	term=bold			ctermfg=208		guifg=#ffa500
 hi Constant	term=underline			ctermfg=39		guifg=Magenta
 hi Special	term=bold			ctermfg=red		guifg=Red
