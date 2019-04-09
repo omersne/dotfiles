@@ -498,6 +498,11 @@ ___get_sha512_digest_without_filename()
     ___get_digest_without_filename "sha512sum" "$@"
 }
 
+___make_json_readable_less()
+{
+    make-json-readable.py "$@" | less
+}
+
 append_PATH()
 {
     local dir
