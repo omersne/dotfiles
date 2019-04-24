@@ -13,6 +13,7 @@
 	cht = checkout --track
 	clear-cred-cache = credential-cache exit
 	co = config
+	debug-comments = grep -i "DEBUG42"
 	df = diff --color --color-words --abbrev
 	d = diff
 	email = config user.email
