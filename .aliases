@@ -207,6 +207,7 @@ alias la="ls -lah"
 alias cla="clear; $(alias_value la)"
 alias ltr="$(alias_value la) -tr"
 alias lad="$(alias_value la) -d */"
+alias sr="$(alias_value la) -Sr"
 
 
 ##### Git
