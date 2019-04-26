@@ -109,6 +109,7 @@ alias gi="grep -i"
 alias gv="grep -v"
 
 alias k="awk"
+alias nf="awk '{print \$NF}'"
 alias s="sed"
 
 
