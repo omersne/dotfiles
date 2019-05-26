@@ -4,6 +4,8 @@ alias rc="echo \$?"
 
 if ___is_zsh; then
     alias rp="echo \$pipestatus"
+    alias disable-rprompt="___NO_RPROMPT=1"
+    alias enable-rprompt="___NO_RPROMPT=0"
 elif ___is_bash; then
     alias rp="echo \${PIPESTATUS[*]}"
 fi
