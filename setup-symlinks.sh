@@ -47,7 +47,8 @@ symlink_file_and_keep_old()
 symlink_general_dotfiles()
 {
     local symlink filename
-    for symlink in $(find $DOTFILES_DIR -maxdepth 1 -type f -name ".*"); do
+    for symlink in $(find "$DOTFILES_DIR" -maxdepth 1 -type f -name ".*") \
+                   "$DOTFILES_DIR/.config"; do
         filename="${symlink##*/}"
 
         if endswith "$filename" ".example"; then

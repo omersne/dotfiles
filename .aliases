@@ -93,15 +93,17 @@ alias spaces-to-underscores="___filenames_spaces_to_underscores"
 alias 256="___get_sha256_digest_without_filename"
 alias 512="___get_sha512_digest_without_filename"
 
-if exists_in_path youtube-dl.sh; then
-    alias y="$(___zsh_noglob) youtube-dl.sh"
-    alias ys="$(___zsh_noglob) youtube-dl.sh --short-filename"
-    alias ymax="$(___zsh_noglob) youtube-dl-max-res.sh"
-    alias y3="$(___zsh_noglob) youtube-dl-mp3.sh"
-    alias yp="$(alias_value y) --use-proxy"
-    alias ysp="$(___zsh_noglob) youtube-dl.sh --use-proxy --short-filename"
-    alias ymaxp="$(alias_value ymax) --use-proxy"
-    alias y3p="$(alias_value y3) --use-proxy"
+if exists_in_path youtube-dl; then
+    alias y="$(___zsh_noglob) youtube-dl"
+
+    # This just needs to override the existing global `--format' option.
+    alias youtube-dl-max-res="$(alias_value y) --format='bestvideo[height=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'"
+    alias ymax="$(alias_value youtube-dl-max-res)"
+
+    # The global config needs to be ignored because it has various video options
+    # that will mess with MP3 downloading.
+    alias youtube-dl-mp3="$(alias_value y) --ignore-config --restrict-filename --no-mtime --extract-audio --audio-format=mp3"
+    alias y3="$(alias_value youtube-dl-mp3)"
 fi
 
 ##### grep, awk, sed ,tr

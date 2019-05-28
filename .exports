@@ -37,10 +37,6 @@ if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     elif ___is_osx && [ -d $DOTFILES_DIR/bin/osx ]; then
         append_PATH "$DOTFILES_DIR/bin/osx"
     fi
-
-    if exists_in_path youtube-dl; then
-        append_PATH "$DOTFILES_DIR/bin/youtube-dl"
-    fi
 fi
 
 RSYNC_PARTIAL_DIR="${RSYNC_PARTIAL_DIR:-.___rsync_partial01}"
