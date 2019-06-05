@@ -10,7 +10,7 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-11-07
-# :version: 0.0.1
+# :version: 0.0.2
 ##############################################################################
 
 import sys
@@ -20,6 +20,7 @@ import subprocess
 import json
 from collections import OrderedDict
 
+# pylint: disable=line-too-long
 TEST_OUTPUTS = [
     # MBP 2016 15", Sierra:
     "Now drawing from 'AC Power'\n -InternalBattery-0 (id=9999999)\t100%; charged; 0:00 remaining present: true\n",
@@ -42,26 +43,27 @@ TEST_OUTPUTS = [
     "Now drawing from 'AC Power'\n -InternalBattery-0\t100%; charged; 0:00 remaining present: true\n",
     "Now drawing from 'Battery Power'\n -InternalBattery-0\t100%; discharging; (no estimate) present: true\n",
 ]
+# pylint: enable=line-too-long
 
-BATTERY_STATUS_CMD = [ "pmset", "-g", "batt" ]
+BATTERY_STATUS_CMD = ["pmset", "-g", "batt"]
 
-OUTPUT_RE = re.compile("^Now drawing from '(?P<input>[\w\s]+)'\n"
-                       "\s*-(?P<battery_name>\w+)-(?P<battery_num>[0-9]+)\s+"
-                       "(?:\(id=(?P<battery_id>[0-9]+)\)\s+)?(?P<charge_level>[0-9]+%)\s*;\s*"
-                       "(?P<charge_status>[\w\s]+);\s*"
-                       "(?P<remaining>\(no estimate\)|[0-9]+:[0-9]+ remaining)"
-                       "(?:\s+present:\s*(?P<present>true|false))?$",
+OUTPUT_RE = re.compile(r"^Now drawing from '(?P<input>[\w\s]+)'\n"
+                       r"\s*-(?P<battery_name>\w+)-(?P<battery_num>[0-9]+)\s+"
+                       r"(?:\(id=(?P<battery_id>[0-9]+)\)\s+)?(?P<charge_level>[0-9]+%)\s*;\s*"
+                       r"(?P<charge_status>[\w\s]+);\s*"
+                       r"(?P<remaining>\(no estimate\)|[0-9]+:[0-9]+ remaining)"
+                       r"(?:\s+present:\s*(?P<present>true|false))?$",
                        flags=re.MULTILINE)
 
 class BatteryStatusParserError(Exception):
     pass
 
 def get_output():
-    p = subprocess.Popen(BATTERY_STATUS_CMD, stdout=subprocess.PIPE)
-    stdout = p.communicate()[0]
-    p.wait()
+    proc = subprocess.Popen(BATTERY_STATUS_CMD, stdout=subprocess.PIPE)
+    stdout = proc.communicate()[0]
+    proc.wait()
 
-    return stdout
+    return stdout.decode("utf-8")
 
 def get_status_dict(re_match):
     status_dict = OrderedDict(sorted(re_match.groupdict().items()))
@@ -97,10 +99,10 @@ def main():
     if args.test:
         outputs = TEST_OUTPUTS
     elif args.get_output:
-        print repr(get_output())
+        print(repr(get_output()))
         sys.exit(0)
     else:
-        outputs = [ get_output() ]
+        outputs = [get_output()]
 
     for output in outputs:
         match = OUTPUT_RE.search(output)
@@ -110,7 +112,7 @@ def main():
 
         status_dict = get_status_dict(match)
         if args.fields:
-            status_dict = OrderedDict([ (key, status_dict[key]) for key in args.fields ])
+            status_dict = OrderedDict([(key, status_dict[key]) for key in args.fields])
 
         if args.json_output:
             print(json.dumps(status_dict, indent=4))
