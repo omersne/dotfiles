@@ -503,6 +503,26 @@ ___make_json_readable_less()
     make-json-readable.py "$@" | less
 }
 
+pycheck()
+{
+    local program_name rc func_rc=0
+    for program_name in pylint pycodestyle; do
+        echo_info "--- $program_name ---"
+        "$program_name" "$@"
+        rc=$?
+        if [ "$rc" -ne 0 ]; then
+            echo_error "\`$program_name' returned $rc"
+            func_rc=1
+        fi
+    done
+
+    if [ "$func_rc" -eq 0 ]; then
+        echo
+        great-success.sh
+    fi
+    return "$func_rc"
+}
+
 append_PATH()
 {
     local dir
