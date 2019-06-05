@@ -55,7 +55,7 @@ function! ColorLongLines()
 	if (!exists("s:LongLinesColored")) || (s:LongLinesColored == 0)
 		"highlight OverLength ctermbg=1 ctermfg=226
 		highlight OverLength ctermbg=242
-		match OverLength /\%81v.\+/
+		match OverLength /\%80v.\+/
 		let s:LongLinesColored = 1
 	elseif s:LongLinesColored == 1
 		highlight OverLength NONE
