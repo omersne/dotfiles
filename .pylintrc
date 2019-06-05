@@ -1,0 +1,15 @@
+[MESSAGES CONTROL]
+disable=bad-continuation,
+	missing-docstring,
+	unnecessary-pass
+
+[REPORTS]
+score=no
+output-format=parseable
+
+[BASIC]
+# For scripts with dashes in their filenames.
+module-rgx=([a-z_][a-z0-9_-]*)$
+
+[FORMAT]
+max-line-length=120
