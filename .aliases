@@ -48,8 +48,8 @@ if ___is_osx; then
 fi
 
 alias py="python"
-alias p="python"
-alias pc="python -c"
+alias pl="pylint"
+alias pc="pycodestyle"
 
 alias tm="tmux"
 # The 'a' needs to be escaped because of the 'a' alias.
