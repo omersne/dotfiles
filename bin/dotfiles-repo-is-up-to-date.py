@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 ##############################################################################
 # dotfiles-repo-is-up-to-date.py
@@ -11,13 +11,15 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2018-12-19
-# :version: 0.0.1
+# :version: 0.0.2
 ##############################################################################
 
+from __future__ import print_function
 import sys
 import os
-from urllib import request
 import subprocess
+
+import requests
 
 DOTFILES_DIR = os.path.join(os.path.dirname(__file__), "..")
 
@@ -28,21 +30,22 @@ HEADERS = {
 }
 
 def main():
-    req = request.Request(API_REPO_INFO_URL, headers=HEADERS)
-    resp = request.urlopen(req)
-    origin_digest = resp.read().decode("utf-8")
+    req = requests.get(API_REPO_INFO_URL, headers=HEADERS)
+    req.raise_for_status()
+    origin_digest = req.text
 
     cmd = ["git", "-C", DOTFILES_DIR, "rev-parse", "HEAD"]
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = p.communicate()
-    p.wait()
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout = proc.communicate()[0]
+    proc.wait()
     local_digest = stdout.strip().decode("utf-8")
 
     if local_digest == origin_digest:
         print("dotfiles repo is up to date")
         sys.exit(0)
     else:
-        print(f"dotfiles repo is not up to date, expected '{origin_digest}', got '{local_digest}'")
+        print("dotfiles repo is not up to date, expected '{}', got '{}'".format(
+              origin_digest, local_digest))
         sys.exit(1)
 
 if __name__ == "__main__":
