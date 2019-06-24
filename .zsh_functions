@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+newest_file()
+{
+    local dir="${1:-}"
+    if [ "${#dir}" -gt 0 ] && ! endswith "$dir" "/"; then
+        dir="$dir/"
+    fi
+
+    # This line causes a syntax error in bash, even if this function isn't called.
+    \ls -tr -- "$dir"*(-^/) | tail -1
+}

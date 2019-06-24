@@ -43,9 +43,15 @@ RSYNC_PARTIAL_DIR="${RSYNC_PARTIAL_DIR:-.___rsync_partial01}"
 
 ___load_gpg_agent()
 {
-    if which gpg >/dev/null 2>&1 && \
-            (___is_osx || (___is_linux && [ -e ~/.linux_load_gpg_agent ])); then
+    if ! which gpg >/dev/null 2>&1; then
+        return 1
+    fi
 
+    if [ -e ~/.no_load_gpg_agent.dfcfg ]; then
+        return 0
+    fi
+
+    if ___is_osx; then
         # For fixing the problem with the password prompt in GPG in OSX
         #if [ -z "$GPG_TTY" ]; then
             export GPG_TTY=$(tty)
@@ -69,10 +75,16 @@ ___load_gpg_agent()
         if [ -S "${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent.ssh" ]; then
             GPG_SSH_AUTH_SOCK="${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent.ssh"
         fi
-        if [ -S "$GPG_SSH_AUTH_SOCK" ] && [ -e ~/.use_gpg_ssh_auth_sock.dfcfg ] && \
-                ([ -z "$SSH_AUTH_SOCK" ] || ! ___is_ssh_session); then
-            export SSH_AUTH_SOCK="$GPG_SSH_AUTH_SOCK"
-        fi
+    elif ___is_linux; then
+        export GPG_TTY="$(tty)"
+        export GPG_SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+        gpgconf --launch gpg-agent
+    fi
+
+    if ([ -n "$GPG_SSH_AUTH_SOCK" ] && [ -S "$GPG_SSH_AUTH_SOCK" ]) && \
+            [ -e ~/.use_gpg_ssh_auth_sock.dfcfg ] && \
+            ([ -z "$SSH_AUTH_SOCK" ] || ! ___is_ssh_session); then
+        export SSH_AUTH_SOCK="$GPG_SSH_AUTH_SOCK"
     fi
 }
 ___load_gpg_agent

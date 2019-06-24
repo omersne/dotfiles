@@ -17,7 +17,7 @@ for func in compinit bashcompinit; do
 done
 unset func
 
-for file in .{functions,colors,exports,aliases,completion,zsh_prompt,zshrc.local}; do
+for file in .{functions,zsh_functions,colors,exports,aliases,completion,zsh_prompt,zshrc.local}; do
     [ -r ~/$file ] && . ~/$file
 done
 unset file
