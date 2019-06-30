@@ -7,3 +7,4 @@ startup_message off
 
 sorendition "-b dw"
 
+defscrollback 65536
