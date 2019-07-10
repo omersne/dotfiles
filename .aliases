@@ -58,6 +58,8 @@ alias tad="tmux \a -d"
 alias tls="tmux ls"
 alias tmux-all-panes="___tmux_send_to_all_panes"
 alias tap="___tmux_send_to_all_panes"
+alias tmux-c-b-enable="tmux set-option -g prefix2 C-b"
+alias tmux-c-b-disable="tmux set-option -g prefix2 None"
 
 alias l="less"
 alias lj="___make_json_readable_less"
