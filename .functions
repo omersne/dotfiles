@@ -374,6 +374,31 @@ exists_in_path()
     which "$@" > /dev/null 2>&1
 }
 
+___verify_existence_in_path()
+{
+    local program="$1"
+
+    if ! exists_in_path "$program"; then
+        echo_erorr "Unable to find \`$program' in \$PATH"
+        return 1
+    fi
+
+    return 0
+}
+
+___get_clipboard_contents()
+{
+    if ___is_linux; then
+        if ! ___verify_existence_in_path "xclip"; then
+            return 1
+        fi
+        xclip -o
+    else
+        echo_error "Unsupported platform"
+        return 1
+    fi
+}
+
 timestamp_to_date()
 {
     local timestamp="$1"

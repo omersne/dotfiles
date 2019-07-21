@@ -97,6 +97,9 @@ alias 512="___get_sha512_digest_without_filename"
 
 if exists_in_path youtube-dl; then
     alias y="$(___zsh_noglob) youtube-dl"
+    # XXX: The output of `___get_clipboard_contents' needs to be expanded when
+    # the alias is called, not when it is defined.
+    alias yc="$(alias_value y) \$(___get_clipboard_contents)"
 
     # This just needs to override the existing global `--format' option.
     alias youtube-dl-max-res="$(alias_value y) --format='bestvideo[height=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'"
