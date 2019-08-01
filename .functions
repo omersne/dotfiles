@@ -143,6 +143,21 @@ tolower()
     tr '[:upper:]' '[:lower:]'
 }
 
+to_lines()
+{
+    tr ' ' '\n'
+}
+
+to_spaces()
+{
+    tr '\n' ' '
+}
+
+to_underscores()
+{
+    tr '[ \n]' '_'
+}
+
 isupper()
 {
     # returns true if all of the letters in the string are upper case.
@@ -546,6 +561,40 @@ pycheck()
         great-success.sh
     fi
     return "$func_rc"
+}
+
+___invalid_platform_error()
+{
+    echo_error "Invalid/unrecognized platform"
+    return 1
+}
+
+___get_procs_using_port()
+{
+    local port_num="$1"
+    if [ -z "$port_num" ] || ! is_int "$port_num"; then
+        echo_error "Invalid port number: \`$port_num'"
+        return 1
+    fi
+
+    local -a pids
+    if ___is_linux; then
+        pids=( $(fuser "$port_num/tcp" 2>/dev/null) )
+    elif ___is_osx; then
+        pids=( $(lsof -i ":$port_num" | awk '{print $2}' | grep -v PID | sort -u) )
+    else
+        ___invalid_platform_error
+        return 1
+    fi
+
+    echo "${pids[@]}"
+    return 0
+}
+
+___kill_procs_using_port()
+{
+    local port_num="$1"
+    ___get_procs_using_port "$port_num" | to_lines | xargs -L1 kill
 }
 
 append_PATH()
