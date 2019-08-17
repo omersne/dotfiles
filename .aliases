@@ -61,6 +61,10 @@ alias tap="___tmux_send_to_all_panes"
 alias tmux-c-b-enable="tmux set-option -g prefix2 C-b"
 alias tmux-c-b-disable="tmux set-option -g prefix2 None"
 
+if ___is_screen_session; then
+    alias screen-name="echo \$STY | sed 's/^[^.]*\.//'"
+fi
+
 alias l="less"
 alias lj="___make_json_readable_less"
 
