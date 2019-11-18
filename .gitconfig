@@ -35,6 +35,7 @@
 	pull-and-verify-sigs = "!f() { last=$(git rev-parse HEAD); git pull || return 1; for c in $(git rev-list $last..HEAD); do git verify-commit $c > /dev/null 2>&1 || { echo \"\n\n-----\nBAD SIGNATURE IN COMMIT $c\n-----\nTo return to safety, run this: \\`git reset --hard $last'\" >&2; return 99; }; done; }; f"
 	puo = push -u origin
 	rb = rebase
+	reset-last-commit = commit --amend --no-edit --reset-author
 	s = status
 	safe-hard-reset = "!git backup-branch && git fetch --all && git reset --hard \"origin/$(git rev-parse --abbrev-ref HEAD)\""
 	sb = status -sb
