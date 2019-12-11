@@ -280,6 +280,30 @@ ___ssh_remove_known_hosts_line()
     sed -i "${line_num}d" ~/.ssh/known_hosts
 }
 
+copy_ssh_key_to_host()
+{
+    local key="$1"
+    local hostname="$2"
+    shift 2
+    local -a additional_ssh_options
+    additional_ssh_options=("$@")
+
+    if [ -z "$key" ]; then
+        echo_error "No key specified"
+        return 1
+    fi
+    if [ -z "$hostname" ]; then
+        echo_error "No hostname specified"
+        return 1
+    fi
+
+    if [ ! -r "$key" ]; then
+        echo_error "Unable to read '$key'"
+        return 1
+    fi
+    cat "$key" | ssh "${additional_ssh_options[@]}" -- "$hostname" "cat >> ~/.ssh/authorized_keys"
+}
+
 ___find_files_exec_cmd()
 {
     find . -type f -exec $@ {} \;
