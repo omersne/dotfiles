@@ -158,6 +158,26 @@ to_underscores()
     tr '[ \n]' '_'
 }
 
+___format_int_handler()
+{
+    # for safety when reading from stdin
+    local cutoff="1024"
+
+    python -c "import sys; num = int(sys.stdin.read($cutoff)); print('{:,}'.format(num))"
+}
+
+format_int()
+{
+    local int="$1"
+
+    if [ $# -gt 0 ]; then
+        echo "$1" | ___format_int_handler
+    else
+        # from stdin
+        ___format_int_handler
+    fi
+}
+
 isupper()
 {
     # returns true if all of the letters in the string are upper case.
