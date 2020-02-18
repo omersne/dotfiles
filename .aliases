@@ -320,6 +320,8 @@ elif ___is_linux; then
 
     alias x="xclip -selection clipboard"
 
+    alias available-memory="free -m | grep 'Mem:' | awk '{total=\$NF; available=\$2; available_percent=(total/available)*100; printf(\"%d/%d MB (%.2f%%)\n\", total, available, available_percent)}'"
+
     if [ -n "$DOTFILES_DIR" ]; then
         ### Volume control. Uses volume_control_linux.sh
 
