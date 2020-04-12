@@ -99,6 +99,8 @@ alias spaces-to-underscores="___filenames_spaces_to_underscores"
 alias 256="___get_sha256_digest_without_filename"
 alias 512="___get_sha512_digest_without_filename"
 
+alias dh="du -sh"
+
 if exists_in_path youtube-dl; then
     alias y="$(___zsh_noglob) youtube-dl"
     # XXX: The output of `___get_clipboard_contents' needs to be expanded when
