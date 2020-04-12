@@ -14,7 +14,7 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-09-12
-# :version: 0.0.10
+# :version: 0.0.11
 ##############################################################################
 
 import os
@@ -33,7 +33,7 @@ FILE_VERSION_DIGEST_ALGO = "sha512"
 FILE_VERSION_DIGEST_FUNC = getattr(hashlib, FILE_VERSION_DIGEST_ALGO)
 FILE_IO_BLOCK_SIZE = 65536
 
-FILE_INFO_FORMAT_VERSION = "0.0.6"
+FILE_INFO_FORMAT_VERSION = "0.0.7"
 
 DEFAULT_INFO_FILE = "___FILE_INFO_01.json"
 
@@ -173,6 +173,11 @@ class GetFileInfo(object):
                     self.file_info[filename] = OrderedDict()
 
                 info = self.get_stat_info(filename)
+
+                # In case we want additional info that is an empty string/list/dict, etc...
+                if self.args.additional_information is not None:
+                    info["additional_information"] = self.args.additional_information
+
                 if info["is_symlink"]:
                     digest = FILE_VERSION_DIGEST_FUNC(info["id_str"]).hexdigest()
                     file_version_digest = "SYMLINK_" + digest
@@ -235,6 +240,12 @@ def parse_args():
 
     parser.add_argument("--include-info-file", dest="include_info_file",
                         default=False, action="store_true")
+
+    additional_info = parser.add_mutually_exclusive_group()
+    additional_info.add_argument("--additional-information", "--additional-info", "-I",
+                                 dest="additional_information", default=None)
+    additional_info.add_argument("--additional-information-json", dest="additional_information",
+                                 default=None, type=json.loads)
 
     patterns = parser.add_mutually_exclusive_group()
     patterns.add_argument("--ignore-patterns", dest="ignore_patterns", default=[],

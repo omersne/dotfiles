@@ -11,7 +11,7 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-09-12
-# :version: 0.0.6
+# :version: 0.0.7
 ##############################################################################
 
 import os
@@ -76,6 +76,7 @@ FILE_INFO_VERSION_PARSING_FUNCS = {
     "0.0.4": parse_file_info_dict_0_0_4,
     "0.0.5": parse_file_info_dict_0_0_4,
     "0.0.6": parse_file_info_dict_0_0_4,
+    "0.0.7": parse_file_info_dict_0_0_4,
 }
 
 def main():
