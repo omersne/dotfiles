@@ -1,63 +1,119 @@
-#!/bin/bash
+#!/bin/sh
 
-# Bash script for setting or clearing touch requirements for
-# cryptographic operations the OpenPGP application on a YubiKey 4.
+# Shell script for reading, setting or clearing touch requirements for
+# cryptographic operations using the OpenPGP application on a
+# YubiKey 4 or YubiKey 5.
 #
 # Author: Alessio Di Mauro <alessio@yubico.com>
-# From: https://github.com/a-dma/yubitouch, commit acf0996
 
-GCA=$(which gpg-connect-agent)
-XXD=$(which xxd)
+GCA=$(command -v gpg-connect-agent)
+XXD=$(command -v xxd)
+OD=$(command -v od)
 DO=0
 UIF=0
 
-PE=$(which pinentry)
-PE_PROMPT="SETPROMPT Admin PIN\nGETPIN\nBYE"
+ascii_to_hex()
+{
+    if [ -n "$XXD" ]
+    then
+        $XXD -ps
+    elif [ -n "$OD" ]
+    then
+        $OD -An -tx1
+    fi
+}
+
+PE=$(command -v pinentry)
+PE_PROMPT='SETPROMPT Admin PIN\nGETPIN\nBYE\n'
 
 if [ -z "$GCA" ]
 then
-    echo "Can not find gpg-connect-agent. Aborting...";
+    echo "Can not find gpg-connect-agent. Aborting..." >&2
     exit 1;
 fi
 
-if [ -z "$XXD" ]
+if [ -z "$XXD" ] && [ -z "$OD" ]
 then
-    echo "Can not find xxd. Aborting...";
+    echo "Can not find xxd(1) nor od(1). Aborting..." >&2
     exit 1;
 fi
 
 if [ $# -lt 2 ] || [ $# -gt 3 ]
 then
-    echo "Wrong parameters"
-    echo "usage: yubitouch {sig|aut|dec} {off|on|fix} [admin_pin]";
+    echo "Wrong parameters" >&2
+    echo "usage: yubitouch {sig|aut|dec|att} {get|off|on|fix|cacheon|cachefix} [admin_pin]" >&2
     exit 1;
 fi
 
-if [ "$1" == "sig" ]
+if [ "$1" = "sig" ]
 then
     DO="D6"
-elif [ "$1" == "dec" ]
+elif [ "$1" = "dec" ]
 then
     DO="D7"
-elif [ "$1" == "aut" ]
+elif [ "$1" = "aut" ]
 then
     DO="D8"
+elif [ "$1" = "att" ]
+then
+    DO="D9"
 else
-    echo "Invalid value $1 (must be sig, aut, dec). Aborting..."
+    echo "Invalid value $1 (must be sig, aut, dec, att). Aborting..." >&2
     exit 1
 fi
 
-if [ "$2" == "off" ]
+if [ "$2" = "get" ]
+then
+    $GCA --hex "scd reset" /bye > /dev/null
+
+    GET=$($GCA --hex "scd apdu 00 ca 00 $DO 00" /bye)
+    if ! echo "$GET" | grep -q "90 00"
+    then
+        echo "Get data failed, unsupported device?" >&2
+        exit 1
+    fi
+
+    STATUS=$(echo "$GET" | grep -oE "[0-9]{2} 20 90 00" | cut -c 1-2)
+
+    if [ "$STATUS" = "00" ]
+    then
+        UIF="off"
+    elif [ "$STATUS" = "01" ]
+    then
+        UIF="on"
+    elif [ "$STATUS" = "02" ]
+    then
+        UIF="fix"
+    elif [ "$STATUS" = "03" ]
+    then
+        UIF="cacheon"
+    elif [ "$STATUS" = "04" ]
+    then
+        UIF="cachefix"
+    else
+        echo "Unknown touch setting status ($STATUS)" >&2
+        exit 1
+    fi
+
+    echo "Current $1 touch setting: $UIF" >&2
+    exit 0
+elif [ "$2" = "off" ]
 then
     UIF="00";
-elif [ "$2" == "on" ]
+elif [ "$2" = "on" ]
 then
     UIF="01"
-elif [ "$2" == "fix" ]
+elif [ "$2" = "fix" ]
 then
     UIF="02";
+elif [ "$2" = "cacheon" ]
+then
+    UIF="03";
+elif [ "$2" = "cachefix" ]
+then
+    UIF="04";
 else
-    echo "Invalid value $2 (must be off, on, fix). Aborting..."
+    echo "Invalid value $2 (must be get, off, on, fix, cacheon, cachefix). Aborting..." >&2
     exit 1
 fi
 
@@ -66,38 +122,42 @@ then
     PIN="$3"
 elif [ -z "$PE" ]
 then
-    echo -e "Pinentry not present\nFalling back to regular stdin.\nBe careful!"
+    echo "Pinentry not present" >&2
+    echo "Falling back to regular stdin." >&2
+    echo "Be careful!" >&2
     echo "Enter your admin PIN: "
-    read PIN
+    read -r PIN
 else
-    PIN="$(echo -e $PE_PROMPT | $PE | sed -n '/^D .*/s/^D //p')"
+    # shellcheck disable=SC2059
+    PIN=$(printf "$PE_PROMPT" | $PE | sed -n '/^D .*/s/^D //p')
 fi
 
 if [ -z "$PIN" ]
 then
-    echo "Empty PIN. Aborting..."
+    echo "Empty PIN. Aborting..." >&2
     exit 1
 fi
 
 PIN_LEN=${#PIN}
 
-PIN=$(echo -n "$PIN" | xxd -ps | tr -d '\n')
+# shellcheck disable=SC2059
+PIN=$(printf "$PIN" | ascii_to_hex | tr -d '\n')
 
-PIN_LEN=$(printf %02x $PIN_LEN)
+PIN_LEN=$(printf %02x "$PIN_LEN")
 
 $GCA --hex "scd reset" /bye > /dev/null
 
 VERIFY=$($GCA --hex "scd apdu 00 20 00 83 $PIN_LEN $PIN" /bye)
-if ! echo $VERIFY | grep -q "90 00"
+if ! echo "$VERIFY" | grep -q "90 00"
 then
-    echo "Verification failed, wrong pin?"
+    echo "Verification failed, wrong pin?" >&2
     exit 1
 fi
 
 PUT=$($GCA --hex "scd apdu 00 da 00 $DO 02 $UIF 20" /bye)
-if ! echo $PUT | grep -q "90 00"
+if ! echo "$PUT" | grep -q "90 00"
 then
-    echo "Unable to change mode. Set to fix?"
+    echo "Unable to change mode. Set to fix?" >&2
     exit 1
 fi
 
