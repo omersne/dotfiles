@@ -14,15 +14,24 @@ precmd()
         local git_status="$(git status)"
 
         if grep -q $'\t' <<< "$git_status"; then
+            # Dirty
             local bracket_color="%F{9}"
         elif ! grep -q "Your branch is up.to.date with " <<< "$git_status"; then
+            # Not synced with remote
             local bracket_color="%F{226}"
         else
+            # Clean
             local bracket_color="%F{33}"
         fi
     else
         local pwd_color="%F{2}"
         local bracket_color="%F{2}"
+    fi
+
+    local rprompt_message=
+    if boolean_true "$___SONG_PROMPT"; then
+        rprompt_message+="%F{208}[${___prompt_song_lyrics[$___prompt_song_word_index]}] "
+        ___update_prompt_song_word_index
     fi
 
     local env_indicator=
@@ -46,8 +55,7 @@ precmd()
     if [ "$___NO_RPROMPT" = 1 ]; then
         RPROMPT=""
     else
-        RPROMPT="${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}] %(?.%F{2}.%F{9})[%?]${env_indicator}%f"
+        RPROMPT="${rprompt_message}${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}] %(?.%F{2}.%F{9})[%?]${env_indicator}%f"
     fi
     PROMPT="%(!.%F{9}.%F{14})%n%F{63}@%m%(?.%F{226}.%F{9})->%f "
 }
-

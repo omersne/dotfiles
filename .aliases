@@ -4,8 +4,15 @@ alias rc="echo \$?"
 
 if ___is_zsh; then
     alias rp="echo \$pipestatus"
+    # Apologies for the inconsistency in the order of the enable-disable aliases.
+    # The reasoning for it is that the first alias for each functionality should
+    # be the one that changes the default behavior and the second one should
+    # restore the default.
     alias disable-rprompt="___NO_RPROMPT=1"
     alias enable-rprompt="___NO_RPROMPT=0"
+    alias enable-song-prompt="___SONG_PROMPT=1"
+    alias disable-song-prompt="___SONG_PROMPT=0"
+    alias reset-song-prompt-lyrics="___reset_prompt_song_word_index"
 elif ___is_bash; then
     alias rp="echo \${PIPESTATUS[*]}"
 fi

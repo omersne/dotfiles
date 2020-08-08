@@ -246,6 +246,17 @@ is_int()
     return 1
 }
 
+boolean_true()
+{
+    local value="$1"
+
+    if is_int "$value"; then
+        [ "$value" -ne 0 ]
+    else
+        [ "${#value}" -ne 0 ]
+    fi
+}
+
 func_exists()
 {
     local _function="$1"
@@ -655,6 +666,18 @@ append_PYTHONPATH()
     for dir in "$@"; do
         export PYTHONPATH="${PYTHONPATH%:}:$dir"
     done
+}
+
+___get_array_start_index()
+{
+    if ___is_bash; then
+        echo 0
+    elif ___is_zsh; then
+        echo 1
+    else
+        ___invalid_platform_error
+        return 1
+    fi
 }
 
 ##### Completion functions
