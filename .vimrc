@@ -5,6 +5,7 @@ set number
 set ignorecase
 set smartcase
 set ruler
+set vb t_vb=     " no visual bell and flash
 
 " Default colorscheme. Will be overridden for some file types.
 colorscheme timessquare
