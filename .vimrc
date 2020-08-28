@@ -76,8 +76,8 @@ au BufNewfile,BufRead *.awk,*.gawk setlocal filetype=awk
 au BufNewfile,BufRead *.rs setlocal filetype=rust
 
 au Filetype c,go setlocal noexpandtab
-au FileType cpp,arduino,rust setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
-au FileType c,cpp,arduino,go colorscheme rockefellercenter
+au FileType cpp,arduino,rust,d setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+au FileType c,cpp,arduino,go,d colorscheme rockefellercenter
 
 au FileType python,bash,sh,zsh,awk setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 au FileType javascript,json setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
