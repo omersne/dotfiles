@@ -449,7 +449,7 @@ ___verify_existence_in_path()
     local program="$1"
 
     if ! exists_in_path "$program"; then
-        echo_erorr "Unable to find \`$program' in \$PATH"
+        echo_error "Unable to find \`$program' in \$PATH"
         return 1
     fi
 
