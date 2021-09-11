@@ -10,6 +10,8 @@ if ___is_zsh; then
     # restore the default.
     alias disable-rprompt="___NO_RPROMPT=1"
     alias enable-rprompt="___NO_RPROMPT=0"
+    alias disable-git-prompt="___NO_GIT_PROMPT=1"
+    alias enable-git-prompt="___NO_GIT_PROMPT=0"
     alias enable-song-prompt="___SONG_PROMPT=1"
     alias disable-song-prompt="___SONG_PROMPT=0"
     alias reset-song-prompt-lyrics="___reset_prompt_song_word_index"

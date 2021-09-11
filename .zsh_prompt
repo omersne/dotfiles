@@ -3,7 +3,7 @@
 precmd()
 {
     local git_branch=
-    if [ ! -e ./.no_git_prompt.dfcfg ]; then
+    if [ ! -e ./.no_git_prompt.dfcfg ] && ! boolean_true "$___NO_GIT_PROMPT"; then
         git_branch="$(git branch 2>/dev/null | sed -ne '/^\*/ {s/^\* *//p;}')"
     fi
 
