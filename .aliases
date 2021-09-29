@@ -112,6 +112,8 @@ alias dh="du -sh"
 
 alias fumount="fusermount -u"
 
+alias td="timestamp_to_date"
+
 if exists_in_path youtube-dl; then
     alias y="$(___zsh_noglob) youtube-dl"
     # XXX: The output of `___get_clipboard_contents' needs to be expanded when
@@ -223,6 +225,8 @@ alias md="mkdir"
 alias mk="mkdir"
 
 alias mkcd="mkdir_cd"
+
+alias dn="dirname"
 
 ##### ls
 
