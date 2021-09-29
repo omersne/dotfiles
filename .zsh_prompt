@@ -57,5 +57,9 @@ precmd()
     else
         RPROMPT="${rprompt_message}${bracket_color}[${pwd_color}%~${git_branch}${bracket_color}] %(?.%F{2}.%F{9})[%?]${env_indicator}%f"
     fi
-    PROMPT="%(!.%F{9}.%F{14})%n%F{63}@%m%(?.%F{226}.%F{9})->%f "
+    if [ -n "$___PROMPT_OVERRIDE" ]; then
+        PROMPT="$___PROMPT_OVERRIDE"
+    else
+        PROMPT="%(!.%F{9}.%F{14})%n%F{63}@%m%(?.%F{226}.%F{9})->%f "
+    fi
 }
