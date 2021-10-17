@@ -114,20 +114,20 @@ alias fumount="fusermount -u"
 
 alias td="timestamp_to_date"
 
-if exists_in_path youtube-dl; then
-    alias y="$(___zsh_noglob) youtube-dl"
+if exists_in_path yt-dlp; then
+    alias y="$(___zsh_noglob) yt-dlp"
     # XXX: The output of `___get_clipboard_contents' needs to be expanded when
     # the alias is called, not when it is defined.
     alias yc="$(alias_value y) \$(___get_clipboard_contents)"
 
     # This just needs to override the existing global `--format' option.
-    alias youtube-dl-max-res="$(alias_value y) --format='bestvideo[height=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'"
-    alias ymax="$(alias_value youtube-dl-max-res)"
+    alias yt-dlp-max-res="$(alias_value y) --format='bestvideo[height=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'"
+    alias ymax="$(alias_value yt-dlp-max-res)"
 
     # The global config needs to be ignored because it has various video options
     # that will mess with MP3 downloading.
-    alias youtube-dl-mp3="$(alias_value y) --ignore-config --restrict-filename --no-mtime --extract-audio --audio-format=mp3"
-    alias y3="$(alias_value youtube-dl-mp3)"
+    alias yt-dlp-mp3="$(alias_value y) --ignore-config --restrict-filename --no-mtime --extract-audio --audio-format=mp3"
+    alias y3="$(alias_value yt-dlp-mp3)"
 fi
 
 ##### grep, awk, sed ,tr
