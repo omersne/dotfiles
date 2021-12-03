@@ -14,7 +14,7 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-09-12
-# :version: 0.0.11
+# :version: 0.0.12
 ##############################################################################
 
 import os
@@ -179,7 +179,7 @@ class GetFileInfo(object):
                     info["additional_information"] = self.args.additional_information
 
                 if info["is_symlink"]:
-                    digest = FILE_VERSION_DIGEST_FUNC(info["id_str"]).hexdigest()
+                    digest = FILE_VERSION_DIGEST_FUNC(info["id_str"].encode("utf-8")).hexdigest()
                     file_version_digest = "SYMLINK_" + digest
                 else:
                     try:

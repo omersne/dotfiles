@@ -11,7 +11,7 @@
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-09-12
-# :version: 0.0.7
+# :version: 0.0.8
 ##############################################################################
 
 import os
@@ -87,8 +87,11 @@ def main():
     with open(args.filename, "r") as f:
         FILES_INFO = json.load(f, object_pairs_hook=OrderedDict)
 
-    for filename, digests in FILES_INFO.iteritems():
-        for digest, file_info in digests.iteritems():
+    #                                 python2                                      python3
+    efficient_iteration_method_name = "iteritems" if hasattr({}, "iteritems") else "items"
+
+    for filename, digests in getattr(FILES_INFO, efficient_iteration_method_name)():
+        for digest, file_info in getattr(digests, efficient_iteration_method_name)():
             try:
                 info_format_version = file_info["file_info_format_version"]
             except KeyError:
