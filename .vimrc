@@ -81,6 +81,7 @@ au FileType c,cpp,arduino,go,d colorscheme rockefellercenter
 
 au FileType python,bash,sh,zsh,awk setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 au FileType javascript,json setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+au FileType sshconfig setlocal tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
