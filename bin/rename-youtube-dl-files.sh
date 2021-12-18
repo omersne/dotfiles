@@ -10,14 +10,14 @@
 #       rename-youtube-dl-files.sh <source filename> <destination filename>
 #
 #       The filenames should not include extensions. Example:
-#       rename-youtube-dl-files.sh Rick_Astley_-_Never_Gonna_Give_You_Up_dQw4w9WgXcQ_D3141592653. some_misleading_video_name.
+#       rename-youtube-dl-files.sh Rick_Astley_-_Never_Gonna_Give_You_Up_dQw4w9WgXcQ_D3141592653 some_misleading_video_name
 #
 # :authors: Omer Sne, @omersne, 0x65A9D22B299BA9B5
 # :date: 2017-09-08
-# :version: 0.0.2
+# :version: 0.0.3
 ##############################################################################
 
-EXTENSIONS=( info.json annotations.xml jpg mp4 mp3 en.srt )
+EXTENSIONS=( .info.json .annotations.xml .jpg _{thumb,small,medium,large,orig}.jpg .mp4 .mp3 .en.srt )
 MV="mv"
 
 endswith()
@@ -48,14 +48,6 @@ DST="$2"
 if [ -z "$SRC" ] || [ -z "$DST" ]; then
     usage
     abort
-fi
-
-# In case the period before the extension isn't included.
-if ! endswith "$SRC" "."; then
-    SRC+="."
-fi
-if ! endswith "$DST" "."; then
-    DST+="."
 fi
 
 for extension in "${EXTENSIONS[@]}"; do
