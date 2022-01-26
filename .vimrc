@@ -6,6 +6,7 @@ set ignorecase
 set smartcase
 set ruler
 set vb t_vb=     " no visual bell and flash
+set autowriteall
 
 " Default colorscheme. Will be overridden for some file types.
 colorscheme timessquare
@@ -31,6 +32,10 @@ nnoremap B ^
 " For getting to the end of the line more easily.
 nnoremap E $
 nnoremap e $
+
+let mapleader = ","
+nnoremap <Leader>f :bn<CR>
+nnoremap <Leader>p :bp<CR>
 
 " Shortcuts for displaying line numbers
 :command NU set number!
