@@ -28,6 +28,10 @@ DOCS=$HOME/Documents/
 #    export PATH="$PATH:$DOTFILES_DIR/linux/bin"
 #fi
 
+if ___is_osx && [ -d "$HOME/.brew" ]; then
+    PATH="$HOME/.brew/bin:$HOME/.brew/sbin:${PATH#:}"
+fi
+
 if [ -n "$DOTFILES_DIR" ] && [ -d $DOTFILES_DIR/bin ]; then
     append_PATH "$DOTFILES_DIR/bin" "$DOTFILES_DIR/bin/local" "$DOTFILES_DIR/bin/local/python"
     append_PYTHONPATH "$DOTFILES_DIR/bin/python/lib" "$DOTFILES_DIR/bin/local/python/lib"
