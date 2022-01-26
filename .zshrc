@@ -18,7 +18,11 @@ done
 unset func
 
 for file in .{functions,zsh_functions,prompt_utils,colors,exports,aliases,completion,zsh_prompt,zshrc.local}; do
-    [ -r ~/$file ] && . ~/$file
+    if [ -d "$DOTFILES_DIR" ] && [ -r "$DOTFILES_DIR/$file" ]; then
+        . "$DOTFILES_DIR/$file"
+    else
+        [ -r ~/$file ] && . ~/$file
+    fi
 done
 unset file
 
