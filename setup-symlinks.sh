@@ -1,8 +1,10 @@
 #!/bin/bash
 
+set -e
+
 DOTFILES_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-. $DOTFILES_DIR/.colors
-. $DOTFILES_DIR/.functions
+. "$DOTFILES_DIR/.colors"
+. "$DOTFILES_DIR/.functions"
 
 NO_REPLACE=0
 
@@ -36,7 +38,6 @@ symlink_file_and_keep_old()
         mv "$dst" "$dst.old_$the_date"
         if [ $? -ne 0 ]; then
             echo_error "Failed to rename $filename"
-            ((ERRORS++))
             return 1
         fi
     fi
@@ -44,61 +45,80 @@ symlink_file_and_keep_old()
     ln -s "$src" "$dst"
 }
 
-symlink_general_dotfiles()
+no_restrictions()
 {
-    local symlink filename
-    for symlink in $(find "$DOTFILES_DIR" -maxdepth 1 -type f -name ".*") \
-                   "$DOTFILES_DIR/.config"; do
-        filename="${symlink##*/}"
+    return 0
+}
 
-        if endswith "$filename" ".example"; then
-            if [ -e $HOME/${filename%.example} ]; then
+symlink_dir_to_dir()
+{
+    local src_dir="$1"
+    local dst_dir="$2"
+    local filter_func="${3:-no_restrictions}"
+
+    if [ ! -d "$dst_dir" ]; then
+        if [ -e "$dst_dir" ]; then
+            abort "'$dst_dir' exists but is not a directory"
+        fi
+        mkdir -p "$dst_dir"
+    fi
+
+    local files=( "$src_dir"/.* "$src_dir"/* )
+    local symlink base_filename
+    for symlink in "${files[@]}"; do
+        if [ "$symlink" == "." ] || [ "$symlink" == ".." ] || [ -d "$symlink" ] || ! "$filter_func"; then
+            continue
+        fi
+        base_filename="${symlink##*/}"
+
+        if endswith "$base_filename" ".example"; then
+            if [ -e $HOME/${base_filename%.example} ]; then
                 continue
             else
                 # Copy the file, so a symlink won't be created. The file will be
                 # renamed to ${filename%.example} later and will be edited with the
                 # local config.
-                cp $filename $HOME/
+                cp "$symlink" $HOME/
                 continue
             fi
         fi
 
-        symlink_file_and_keep_old "$symlink" "$HOME/"
+        if ! symlink_file_and_keep_old "$symlink" "$dst_dir"; then
+            return 1
+        fi
     done
 }
 
-symlink_vim_files()
+only_hidden_files()
 {
-    [ ! -d $HOME/.vim/colors ] && mkdir -p $HOME/.vim/colors
-
-    local symlink
-    for symlink in $(find $DOTFILES_DIR/vim/color_schemes/ -maxdepth 1 -type f); do
-        symlink_file_and_keep_old "$symlink" "$HOME/.vim/colors/"
-    done
+    local path="$1"
+    startswith "$path" "."
 }
 
-symlink_gpg_files()
+all_files_except_scripts()
 {
-    [ ! -d $HOME/.gnupg ] && mkdir -p $HOME/.gnupg
-
-    local symlink
-    for symlink in $(find $DOTFILES_DIR/.gnupg/ -maxdepth 1 -type f); do
-        symlink_file_and_keep_old "$symlink" "$HOME/.gnupg/"
-    done
+    local path="$1"
+    ! endswith "$path" ".sh" ".py"
 }
 
-run_func()
+symlink_dotfiles()
 {
-    local func_name="$1"
-    (
-    ERRORS=0
-    $func_name
-    if [ $ERRORS -eq 0 ]; then
-        exit 0
-    else
-        exit 1
-    fi
-    )
+    symlink_dir_to_dir "$DOTFILES_DIR" "$HOME" all_files_except_scripts
+
+    symlink_dir_to_dir "$DOTFILES_DIR/.config" "$HOME/.config"
+
+    local path
+    for path in "$DOTFILES_DIR/.config/"*; do
+        if [ -d "$path" ]; then
+            symlink_dir_to_dir "$path" "$HOME/.config/$(basename "$path")"
+        fi
+    done
+
+    symlink_dir_to_dir "$DOTFILES_DIR/vim" "$HOME/.vim"
+    symlink_dir_to_dir "$DOTFILES_DIR/vim/color_schemes" "$HOME/.vim/colors"
+    symlink_dir_to_dir "$DOTFILES_DIR/vim/syntax" "$HOME/.vim/syntax"
+
+    symlink_dir_to_dir "$DOTFILES_DIR/.gnupg" "$HOME/.gnupg"
 }
 
 main()
@@ -111,15 +131,11 @@ main()
         esac
     done
 
-    local rc=0
-
     echo "$DOTFILES_DIR" > $HOME/.dotfiles_dir_path
     [ -n "$GIT_DIR" ] && echo "$GIT_DIR" > ~/.git_dir_path
 
-    run_func symlink_general_dotfiles || rc=1
-    run_func symlink_vim_files || rc=1
-    run_func symlink_gpg_files || rc=1
+    symlink_dotfiles
 
-    exit $rc
+    exit 0
 }
 main "$@"
