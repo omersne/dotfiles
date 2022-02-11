@@ -365,10 +365,25 @@ ___tmux_send_to_all_panes()
     done
 }
 
+___get_pipestatus()
+{
+    # XXX: The value needs to be saved before it is overridden by running the
+    # platform verification commands
+
+    #            zsh        bash
+    local value="$pipestatus${PIPESTATUS[@]}"
+
+    if ! ___is_bash && ! ___is_zsh; then
+        ___invalid_platform_error
+        return
+    fi
+
+    echo "$value"
+}
+
 check_pipestatus_error()
 {
-    #                       zsh        bash
-    if grep -q "[^0 ]" <<< "$pipestatus${PIPESTATUS[@]}"; then
+    if grep -q "[^0 ]" <<< "$(___get_pipestatus)"; then
         return 1
     else
         return 0
@@ -650,6 +665,64 @@ ___kill_procs_using_port()
 {
     local port_num="$1"
     ___get_procs_using_port "$port_num" | to_lines | xargs -L1 kill
+}
+
+___get_user_ssh_agent_pids()
+{
+    ps aux | awk '{if ($1 == "'$USER'" && $NF == "ssh-agent") print $2}'
+}
+
+_get_user_ssh_agent_pid()
+{
+    local -a pids
+    pids=( $(___get_user_ssh_agent_pids | tr '\n' ' ') )
+
+    if [ "${#pids[@]}" -eq 0 ]; then
+        echo_error "No ssh-agent instances are running" >&2
+        return 1
+    elif [ "${#pids[@]}" -gt 1 ]; then
+        echo_error "More than once ssh-agent instance is running" >&2
+        return 1
+    else
+        echo "${pids[$(___get_array_start_index)]}"
+        return 0
+    fi
+}
+
+___user_ssh_agent_is_running()
+{
+    ___get_user_ssh_agent_pids | grep "." > /dev/null
+}
+
+_add_ssh_key_to_ssh_agent()
+{
+    local pub_key_path="$1"
+    local pub_key_contents="$(cat "$pub_key_path")"
+
+    local should_add=0
+
+    local -a rcs
+    ssh-add -L 2>/dev/null | grep -qx "$pub_key_context"
+    rcs=( $(___get_pipestatus) )
+
+    local rc
+    for rc in "${rcs[@]}"; do
+        if [ "$rc" -ne 0 ]; then
+            should_add=1
+            break
+        fi
+    done
+
+    if boolean_true "$should_add"; then
+        ssh-add "$pub_key_path" 2>/dev/null
+        rc=$?
+        if [ "$rc" -ne 0 ]; then
+            echo_error "Failed to add '$pub_key_path' to ssh-agent"
+            return "$rc"
+        fi
+    fi
+
+    return 0
 }
 
 append_PATH()

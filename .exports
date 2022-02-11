@@ -93,3 +93,18 @@ ___load_gpg_agent()
 }
 ___load_gpg_agent
 
+___load_ssh_agent()
+{
+    if ! which ssh-agent > /dev/null 2>&1; then
+        return 1
+    fi
+
+    if [ -e ~/.no_load_ssh_agent.dfcfg ]; then
+        return 0
+    fi
+
+    if [ -z "$SSH_AGENT_PID" ] || [ -z "$SSH_AUTH_SOCK" ]; then
+        eval $(ssh-agent) > /dev/null
+    fi
+}
+___load_ssh_agent
