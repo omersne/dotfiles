@@ -103,7 +103,7 @@ ___load_ssh_agent()
         return 0
     fi
 
-    if [ -z "$SSH_AGENT_PID" ] || [ -z "$SSH_AUTH_SOCK" ]; then
+    if [ -z "$SSH_AGENT_PID" ] && ([ -z "$SSH_AUTH_SOCK" ] || ! ___is_ssh_session); then
         eval $(ssh-agent) > /dev/null
     fi
 }
