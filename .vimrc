@@ -7,6 +7,7 @@ set smartcase
 set ruler
 set vb t_vb=     " no visual bell and flash
 set autowriteall
+set backspace=indent,eol,start " https://stackoverflow.com/a/3534090
 
 " Default colorscheme. Will be overridden for some file types.
 colorscheme timessquare
