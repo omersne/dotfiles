@@ -11,10 +11,12 @@
 	sc = commit -S -m
 	ch = checkout
 	chb = checkout -b
+	checkout-default-branch = "!git checkout $(git default-branch);"
 	cht = checkout --track
 	clear-cred-cache = credential-cache exit
 	co = config
 	debug-comments = grep -i "DEBUG42"
+	default-branch = "!git remote show origin | grep 'HEAD branch' | awk '{print $3}';"
 	df = diff --color --color-words --abbrev
 	d = diff
 	email = config user.email
