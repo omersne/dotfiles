@@ -27,6 +27,10 @@ LINUX_PACKAGES=(
     libffi-dev # https://stackoverflow.com/a/58396708
     sudo
     libssl-dev # https://askubuntu.com/a/797352
+    iproute2
+    golang-go
+    sqlite3
+    iptables
 )
 apt-get install -y "${LINUX_PACKAGES[@]}"
 
