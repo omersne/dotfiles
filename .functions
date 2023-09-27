@@ -22,8 +22,7 @@ ___is_zsh()
 
 ___is_bash()
 {
-    [ "$BASH" = "$(which bash)" ] && return 0
-    return 1
+    [ -n "$BASH_VERSION" ]
 }
 
 ___is_ssh_session()
@@ -753,6 +752,55 @@ ___get_array_start_index()
     fi
 }
 
+___filename_exists_in_this_or_higher_directories()
+{
+    local filename="$1"
+    if grep -q "/" <<< "$filename"; then
+        echo_error "$(___function_name): Only a filename should be specified, not a path"
+        return 99
+    fi
+    local starting_dir="${2:-.}"
+
+    (
+    cd "$starting_dir"
+    while true; do
+        if [ ! -r . ]; then
+            echo_error "$(___function_name): Cannot list files in $(pwd)"
+            exit 99
+        fi
+        if [ -e "$filename" ]; then
+            exit 0
+        fi
+
+        if [ "$(pwd)" = / ]; then
+            exit 1
+        fi
+
+        cd ..
+    done
+    )
+}
+
+___run_vim_wrapper()
+{
+    local -a cmd_line
+    cmd_line+=("vim")
+
+    local filename="$1"
+    local starting_dir=""
+    if [ -e "$filename" ]; then
+        starting_dir="$(dirname "$filename")"
+    else
+        starting_dir="."
+    fi
+    if ___filename_exists_in_this_or_higher_directories ".text_editor_readonly.dfcfg" "$starting_dir"; then
+        cmd_line+=("-M" "-n")
+    fi
+    cmd_line+=("$@")
+
+    "${cmd_line[@]}"
+}
+
 ##### Completion functions
 
 _gen_complist()
@@ -770,6 +818,11 @@ _gen_filename_complist()
 _sh_completion()
 {
     COMPREPLY=( $(_gen_complist "$@") )
+}
+
+_sh_filename_completion()
+{
+    COMPREPLY=( $(_gen_filename_complist) )
 }
 
 _sh_completion_with_filenames()

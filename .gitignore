@@ -8,4 +8,5 @@ a.out
 *.swp
 __ignore__*
 .no_git_prompt.dfcfg
+.text_editor_readonly.dfcfg
 ___FILE_INFO_01.json

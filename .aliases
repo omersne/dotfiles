@@ -84,7 +84,9 @@ alias tl="cut -c1-\$COLUMNS"
 
 alias mkx="chmod +x"
 
-alias v="vi"
+alias vim="___run_vim_wrapper"
+alias vi="$(alias_value "vim")"
+alias v="$(alias_value "vim")"
 # Open a file in readonly mode, even if a swapfile exists.
 alias vir="vi -M -n"
 alias viw="edit_which"
