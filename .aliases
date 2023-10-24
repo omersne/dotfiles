@@ -122,6 +122,8 @@ if exists_in_path yt-dlp; then
     # the alias is called, not when it is defined.
     alias yc="$(alias_value y) \$(___get_clipboard_contents)"
 
+    alias ys="$(alias_value y) --output='%(title).50s_%(id)s_D%(epoch)s.%(ext)s'"
+
     # This just needs to override the existing global `--format' option.
     alias yt-dlp-max-res="$(alias_value y) --format='bestvideo[height=2160][ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'"
     alias ymax="$(alias_value yt-dlp-max-res)"
