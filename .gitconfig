@@ -15,6 +15,7 @@
 	cht = checkout --track
 	clear-cred-cache = credential-cache exit
 	co = config
+	current-branch = "!git branch | grep '^\\*' | sed 's/^\\*\\s\\+//';"
 	debug-comments = grep -i "DEBUG42"
 	default-branch = "!git remote show origin | grep 'HEAD branch' | awk '{print $3}';"
 	df = diff --color --color-words --abbrev
@@ -38,6 +39,7 @@
 	pull-and-verify-sigs = "!f() { last=$(git rev-parse HEAD); git pull || return 1; for c in $(git rev-list $last..HEAD); do git verify-commit $c > /dev/null 2>&1 || { echo \"\n\n-----\nBAD SIGNATURE IN COMMIT $c\n-----\nTo return to safety, run this: \\`git reset --hard $last'\" >&2; return 99; }; done; }; f"
 	puo = push -u origin
 	rb = rebase
+	rebase-default-branch = "!git rebase $(git default-branch);"
 	reset-last-commit = commit --amend --no-edit --reset-author
 	s = status
 	safe-hard-reset = "!git backup-branch && git fetch --all && git reset --hard \"origin/$(git rev-parse --abbrev-ref HEAD)\""
